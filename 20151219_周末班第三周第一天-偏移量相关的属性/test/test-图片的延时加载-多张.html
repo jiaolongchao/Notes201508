@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+             height: 200px; background: red; color: white;line-height: 200px; font-size: 50px; text-align: center;
+        }
+    </style>
+</head>
+<body style="height: 5000px;">
+<div style="height: 3000px"></div>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">
+<script>
+    var oImgs = document.getElementsByTagName('img');
+    for(var i = 0;i<oImgs.length;i++){
+        var oImg = oImgs[i];
+        oImg.posi = offset(oImg).top + oImg.offsetHeight;
+    }
+    window.onscroll = function(){
+        for(var i = 0 ;i<oImgs.length; i++){
+            var oImg = oImgs[i];
+            var broswBottom = (document.documentElement.clientHeight || document.body.clientHeight) + (document.documentElement.scrollTop || document.body.scrollTop);
+            if(oImg.posi < broswBottom){
+                if(oImg.loaded) return;
+                changeimg(oImg);
+            }
+        }
+    }
+
+    function changeimg(oImg){
+
+        var realimg = oImg.getAttribute('realImg') + '?' + Math.random();
+        //1.为什么getAttribute不能直接获取 而img可以 img.loaded
+        //ele.getAttribute() //获得写在HTML里的属性值的，这个属性无论是自定义的还是法定的，都可以用这个方法，但是如果这个属性是的自定义的，只能用这个方法了
+        //HTML语文先于DOM出生，在DOM出生之前，也有一套属于自己HTML自己的操作它的JS的编程规范
+        //2.不知道onload是怎么执行的？
+        //onload事件是因为浏览器的异步机制产生的，文档本身html DOM结构生成 img除了onload事件，还有一个onerror事件
+        var temp = document.createElement('img');
+        temp.src = realimg;
+        temp.onload = function(){
+            oImg.src = realimg;
+            oImg.loaded = true;
+        }
+        oImg.src = 'o_loading.gif';
+    }
+    //封装offset方法获取offset距离
+    function offset(ele){
+        var l = ele.offsetLeft;
+        var t = ele.offsetTop;
+        var p = ele.offsetParent;
+        while(true){
+            if(!p || p == document.body) break;
+            if(window.navigator.userAgent.indexOf('MSIE 8') > -1){
+                l += p.offsetLeft;
+                t += p.offsetTop;
+            }else{
+
+                l += p.offsetLeft + p.clientLeft;
+                t += p.offsetTop + p.clientTop;
+            }
+            p = p.offsetParent;
+        }
+        return {left:l,top:t};
+    }
+    //封装获取计算后的css样式的方法
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return getComputedStyle(ele,null)[attr]
+        }else{
+            return ele.currentStyle(attr);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{ margin:0; padding: 0;}
+        #div1{ width: 100px; height: 100px; position: absolute; background: red; border-radius: 50%;}
+    </style>
+</head>
+<body>
+<div id="div1" draggable="true"></div>
+<script>
+    var ele1 = document.getElementById("div1");
+    ele1.ondragstart = function(e){
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+    }
+    ele1.ondrag = function(e){
+        this.style.left = this.x + e.pageX - this.mx + "px";
+        this.style.top = this.y + e.pageY - this.my + "px";
+    }
+    ele1.ondragend = function(e){
+        this.style.left = this.x + e.pageX - this.mx + "px";
+        this.style.top = this.y + e.pageY - this.my + "px";
+    }
+</script>
+</body>
+</html>

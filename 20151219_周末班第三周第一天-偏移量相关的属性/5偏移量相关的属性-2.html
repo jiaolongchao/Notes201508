@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:200px; background:red; -float:right;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+<div id="div1" style="clear:both; position:absolute; top:300px; left:400px;" >div2
+	<p id="p1" style="background:yellow; position:relative; height:100px;  width:200px; border:50px black solid;">段落
+    	<span id="span1" style="float:right; width:50px; height:50px; background:green;">span</span>
+    </p>
+
+</div>
+
+</body>
+</html>
+<script>
+//计算网页上的某个DOM元素距离浏览器的偏移量
+function offset(ele){
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+/*	while(p){
+		//p一般情况下是个DOM元素
+		//当p是body的时候，下一次，p
+		l+=p.offsetLeft;
+		t+=p.offsetTop;
+		p=p.offsetParent;
+	}*/
+	while(1){
+		
+		if(!p||p==document.body)break;//要么p是null，要么p是body，则退出
+		if(window.navigator.userAgent.indexOf("MSIE 8")>-1){
+			//如果是IE8，则直接累加offsetLeft就可以了
+			l+=p.offsetLeft;
+			t+=p.offsetTop;
+		}else{
+			//在标准浏览器下，需要加上边框的宽
+			l+=p.offsetLeft+p.clientLeft;//p.clientLeft是左边框的宽
+			t+=p.offsetTop+p.clientTop;
+		}
+		p=p.offsetParent;
+	}
+	return {left:l,top:t}
+}
+var ele=document.getElementById("span1")
+alert(offset(ele).left);
+//如果37中的判断条件不加!p，则这样执行会出错:offset(document.body)
+
+//offsetLeft的一些细节决定的：offsetLeft的计算是从那儿开始，到那儿结束。
+//从边框外边开始，到它的offsetParent的边框内侧结束
+
+</script>

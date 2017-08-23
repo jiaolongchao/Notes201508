@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // onload和jquery的ready有什么区别？
+        // onload是所有的资源加载完毕执行
+        // ready是dom树加载完毕执行
+        var ready = function (callback) {
+            if (window.addEventListener) {
+                // dom树加载完毕
+                window.addEventListener('DOMContentLoaded', function () {
+                    callback();
+                })
+            } else {
+                document.attachEvent('onreadystatechange', function () {
+                    if (document.readyState === 'interactive') {
+                        callback();
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+<img src="https://www.baidu.com/img/bd_logo1.png?1">
+<img src="https://www.baidu.com/img/bd_logo1.png?2">
+<img src="https://www.baidu.com/img/bd_logo1.png?3">
+<img src="https://www.baidu.com/img/bd_logo1.png?4">
+<img src="https://www.baidu.com/img/bd_logo1.png?5">
+<img src="https://www.baidu.com/img/bd_logo1.png?6">
+<img src="https://www.baidu.com/img/bd_logo1.png?7">
+<img src="https://www.baidu.com/img/bd_logo1.png?8">
+<img src="https://www.baidu.com/img/bd_logo1.png?9">
+<img src="https://www.baidu.com/img/bd_logo1.png?10">
+<img src="https://www.baidu.com/img/bd_logo1.png?11">
+<img src="https://www.baidu.com/img/bd_logo1.png?12">
+<img src="https://www.baidu.com/img/bd_logo1.png?13">
+<img src="https://www.baidu.com/img/bd_logo1.png?14">
+<img src="https://www.baidu.com/img/bd_logo1.png?15">
+<img src="https://www.baidu.com/img/bd_logo1.png?16">
+</body>
+</html>
+<script>
+    window.onload=function(){
+        console.log('onload');
+        console.timeEnd('start');
+    };
+    ready(function(){
+        console.log('ready');
+
+        console.time('start');
+    })
+</script>

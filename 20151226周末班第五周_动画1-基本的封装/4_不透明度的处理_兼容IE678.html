@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:100px; width:100px; position:absolute; top:100px;  background:red;  left:150px; opacity:0.1; filter:alpha(opacity=10)}
+#left,#right{ width:100px; height:100px; background:black; color:white; margin:20px; position:absolute; top:200px; left:0; opacity:0.1 }
+</style>
+</head>
+
+<body>
+
+<div id="div1"></div>
+<div id="left">左</div><div id="right" style="left:110px;">右</div>
+</body>
+</html>
+<script>
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		//return parseFloat("a"+getComputedStyle(ele,null)[attr]);
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{//专门处理IE的方案
+		if(attr=="opacity"){
+			//filter:alpha(opacity=10)
+			var reg=/alpha\(opacity=(\d+)\)/
+			var str=ele.currentStyle.filter;
+			if(reg.test(str)){
+				RegExp.$1//这就是匹配的正则中的第一个分组的值	
+				return RegExp.$1/100;
+			}
+			
+		}
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+function fadeInOut(ele,target,duration){//淡入淡入效果，
+/*	//target 0---1之间
+	ele=div1;
+	target=0;
+	duration=1000;
+	this;*/
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			var value=times/duration*change+begin
+			ele.style.opacity=value;//+"px";	
+			ele.style.filter="alpha(opacity="+value*100+")";
+		}else{
+			ele.style.opacity=target;
+			ele.style.filter="alpha(opacity="+target*100+")";
+			clearInterval(ele.timer);
+			ele.timer=null;
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+	
+}
+
+div1.onclick=function(){
+	fadeInOut(this,1,3000);
+	
+}
+/*//
+//div1.onclick=fadeInOut(this,0,1000);
+div1.onclick=fadeInOut;//参数怎么？传*/
+</script>

@@ -1,0 +1,117 @@
+body {
+    font-family: "\5FAE\8F6F\96C5\9ED1", "microsoft yahei", "sans-serif";
+    font-size: 18px;
+    -webkit-user-select: none;
+}
+
+.wrap {
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid blue;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.wrap h2 {
+    width: 600px;
+    overflow: hidden;
+}
+
+.wrap h2 span {
+    display: block;
+    float: left;
+    width: 200px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    background-color: #04AA55;
+    color: #000066;
+}
+.wrap ul.conList{
+    height: 300px;
+}
+.wrap ul.conList li{
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.wrap ul.conList li.even{
+    background-color: #008800;
+    color: #FFFF00;
+}
+
+.wrap ul.conList li span{
+    display: block;
+    float: left;
+    width: 200px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.wrap .page{
+    float: right;
+    overflow: hidden;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.wrap .page span{
+    display: block;
+    float: left;
+    width: 50px;
+    margin-left: 5px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    border: 1px solid #22a2c9;
+}
+
+.wrap .page ul{
+    float: left;
+    overflow: hidden;
+}
+
+.wrap .page ul li{
+    float: left;
+    width: 20px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 5px;
+    border: 1px solid #22a2c9;
+    font-size: 12px;
+}
+.wrap .page ul li.select{
+    background-color: #FF6700;
+    color: #000066;
+}
+.wrap .page input{
+    display: block;
+    float: left;
+    width: 30px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    outline: none;
+    border: 1px solid #22a2c9;
+    margin-left: 5px;
+    font-size: 12px;
+}
+.wrap .page button{
+    display: block;
+    float: left;
+    width: 30px;
+    height: 22px;
+    line-height: 20px;
+    border: 1px solid #22a2c9;
+    margin-left: 5px;
+    font-size: 12px;
+    background-color: #22a2c9;
+    color: #000066;
+    cursor: pointer;
+}

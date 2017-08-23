@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 1000%;
+            /*CSS3中新增加的背景颜色渐变的样式*/
+            background: #ffe470;
+            background: -webkit-linear-gradient(top left, #08BECE, #008000, #ffe470, #ffeedd);
+            background: -moz-linear-gradient(top left, #08BECE, #008000, #ffe470, #ffeedd);
+            background: -ms-linear-gradient(top left, #08BECE, #008000, #ffe470, #ffeedd);
+            background: -o-linear-gradient(top left, #08BECE, #008000, #ffe470, #ffeedd);
+            background: linear-gradient(top left, #08BECE, #008000, #ffe470, #ffeedd);
+        }
+
+        #goBack {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            background: #ff3333;
+            cursor: pointer;
+
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px 0 #000000;
+        }
+    </style>
+</head>
+<body>
+<div id="goBack"></div>
+
+<script type="text/javascript">
+    var goBack = document.getElementById("goBack");
+    //实现点击回到顶部
+    goBack.onclick = function () {
+        var duration = 1000;//->总时间
+        var interval = 10;//->时间因子(多长时间走一步)
+        var totalTar = win("scrollTop") - 0;//->当前的scrollTop减去目标scrollTop就是我们的总距离
+        var step = (totalTar / duration) * interval;//->求出每一步走的步长
+        var timer = window.setInterval(function () {
+            var curT = win("scrollTop");
+            if (curT <= 0) {
+                window.clearInterval(timer);
+                return;
+            }
+            win("scrollTop", curT - step);
+        }, interval);
+    };
+
+    //实现开始没有回到顶部的按钮,当滚动超出一屏幕高度的时候在显示
+    //window.onscroll:当页面的滚动条发生滚动的时候(手动拖动滚动条、键盘的上下键、鼠标滚轮、JS控制scrollTop值变化的时候...)，就会执行对应的方法
+    window.onscroll = function () {
+        var curT = win("scrollTop");//当前滚动条卷去的高度
+        var cliH = win("clientHeight");//当前页面一屏幕的高度
+        goBack.style.display = curT >= cliH ? "block" : "none";
+    };
+
+    //思考题:现在还有一个小问题,当我点击的时候,goBack没有消失,用户可能会出现狂点,为了避免这个问题,我们当用户点击的时候,不仅仅实现滚动到顶部,并且把goBack消失
+
+    function win(attr, value) {
+        if (typeof value === "undefined") {
+            return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+    }
+</script>
+</body>
+</html>

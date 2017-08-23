@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<a id="link" href="http://www.zhufengpeixun.com/zhouxiatian/?name=aa&age=12"></a>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    console.dir(oDiv);
+
+    //oDiv本身有一些自己的私有的属性:
+    //id、className、onclick(是定义在元素私有属性中的事件，我们称之为DOM0级事件)...
+
+    //__proto__
+
+    //HTMLDivElement div标签所属的类(每一个div元素都是它的一个实例) ->每一个HTML元素标签都已一个自己所属的内置类
+
+    //__proto__
+
+    //HTMLElement 元素标签所属的类(每一个元素标签都是它的一个实例)
+
+    //__proto__
+
+    //Element
+
+    //__proto__
+
+    //Node 节点类
+
+    //__proto__
+
+    //EventTarget DOM二级事件类
+
+    //__proto__
+
+    //Object
+
+    console.dir(document);
+
+</script>
+</body>
+</html>

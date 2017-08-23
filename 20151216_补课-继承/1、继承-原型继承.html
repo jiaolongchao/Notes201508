@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    //继承：子类继承父类中的属性和方法
+    //B中也想有一个getX的方法,我们发现A中已经有了,我接下来只需要让B作为儿子,让A作为父亲,让B继承A中的属性和方法
+
+    //1、原型继承
+    //B要继承A,只需要让B的原型等于A的一个实例即可 ->B.prototype=new A;
+    //1)原型继承是我们JS中最常用的一种继承方式,我们查看#div1的原型链发现和我们自己模拟的原型继承是一模一样的
+
+    //2)原型继承不是把父类的属性和方法复制一份给自己,而是更改了原型链的查找顺序,我们b想要使用getX这个方法,是通过__proto__一级级的向上查找,最后也找到A的原型上,获取getX并且使用 -> b.__proto__.__proto__.getX=A.prototype.getX
+
+    //3)子类不仅仅可以获取使用父类上的方法,而且还可以把父类原型上的方法进行修改 b.__proto__.__proto__.getX=function(){console.log(this.x+1000);} 就是把父类A原型上的方法修改了,这样的话,A的其他的实例也会受到影响 ->"这叫做类的多态(是多态中的重写):子类重写父类的方法"
+
+    //4)在原型继承中,子类可以把父类中私有和公有的属性/方法都继承过来使用;并且都是作为子类B公有的属性/方法;
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+
+    }
+    B.prototype = new A;
+    var b = new B;
+
+
+    //子类重写父类的方法
+    //    b.__proto__.__proto__.getX = function () {
+    //        console.log(this.x + 1000);
+    //    };
+
+
+</script>
+</body>
+</html>

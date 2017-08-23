@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, input {
+            margin: 0;
+            padding: 0;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        input[type='text'] {
+            margin: 10px;
+            width: 50px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        input[type='range'] {
+            margin: 10px;
+        }
+
+        #userEmail {
+            margin: 10px auto;
+            padding: 0 15px;
+            width: 300px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        /*CSS验证：只能在用户输入的时候通过改变文本框的样式进行提示->做一个临时的提示作用*/
+        #userEmail:valid {
+            border: 1px solid green;
+        }
+
+        #userEmail:invalid {
+            border: 1px solid red;
+        }
+
+        #divEmail {
+            display: none;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 300px;
+            height: 35px;
+            line-height: 35px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<!--
+ 传统的表单元素都有哪些?
+   input(text、radio、checkbox、button、submit、reset、file、hidden、password...)、textarea、select、label、form...
+
+ HTML5中新增加的?
+   我们对于input标签新增加了很多的类型:search、email、number、url、tel、range、color、date(日历)、time(时间)...
+   作用:
+   1)当我们使用对应的数据类型，用户输入的时候，调取出来的是最符合用户输入的虚拟键盘,例如：我们的type='tel' ，我们调取出来的是数字键盘...
+
+   2)我们之前做表单验证如何的处理?->需要自己编写正则，和用户输入的内容进行匹配，然后在进行相关的提示
+     H5当中对于新增加的这些类型提供了最新的验证方式:css验证/JS验证
+
+   在移动端开发中，我们的表单有一个非常非常重要的知识点：移动端没有onkeyup、onkeydown...这些文本框经常操作的事件->移动端的表单验证只有一个常用的事件:input事件,需要使用DOM2事件绑定
+-->
+<input type="email" id="userEmail" placeholder="请输入您常用的邮箱"/>
+
+<div id="divEmail">请输入有效的邮箱地址~~</div>
+
+<script type="text/javascript">
+    var userEmail = document.querySelector("#userEmail");
+    var divEmail = document.querySelector("#divEmail");
+    userEmail.addEventListener("input", function () {
+        var flag = this.checkValidity();//->用来检测用户输入的内容是否是邮箱
+        divEmail.style.display = flag ? "none" : "block";
+    }, false);
+
+    /*userEmail.onblur = function () {//->文本框失去焦点事件
+
+     };*/
+</script>
+
+
+<input type="text" value="25" disabled="disabled"/>
+<input type="range" max="65" min="18" value="25" step="1"/>
+
+<script type="text/javascript">
+    var oRange = document.querySelector("input[type='range']");
+    var ageText = document.querySelector("input[type='text']");
+    oRange.addEventListener("input", function () {
+        ageText.value = this.value;
+    }, false);
+</script>
+</body>
+</html>

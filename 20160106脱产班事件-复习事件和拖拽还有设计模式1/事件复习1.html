@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script>
+//bind,unbind,on,off,run ;
+
+//IE和标准浏览器的DOM二级事件绑定和绑定中出现的一些问题：主要this的指向问题
+//var fnTemp=function(){fn.call(ele)}
+//要把fnTemp保存下来，还要给fnTemp加一个自定义属性用来和fn做关联
+//解绑的的用
+
+function on(ele,type,fn){
+	//无论on执行多少次，这一行只会执行一次
+	if(!ele["onevent"+type]){
+		ele["onevent"+type]=[];
+	}
+		for(var i=0;i<ele["onevent"+type].length;i++){
+			if(ele["onevent"+type][i]==fn){
+				return
+			}
+			
+		}
+			ele["onevent"+type].push(fn);
+			//bind(ele,type,run);//IE中绑定的方法，在运行时this关键字的指向
+			ele.attachEvent("on"+type,function (){run.call(ele)});
+			//如果是仅解决this的指向，并且不考虑run的移除绑定的问题，那这样就可以了。
+			//还会有一个问题，重复绑定的问题，不是重复绑定fn,而是重复绑定了run
+			
+}
+function run(e){
+	e=window.event;
+	var type=e.type;//
+	var a=this["onevent"+type];
+	for(var i=0;i<a.length;i++){
+		if(typeof a[i]=="function"){
+			a[i].call(this,e);
+			}
+			else{
+				}
+		}
+	
+}
+function off(ele,type,fn){
+	var a=ele["onevent"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn){
+			a[i]=null;
+			return;
+		}	
+	}
+}
+var ele=document.getElementById("div1");
+function fn1(){alert(this.innerHTML)}
+function fn2(){alert(2);}
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+//ele,click,run*2;
+//当click事件触发的时候，run会执行两次，每执行一次，都坐去遍历一遍数组
+
+</script>
+

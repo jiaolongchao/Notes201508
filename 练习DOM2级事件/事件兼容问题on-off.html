@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv{ width:100px; height:100px; background:red; margin:100px auto;}
+
+    </style>
+</head>
+<body>
+<ol>
+    <li>DOM2事件绑定：方法不同</li>
+    <li>DOM2事件绑定：IE里被定上的方法，this指向不同</li>
+    <li>DOM2事件绑定：IE里执行的顺序是混乱的</li>
+    <li>DOM2事件绑定：方法可以被重复绑定不同</li>
+    <li>事件对象本身：IE是全局的事件对象window.event,其它的是系统自动传给</li>
+    <li>事件源：标准浏览器是e.target, IE是event.srcElement</li>
+    <li>阻止事件默认行为：标准浏览是一个方法 e.preventDefault  IE是e.returnValue = false</li>
+    <li>在所有浏览器中，如果用DOM0的方法来绑定事件也可以使用reutrn false的方法</li>
+    <li>阻止事件传播：标准浏览器e.stopPropagation() ,IEj e.cancelBubble=true</li>
+    <li>e.pageX ,e.pageY, 这两个属性IE不支持</li>
+    <li>IE不支持捕获</li>
+</ol>
+<div id="odiv"></div>
+<script>
+    function bind(ele,type,fn){
+        if(ele.addEventListener){
+            ele.addEventListener(type,fn,false)
+        }else{
+            var fnTemp = function(){fn.call(ele)}
+            if(!ele["myBind" + type]){
+                ele["myBind" + type] = [];
+            }
+            var a = ele["myBind" + type];
+            for(var i=0;i< a.length;i++){ //防止重复绑定事件
+                if(a[i].flag == fn){
+                    return;
+                }
+            }
+            a.push(fnTemp)
+            fnTemp.flag = fn;  //加一个标识符，识别真身
+            ele.attachEvent("on"+type,fnTemp);
+        }
+    }
+    function unbind(ele,type,fn){
+        if(ele.removeEventListener){
+            ele.removeEventListener(type,fn,false)
+        }else{
+            var a = ["myBind" + type];
+            for(var i=0;i< a.length;i++){
+                if(a[i].flag == fn){
+                    ele.detachEvent("on"+type,fn);
+                    //a.splice(i,1)
+                    a[i] = null;
+                }
+            }
+        }
+    }
+
+    function run(e){
+        e = e|| event;
+        var type = e.type;
+        var a = this["aEvent"+ type];
+        for(var i=0;i< a.length;i++){
+            if(typeof a[i] == "function"){
+                a[i].call(this);
+                i++
+            }else{
+                a.splice(i,1)
+            }
+        }
+    }
+    function off(ele,type,fn){
+        if(ele["aEvent" + type]){
+            var a = ele["aEvent" + type];
+            for(var i=0;i< a.length;i++){
+                if(a[i] == fn){
+                    a[i] = null;
+                    return;
+                }
+            }
+        }
+    }
+
+    function fn1(){
+        alert(1);
+    }
+    function fn2(){
+        alert(2);
+    }
+    function fn3(){
+        alert(3);
+    }
+    var count = 0;
+    function fn4(){
+        count++;
+        if(count==3){
+            off(this,"click",fn1)
+            off(this,"click",fn2)
+            off(this,"click",fn3)
+            off(this,"click",fn4)
+        }
+        alert(4);
+    }
+    bind(odiv,"click",fn1)
+    bind(odiv,"click",fn2)
+    bind(odiv,"click",fn3)
+</script>
+</body>
+</html>

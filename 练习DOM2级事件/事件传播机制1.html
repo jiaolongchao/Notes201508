@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv{ width:100px; height:100px; background:red; margin:100px auto; position: relative}
+
+        #child{ height: 50px; width: 50px; position:absolute; background:black;}
+    </style>
+</head>
+<body>
+<ol>
+
+</ol>
+<div id="odiv"></div>
+<script>
+    var ele = document.getElementById("odiv");
+    ele.onmouseenter = function(e){
+        var child = document.createElement("div");
+        child.id  = "child";
+        with(child.style){
+            left = e.pageX - this.offsetLeft + "px";
+            top = e.pageY - this.offsetTop + "px";
+        }
+        this.appendChild(child);
+        /*child.onmouseover = function(e){
+            //是因为ele的事件传播给父元素，才会不断的创建小盒子
+            e.stopPropagation(); //阻止事件传播
+        }*/
+    }
+</script>
+</body>
+</html>

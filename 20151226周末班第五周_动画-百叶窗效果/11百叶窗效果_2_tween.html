@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#container{ width:1000px; height:300px; margin:10px auto; background:#ccc; position:relative; float:right;}
+#container div{ position:absolute;background:url(banner1.jpg)}
+#div1{ width:100px; height:100px; background:url(banner1.jpg) -500px -200px; }
+</style>
+</head>
+
+<body>
+<img src="banner1.jpg" width="1000" height="300">
+sprite
+30
+3行10列
+<div id="container"></div>
+</body>
+<div id="div1"></div>
+</html>
+<script src="tween.js"></script>
+<script>
+var rows=3;
+var cols=10;
+var w=1000/cols;
+var h=300/rows;
+var container=document.getElementById("container");
+var a=[];
+for(var i=0;i<rows*cols;i++){
+	var ele=document.createElement("div");
+	with(ele.style){
+		height=h+"px";
+		width=w+"px";
+		var t=Math.floor(i/cols)*h;
+		ele.t=t;
+		top=100+"px";//行索引号*高度就是top
+		var l=i%cols*w;
+		ele.l=l;
+		left=-400+"px";//	列索引号*宽度
+		backgroundPosition="-"+l+"px "+"-"+t+"px";
+	
+	}
+	a.push(ele);
+	container.appendChild(ele);
+}
+document.documentElement.onclick=function(){
+	
+	for(var i=0;i<a.length;i++){
+		
+		(function(i){
+			var ele=a[i];
+			window.setTimeout(function(){
+				animate(ele,{left:ele.l,top:ele.t},800,3);
+			},i%cols*200);
+		})(i);
+		
+	}
+	
+}
+
+setTimeout(fn1,1000);
+setTimeout(fn2,1000);
+fn1,fn2
+
+</script>

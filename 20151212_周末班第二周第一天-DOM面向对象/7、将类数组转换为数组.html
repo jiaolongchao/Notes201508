@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li>100</li>
+    <li>98</li>
+    <li>120</li>
+    <li>56</li>
+    <li>89</li>
+</ul>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");//->oLis是一个元素集合也是一个类数组集合
+
+    //借用数组的slice实现将类数组(arguments、DOM元素集合...)转换为数组的时候,arguments在所有的浏览器中都兼容,而DOM元素集合在IE6~8下是不兼容的.
+
+    //    //兼容:
+    //    var ary = Array.prototype.slice.call(oLis);
+    //
+    //    //不兼容:
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        ary[ary.length] = oLis[i];
+    //    }
+
+    //try catch的作用:检测和处理浏览器兼容问题
+    //    var ary = [];
+    //    try {
+    //        ary = Array.prototype.slice.call(oLis);
+    //    } catch (e) {
+    //        for (var i = 0; i < oLis.length; i++) {
+    //            ary[ary.length] = oLis[i];
+    //        }
+    //    }
+    //    console.log(ary);
+
+    var ary = utils.listToArray(oLis);
+    console.log(ary);
+</script>
+</body>
+</html>

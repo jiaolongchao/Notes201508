@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function addZero(value){
+        return value < 10 ? '0'+ value:value;
+    }
+    function getNow(){
+        var nowTime = new Date();
+        var year = nowTime.getFullYear(); //年
+        var month = nowTime.getMonth() + 1;//月份
+        var day = nowTime.getDate(); // 日期
+        var week = nowTime.getDay();  //星期
+        var hour = nowTime.getHours(); //时
+        var minutes = nowTime.getMinutes(); //分
+        var seconds = nowTime.getSeconds(); //秒
+        res = year + '年'  +  addZero(month) + '月' +  addZero(day);
+        return res;
+    }
+
+    console.log(getNow())
+</script>
+</body>
+</html>

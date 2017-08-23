@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{ width:100px; height: 100px; background:red; position: absolute;}
+    </style>
+</head>
+<script src="event2.js"></script>
+<script src="darg2.js"></script>
+<script src="effect.js"></script>
+<body>
+<div></div>
+<script>
+    var odiv = document.getElementsByTagName("div")[0];
+    on(odiv,"mousedown",down)
+    // 要实现以下功能，
+    // 当拖拽开始的时候，清除积累的效果
+    //on(odiv,"拖拽开始",clearEffect)
+    on(odiv,"selfdragstart",clearEffect)  //"selfdragstart"用来标识down方法的执行，这是提前约定好的
+
+    //当拖拽进行的时候，计算fly动画的速度
+    //on(odiv,"拖拽开始",getSpeed)
+    on(odiv,"selfdrag",getSpeed)  //"selfdrag" 用来标识拖拽进行
+
+    // 当拖拽结束的时候，执行drop和fly这两种效果
+    //on(odiv,"拖拽结束",fly);
+    //on(odiv,"拖拽结束",drop);
+
+    on(odiv,"selfdragend",fly);
+    on(odiv,"selfdragend",drop);
+
+    function selfRun(selftype,e){ //selfType是自定义事件类型e是系统的事件对象
+        var a = this["self" + selftype];
+        if(a){
+            for(var i=0;i< a.length;i++){
+                if(typeof a[i] == "function"){
+                    a[i].call(this,e)
+                }else{
+                    a.splice(i,1);
+                    i--;
+                }
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

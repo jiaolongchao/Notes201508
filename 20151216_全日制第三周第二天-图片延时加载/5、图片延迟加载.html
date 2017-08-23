@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        #div1 {
+            margin: 1000px auto;
+            width: 300px;
+            height: 150px;
+        }
+
+        #div1 img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <!--trueImg是自己定义的属性,存储图片的真实地址-->
+    <img src="img/default.jpg" trueImg="img/10.jpg"/>
+</div>
+
+<script type="text/javascript">
+    //原理：
+    //刚开始加载页面的时候,为了保证页面的打开速度和进行资源的优化,我们真实项目中对于第二屏及以后的图片都先不进行加载,只是给一张默认图
+    //只有当滚动条滑到指定区域的时候（我们的图片完全出现在了我们的视野区 或者 一露头的时候）我们在加载真实的图片
+
+    //分析步骤：
+    //我们最重要的就是计算完全出现的条件:
+    //浏览器底边框此时距离body的上偏移=当前浏览器卷去的高度(scrollTop)+浏览器可视窗口的高度(clientHeight)
+    //图片底边框距离body的上偏移=图片所在盒子距离body的上偏移+盒子本身的高度(offsetHeight)
+    //条件:浏览器底边框此时距离body的上偏移>=图片底边框距离body的上偏移
+    //条件成立的话我们加载真实的图片
+
+    var oDiv = document.getElementById("div1");
+    var oDivImg = oDiv.getElementsByTagName("img")[0];
+
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;//->获取浏览器可视窗口的高度
+    var imgT = offset(oDiv)["top"];//->获取盒子距离body的上偏移
+    var imgH = oDiv.offsetHeight;//->获取盒子自身的高度
+
+    //当滚动条滚动的时候计算我们是否加载真实的图片
+    window.onscroll = function () {
+        var winT = document.documentElement.scrollTop || document.body.scrollTop;//->在滚动的时候随时获取当前的scrollTop
+        if ((winT + winH) >= (imgH + imgT)) {
+            //我们的图片该开始加载了
+            var trueImg = oDivImg.getAttribute("trueImg");//->获取自定义属性值,里面存储的是真实图片的地址
+            //oDivImg.src = trueImg; 直接这个赋值会出现一个问题,如果真实的图片不存在的话,我们加载出来的结果是一张非常恶心的碎图,这样的话还不如显示默认的图片呢,所以我们在加载真实图片的时候判断是否能够正常的加载,能的话在加载
+            var oImg = new Image;//->document.createElement("img")
+            oImg.src = trueImg;
+            oImg.onload = function () {
+                //如果图片能够正常的加载出来的话,就会执行对应的函数
+                oDivImg.src = trueImg;
+            };
+        }
+    };
+
+    function offset(curEle) {
+        var l = curEle.offsetLeft, t = curEle.offsetTop;
+        var p = curEle.offsetParent;
+        while (p.tagName.toLowerCase() != "body") {
+            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                l += p.clientLeft;
+                t += p.clientTop;
+            }
+            l += p.offsetLeft;
+            t += p.offsetTop;
+            p = p.offsetParent;
+        }
+        return {left: l, top: t};
+    }
+</script>
+</body>
+</html>

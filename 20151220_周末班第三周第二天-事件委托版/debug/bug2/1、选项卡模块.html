@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul.tabGroup{
+            list-style: none;
+        }
+        .tabbedPanels{
+            width: 500px;
+            margin: 10px auto;
+        }
+        .tabGroup{
+            height: 30px;
+            line-height: 30px;
+        }
+        .tabGroup .tab{
+            width: 90px;
+            float: left;
+            margin-right: 10px;
+            background-color: indianred;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            -webkit-user-select: none;
+        }
+        .tabGroup .tab.selectedTab{
+            background-color: red;
+            font-weight: bold;
+        }
+        .contentGroup{
+            overflow: hidden;
+            clear: both;
+        }
+        .contentGroup .content{
+            height: 400px;
+            background: red;
+            display: none;
+            color: white;
+
+        }
+        .contentGroup .selectedContent{
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">选项一</li>
+        <li class="tab">选项二</li>
+        <li class="tab">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+       <div class="content selectedContent">内容一
+           <div>
+               <h3>课程内容</h3>
+               <ol>
+                   <li>CSS</li>
+                   <li>HTML</li>
+                   <li>JS</li>
+                   <li>移动端</li>
+                   <li>HTML5</li>
+               </ol>
+           </div>
+       </div>
+       <div class="content ">内容二</div>
+       <div class="content">内容三</div>
+       <div class="content">内容四</div>
+       <div class="content">内容五</div>
+    </div>
+</div>
+<script type="text/javascript" src="DOM.js">
+    var oLis=document.getElementsByClassName("tab");
+/*
+    function getIndex(ele){//获得ele的索引值
+        var index=0;
+        var p=ele.previousSibling;
+        while(p){
+            if(p.nodeType===1){
+                index++;
+            }
+            p= p.previousSibling;
+        }
+        return index;
+    }
+    function changeTab(){
+        var index=getIndex(this);
+//        alert(index);
+        this.className="tab selectedTab";
+        var nodes=this.parentNode.childNodes;
+        var ary=[];
+        for(var i=0;i<nodes.length;i++) {
+            if (nodes[i]!== this && nodes[i].nodeType === 1) {
+                ary[ary.length] = nodes[i];
+            }
+        }
+        for( var i=0;i<ary.length;i++){
+            ary[i].className="tab";
+        }
+    }
+    for(var i=0;i<oLis.length;i++){
+        oLis[i].onclick=changeTab;
+    }
+*/
+
+    function changeTab(){
+        var n=DOM.getIndex(this);
+        var siblings=DOM.siblings(this);
+        this.className="tab selectedTab";
+        for(var i=0;i<siblings.length;i++){
+            siblings[i].className="tab";
+        }
+        this.parentNode.nextElementSibling.childNodes[n].className="content selectedContent";
+        var s=DOM.siblings(this.parentNode.nextElementSibling.childNodes[n]);
+        for(var i=0;i<s.length;i++){
+           s[i].className="content";
+        }
+    }
+    for(var i=0;i<oLis.length;i++){
+        oLis[i].onclick=changeTab;
+    }
+
+
+
+
+
+
+
+
+    function nextSiblings(ele){//找弟弟们
+        var nodes=ele.parentNode.childNodes;
+        var ary=[];
+        for(var i=nodes.length-1;i>=0;i--){
+            var node=nodes[i];
+            if(node==ele)break;
+            if(node!==ele&&node.nodeType===1)
+            ary.unshift(node);
+        }
+        return ary;
+    }
+    function prevSiblings(ele){//找所有的哥哥们
+        var nodes=ele.parentNode.childNodes;
+        var ary=[];
+        for(var i=0;i<nodes.length;i++){
+            var node=nodes[i];
+            if(node==ele)break;
+            if(node!==ele&&node.nodeType===1){
+                ary.push(node);
+            }
+            return ary;
+        }
+    }
+    function prev(ele){//找相邻的唯一的哥哥
+        var ary=prevSiblings(ele);
+        return ary.length-1;
+    }
+    function next(ele){//找相邻的唯一的弟弟
+        var ary=nextSiblings(ele);
+        return ary[0];
+    }
+    var l=document.getElementsByClassName("tab")[2];
+    console.log(nextSiblings(l));
+    console.log(prevSiblings(l));
+    console.log(prev(l));
+    console.log(next(l));
+
+
+</script>
+</body>
+</html>

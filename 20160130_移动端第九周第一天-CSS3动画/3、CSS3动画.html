@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+
+            width: 100px;
+            height: 100px;
+            background: #00b38a;
+        }
+
+        .move {
+            -webkit-animation: myMove 1s linear 0s infinite;
+            animation: myMove 1s linear 0s infinite;
+
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both; /*让当前的元素在动画完成后停留在最后一帧的位置*/
+        }
+
+        /*事先的把运动的轨迹在CSS中都设置完成了，所以轨迹不能在JS中在进行计算在设置轨迹：transition一般用于JS动态计算和操作动画，而animation一般都实现固定的运动动画*/
+        @-webkit-keyframes myMove {
+            0%, 50%, 100% {
+                top: 0;
+            }
+            25% {
+                -webkit-transform: translate(0, -100px);
+                transform: translate(0, -100px);
+            }
+            75% {
+                -webkit-transform: translate(0, 100px);
+                transform: translate(0, 100px);
+            }
+        }
+
+        @keyframes myMove {
+            0%, 50%, 100% {
+                top: 0;
+            }
+            25% {
+                -webkit-transform: translate(0, -100px);
+                transform: translate(0, -100px);
+            }
+            75% {
+                -webkit-transform: translate(0, 100px);
+                transform: translate(0, 100px);
+            }
+        }
+
+    </style>
+
+    <link type="text/css" rel="stylesheet" href="animate.css"/>
+</head>
+<body>
+<div id="div1" class="animated rotateOut infinite"></div>
+
+<!--
+animate.css:http://daneden.me/animate 常用的animation动画库 里面提供了非常强大的CSS3动画
+-->
+
+<script type="text/javascript">
+    var oDiv = document.querySelector("#div1");
+    oDiv.onclick = function () {
+        this.className = "move";
+    };
+
+    //transition是随时的改变元素的位置样式信息，从而实现动画(和我们的JS实现动画原理一样) ->每一次运动都会触发DOM回流,浏览器需要重新的对DOM计算,消耗性能
+    //animation是模拟动画,我们虽然也看到元素在一点点的按照设定的帧运动,但是元素本身的位置并没有变，只是模拟出来的一个运动的效果(没有引发回流)
+</script>
+</body>
+</html>

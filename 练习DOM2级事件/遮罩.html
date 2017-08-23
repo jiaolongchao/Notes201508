@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv{ width:100px; height:100px; background:red; margin:100px auto; position: relative}
+
+        #child{ height: 50px; width: 50px; position:absolute; background:black;}
+    </style>
+</head>
+<body>
+<ol>
+
+</ol>
+<div id="odiv"></div>
+<script>
+    var ele = document.getElementById("odiv");
+    ele.onmouseenter = function(e){
+        var child = document.createElement("div");
+        child.id  = "child";
+        with(child.style){  //就像跑马圈地一样，把child.style圈起来，以后再有什么操作，
+            left = e.pageX - this.offsetLeft + "px";
+            top = e.pageY - this.offsetTop + "px";
+        }
+        this.appendChild(child);
+        /*child.onmouseover = function(e){
+         //是因为ele的事件传播给父元素，才会不断的创建小盒子
+         e.stopPropagation(); //阻止事件传播
+         }*/
+    }
+    ele.onmousemove = function(e){
+        var child = document.getElementById("child");
+        with(child.style){
+            var minT = 0;
+            var maxT = e.pageY - this.offsetTop - child.offsetHeight/2 + "px";
+            var minL = 0;
+            var maxL = e.pageX - this.offsetLeft - child.offsetWidth/2 + "px";
+
+            //left = e.pageX - this.offsetLeft - this.offsetWidth/2 + "px";
+            //top = e.pageY - this.offsetTop - child.offsetHeight/2 + "px";
+        }
+    }
+    ele.onmouseleave = function(e){
+        var child = document.getElementById("child");
+        if(child){
+            this.removeChild(child);
+        }
+    }
+</script>
+</body>
+</html>

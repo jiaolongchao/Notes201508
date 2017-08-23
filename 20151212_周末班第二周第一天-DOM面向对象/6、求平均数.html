@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>获取平均分</title>
+</head>
+<body>
+<script type="text/javascript">
+    //去掉一个最高分,去掉一个最低分,最后求平均分
+
+    //arguments.sort: arguments不是数组(类数组),而sort是定义在Array这个类的原型上的公有的方法,只有Array这个类的实例"数组"才可以使用这个方法,而arguments是不能直接的使用这个方法的
+    //arguments instanceof Array ->false
+    //    arguments.sort(function (a, b) {
+    //        return a - b;
+    //    });//arguments.sort is not a function
+
+    //    function avgFn() {
+    //        //1、把arguments转换为数组
+    //        var ary = [];
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            ary[ary.length] = arguments[i];
+    //        }
+    //
+    //        //2、给数组进行排序,然后去掉首尾
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        });
+    //        ary.shift();
+    //        ary.pop();
+    //
+    //        //3、求和求平均
+    //        var total = null;
+    //        for (var i = 0; i < ary.length; i++) {
+    //            total += ary[i];
+    //        }
+    //        return (total / ary.length).toFixed(2);
+    //    }
+    //    var res = avgFn(10, 10, 9, 8, 1);
+    //    console.log(res);
+
+    //    //第一步优化：求和优化
+    //    function avgFn() {
+    //        //1、把arguments转换为数组
+    //        var ary = [];
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            ary[ary.length] = arguments[i];
+    //        }
+    //
+    //        //2、给数组进行排序,然后去掉首尾
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        });
+    //        ary.shift();
+    //        ary.pop();
+    //
+    //        //3、求和求平均
+    //        return (eval(ary.join("+")) / ary.length).toFixed(2);
+    //    }
+    //    var res = avgFn(10, 10, 9, 8, 1);
+    //    console.log(res);
+
+
+    //第二步优化：类数组转换为数组的优化
+
+    //模拟数组的slice方法实现数组的克隆
+    //    Array.prototype.slice = function () {
+    //        //this->我们想要操作的那个数组
+    //        var ary = [];
+    //        //浏览器内置slice实现克隆的代码
+    //        for (var i = 0; i < this.length; i++) {
+    //            ary[ary.length] = this[i];
+    //        }
+    //        //我们自己编写的将arguments转换为数组的代码
+    //        for (var i = 0; i < arguments.length; i++) {
+    //            ary[ary.length] = arguments[i];
+    //        }
+    //        //我们发现,我们写的代码个内置的代码的区别就在于一个是arguments一个是this
+    //        return ary;
+    //    };
+    //    [12, 23, 34, 45, 56].slice();
+
+    //借用数组的slice方法,实现将类数组转换为数组：arguments和数组非常的类似,数组的相关操作其实我们的arguments同样也适用,那么我们让数组的方法执行,并且让方法中的this变为我们的arguments,这样的话其实就相当于在操作arguments...
+    //var ary = Array.prototype.slice.call(arguments, 0);
+    //var ary = [].slice.call(arguments);
+    //var ary = [].slice.apply(arguments,[0]);
+    //var ary = [].__proto__.slice.call(arguments);
+
+    //    function avgFn() {
+    //        var ary = Array.prototype.slice.call(arguments, 0);
+    //        ary.sort(function (a, b) {
+    //            return a - b;
+    //        }).shift();
+    //        ary.length--;
+    //        return (eval(ary.join("+")) / ary.length).toFixed(2);
+    //    }
+    //    var res = avgFn(10, 10, 9, 8, 1);
+    //    console.log(res);
+
+    //换一种思想实现
+    function avgFn() {
+        [].sort.call(arguments, function (a, b) {
+            return a - b;
+        });
+        [].shift.call(arguments);
+        [].pop.call(arguments);
+        return (eval([].join.call(arguments, "+")) / arguments.length).toFixed(2);
+    }
+    var res = avgFn(10, 10, 9, 8, 1);
+    console.log(res);
+</script>
+</body>
+</html>

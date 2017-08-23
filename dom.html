@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="oul">
+    <li>list1</li>
+    <li>list2</li>
+    <li id="li2">list1</li>
+    <li>list1</li>
+    <li>list1</li>
+    <li>list1</li>
+    <li>list1</li>
+    <li>list1</li>
+</ul>
+<script>
+    var oul = document.getElementById('oul');
+    var oli = document.getElementById('li2');
+    console.log(children(oul))
+    //封装获取child方法
+    function children(cur){
+        var nodelist = cur.childNodes,ary = [];
+        for(var i=0;i<nodelist.length;i++){
+            var curnoty = nodelist[i];
+            curnoty.nodeType ===1 ? ary[ary.length] = nodelist[i] : null;
+        }
+        return ary;
+    }
+    function prev(curEle){
+        var pre = curEle.previousElementSibling;
+        while( pre && pre.nodeType != 1){
+            pre = pre.previousSibling;
+        }
+        return pre;
+    }
+    console.log(prev(oli))
+
+    function prevAll(curEle){  //获取所有的哥哥元素变量
+        var pre = curEle.previousElementSibling,ary = [];
+        while(pre){
+            if(pre.nodeType === 1){
+                ary.unshift(pre)
+            }
+            pre = pre.previousSibling;
+        }
+        return ary;
+    }
+    console.log(prevAll(oli))
+
+
+    //思考题 获取下一个弟弟元素节点next() 获取所有的弟弟元素节点 nextAll() 获取所有的兄弟元素节点的方法slib
+</script>
+</body>
+</html>

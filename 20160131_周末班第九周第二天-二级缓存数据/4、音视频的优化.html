@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style type="text/css">
+        body, div, audio {
+            margin: 0;
+            padding: 0;
+        }
+
+        audio {
+            display: block;
+            height: 0;
+        }
+
+        #div1 {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            background: url("file/music.svg") no-repeat center center;
+            background-size: 100% 100%;
+        }
+
+        .move {
+            -webkit-animation: move 1s linear 0s infinite both;
+            animation: move 1s linear 0s infinite both;
+        }
+
+        @-webkit-keyframes move {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes move {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<!--
+controls:是否使用浏览器自带的播放器
+preload:刚开始加载的内容 "none"->刚开始啥都不加载,只有当播放的时候才开始加载 "metadata"->刚开始只加载文件的头部信息  auto->开始进来就开始加载音频资源
+autoplay:自动播放
+loop:循环播放
+-->
+<!--<audio src="file/beyond.mp3" preload="none" loop id="audio1"/>-->
+
+<audio preload="none" loop id="audio1">
+    <source src="file/beyond.mp3" type="audio/mpeg"/>
+    <source src="file/beyond.ogg" type="audio/ogg"/>
+    <source src="file/beyond.wav" type="audio/wav"/>
+
+    <embed></embed>
+    <!--flash播放标签 当前浏览器上述三种音频文件都不兼容的话我们在引入flash来实现播放-->
+</audio>
+
+<script type="text/javascript">
+    var oAudio = document.querySelector("#audio1"), oDiv = document.querySelector("#div1");
+
+    window.onload = function () {
+        oAudio.play();
+        //->canplay: 当前的资源文件已经下载一部分,可以播放了 canplaythrough:资源全部下载,播放过程中比较的流畅
+        oAudio.addEventListener("canplay", function () {
+            oDiv.style.display = "block";
+            oDiv.className = "move";
+        }, false);
+
+        //->应该用touch事件
+        oDiv.onclick = function () {
+            if (oAudio.paused) {
+                oAudio.play();
+                oDiv.className = "move";
+                return;
+            }
+            oAudio.pause();
+            oDiv.className = "";
+        }
+    };
+</script>
+</body>
+</html>

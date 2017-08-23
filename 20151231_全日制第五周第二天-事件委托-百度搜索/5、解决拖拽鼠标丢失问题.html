@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, h2 {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        .box {
+            position: absolute;
+            /*top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -150px;*/
+            width: 300px;
+            height: 300px;
+            background: #FFCF78;
+        }
+
+        .box h2 {
+            padding: 0 15px;
+            height: 35px;
+            line-height: 35px;
+            background: #96E555;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <h2>珠峰培训-登录</h2>
+</div>
+
+<script type="text/javascript">
+    //之前的代码存在一个问题：
+    //鼠标如果移动端的速度过快,盒子会跟不上鼠标移动端,导致鼠标从盒子上脱离;我们鼠标在盒子外面移动或者抬起和盒子是没有任何关系的了；这样的话我们之前给boxTop绑定的move和up都不能移除了；当鼠标再次进去我们的盒子，哪怕是没有按下，盒子也会跟着鼠标移动...
+    // ->"鼠标丢失问题"
+
+    //JS中,在IE和火狐浏览器下我们使用一个方法,把鼠标和元素强行的用绳子绑定到一起:setCapture
+    //谷歌下应用 鼠标即使滑动在快你也永远跑不出document，这样的话我们的move/up事件就不给boxTop,给document绑定
+
+
+    var box = document.getElementById("box");
+    var boxTop = box.getElementsByTagName("h2")[0];
+
+    //1、JS实现让当前的盒子#box在屏幕的居中的位置
+    var winW = document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+    var boxW = box.offsetWidth, boxH = box.offsetHeight;
+    box.style.left = (winW - boxW) / 2 + "px";
+    box.style.top = (winH - boxH) / 2 + "px";
+
+
+    //2、实现拖拽
+    function down(e) {
+        e = e || window.event;
+        this["strX"] = e.clientX;
+        this["strY"] = e.clientY;
+        this["strL"] = parseFloat(box.style.left);
+        this["strT"] = parseFloat(box.style.top);
+        if (this.setCapture) {
+            //this->boxTop
+            this.setCapture();
+            this.onmousemove = move;
+            this.onmouseup = up;
+        } else {
+//            document.onmousemove = move;//move执行的时候里面的this不是boxTop了,而变为document
+//            document.onmouseup = up;
+            var _this = this;
+            document.onmousemove = function (e) {
+                move.call(_this, e);
+            };
+            document.onmouseup = function (e) {
+                up.call(_this, e);
+            };
+        }
+    }
+    function move(e) {
+        e = e || window.event;
+        var changeL = e.clientX - this["strX"];
+        var changeT = e.clientY - this["strY"];
+        var left = this["strL"] + changeL;
+        var top = this["strT"] + changeT;
+        var minL = 0, maxL = winW - boxW, minT = 0, maxT = winH - boxH;
+        if (left < minL) {
+            left = minL;
+        } else if (left > maxL) {
+            left = maxL;
+        }
+        if (top < minT) {
+            top = minT;
+        } else if (top > maxT) {
+            top = maxT;
+        }
+        box.style.left = left + "px";
+        box.style.top = top + "px";
+    }
+    function up(e) {
+        e = e || window.event;
+        if (this.releaseCapture) {
+            this.releaseCapture();
+            this.onmousemove = null;
+            this.onmouseup = null;
+        } else {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+    boxTop.onmousedown = down;
+</script>
+</body>
+</html>

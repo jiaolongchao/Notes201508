@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        #outer{ width: 500px; height: 200px; margin: 0 auto; position: relative; overflow: hidden;}
+        #inner{ width: 3500px; height: 200px; position: absolute; left: -500px; top:0;}
+        #inner div{ width: 500px; height: 200px; float: left;}
+        #btn{ width: 100%; position: absolute; top: 80px; left: 0;}
+        #btn:after{ overflow: hidden; clear: both;}
+        #btn > li{ width: 40px; height: 40px; font-size: 30px; font-weight: bold; -webkit-user-select: none; text-align: center; line-height: 40px; background: black; opacity: 0.8; filter: alpha(opacity=80); color: white; cursor: pointer;}
+        #btn li:first-child{ float: left; margin-left: 10px;}
+        #btn li:last-child{ float: right; margin-right:10px;}
+    </style>
+</head>
+<body>
+<!--上机 -->
+1需要自己写出animate动画库（只要实现匀速多方向就可以）
+2点左向左，点右向右（不点不动，点一次动一张）-->
+<div id="outer">
+    <div id="inner">
+        <div><img src="img/01.jpg"></div>
+        <div><img src="img/02.jpg"></div>
+        <div><img src="img/03.jpg"></div>
+        <div><img src="img/04.jpg"></div>
+        <div><img src="img/05.jpg"></div>
+    </div>
+    <ul id="btn">
+      <li id="btnLeft">&lt;</li>
+      <li id="btnRight">&gt;</li>
+    </ul>
+</div>
+<!--<script src="tween.js"></script>-->
+<script>
+    var oLis = document.getElementById('btn').getElementsByTagName("li");
+    var inner = document.getElementById("inner");
+    var odivs = inner.getElementsByTagName("div");
+    var btnLeft = document.getElementById("btnLeft");
+    var btnRight = document.getElementById("btnRight");
+    var firstNode = odivs[0].cloneNode(true);
+    var lastNode = odivs[odivs.length-1].cloneNode(true);
+    inner.appendChild(firstNode)
+    inner.insertBefore(lastNode,odivs[0])
+    var num = 1;
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr])
+        }else{
+            if(attr == "opacity"){
+                var str = ele.currentStyle.opacity;
+                var reg = /alpha\(opacity=(\d+)\)/;
+                if(reg.test(str)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1;
+                }
+            }
+            return parseFloat(ele.currentStyle[attr])
+        }
+    }
+    function setCss(ele,attr,value){
+        if(attr == "opacity"){
+            ele.style.opacity = value;
+            ele.style.filter = "alpha(opacity="+ value*100 + ")";
+        }else{
+            ele.style[attr] = value + "px";
+        }
+    }
+    function animate(ele,oTarget,durction,callback){
+        var oBegin = {};
+        var oChange = {};
+        for(var attr in oTarget){
+            var target=oTarget[attr];
+            begin=getCss(ele,attr);
+            change=target-begin;
+
+            if(change){
+                oBegin[attr] = begin;
+                oChange[attr] = change;
+            }
+        }
+        var times = 0;
+        var interval = 15;
+        window.clearTimeout(ele.timer)
+        function step(){
+            times += interval;
+            if(times < durction){
+                for(var attr in oChange){
+                    var val = times / durction * oChange[attr] + oBegin[attr];
+                    setCss(ele,attr,val)
+                }
+            }else{
+                for(var attr in oTarget){
+                    setCss(ele,attr,oTarget[attr])
+                }
+                window.clearTimeout(ele.timer)
+                ele.timer = null;
+                if(typeof callback == "function"){
+                    callback.call(ele)
+                }
+            }
+        }
+        ele.timer = window.setInterval(step,interval)
+    }
+
+    btnLeft.onclick = function(){
+        num--;
+        if(num == 0){
+            inner.style.left = (odivs.length-1)*-500+"px";
+            num = odivs.length-2;
+        }
+        animate(inner,{left:num*-500},600)
+    }
+    btnRight.onclick = function(){
+        num ++;
+        if(num == odivs.length){
+            num = 2;
+            inner.style.left = -500 + "px";
+        }
+        animate(inner,{left:num*-500},600)
+    }
+</script>
+</body>
+</html>

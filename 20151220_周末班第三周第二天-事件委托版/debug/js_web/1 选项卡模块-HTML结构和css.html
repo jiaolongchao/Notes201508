@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .tabbedPanels {
+            width: 500px;
+            margin: 10px auto;
+        }
+
+        ul.tabGroup {
+            list-style: none;
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        li.tab {
+            width: 70px;
+            margin-left: 20px;
+            background: orangered;
+            font-size: 18px;
+            float: left;
+            cursor: pointer;
+        }
+
+        li.selectedTab {
+            background: yellow;
+            font-weight: bold;
+        }
+
+        div.contentGroup {
+            overflow: hidden;
+            clear: both
+        }
+
+        div.content {
+            height: 400px;
+            background: orange;
+            display: none
+        }
+
+        div.selectedContent {
+            display: block;
+        }
+
+        .promoted {
+            color: #8ae6ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="dom.js"></script>
+<script>
+    var oLis = document.getElementsByClassName("tab");
+    for (var i = 0; i < oLis.length; i++) {
+        oLis.item(i).onclick = changeTab;
+
+    }
+``
+    function changeTab() {
+        var n = DOM.getIndex(this);
+        var siblings = DOM.siblings(this);
+        this.className = "tab selectedTab";
+        for (var i = 0; i < siblings.length; i++) {
+            siblings[i].className = "tab";
+        }
+
+        this.parentNode.nextElementSibling.children[n].className="content selectedContent";
+        var s=DOM.siblings(this.parentNode.nextSibling.children[n]);
+        for(var i=0;i< s.length;i++){
+            s[i].className="content";
+        }
+
+    }
+
+</script>
+</html>

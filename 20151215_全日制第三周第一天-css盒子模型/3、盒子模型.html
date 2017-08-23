@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DOM的盒子模型</title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #div1 {
+            margin: 100px;
+            padding: 30px;
+            width: 200px;
+            height: 200px;
+            line-height: 25px;
+            border: 10px solid #08BECE;
+            overflow: hidden;
+
+            opacity: 0.111111;
+            filter: alpha(opacity=11.1111); /*在IE下设置元素的透明度不是使用opacity,而是使用filter*/
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    勿忘初心方得始终!站在台风口上,猪都能飞起来!勿忘初心方得始终!站在台风口上,猪都能飞起来!勿忘初心方得始终!站在台风口上,猪都能飞起来!勿忘初心方得始终!站在台风口上,猪都能飞起来!勿忘初心方得始终!站在台风口上,猪都能飞起来!
+</div>
+
+<script type="text/javascript">
+    //JS盒子模型:JS中的DOM提供给我们一些获取元素样式的属性和方法
+    var oDiv = document.getElementById("div1");
+
+    //1、
+    //clientWidth:
+    // 内容的宽度(width)+左右填充(paddingLeft+paddingRight)
+    //clientHeight:
+    // 内容的高度(height)+上下填充(paddingTop+paddingBottom)
+    //->内容的溢出(设定好区域,但是内容有多出的)对我们的结果是没有影响的
+
+    //2、
+    //clientTop:上边框的高度(border-top-width)
+    //clientLeft:左边框的宽度(border-left-width)
+
+    //3、
+    //offsetWidth:在clientWidth的基础上加上左右边框
+    //offsetHeight:在clientHeight的基础上加上上下边框
+    //->内容的溢出对我们的结果是没有影响的
+
+    //4、
+    //在内容没有溢出的情况下
+    //scrollWidth:clientWidth
+    //scrollHeight:clientHeight
+
+    //在内容有溢出大的情况下(我们下述的值都是约等于的值,而且每个浏览器都有一些偏差,而且是否添加overflow:hidden获取的值也有偏差)
+    //scrollWidth:padding-left+真实内容(包含溢出的)的宽度
+    //scrollHeight:padding-top+真实内容(包含溢出的)的高度
+
+
+    //上述的八个JS盒子模型的属性都是一些组合值,没有办法获取具体的值,比如:我就单独的想获取padding-top,用上面的是获取不到的
+    //这种情况需要我们获取元素的具体样式来操作的了
+
+    //1、"元素.style.样式属性名" ->oDiv.style.height
+    //弊端:"只能"获取在"行内"上编写过的样式,不管在哪些了对应的样式,只要没有在行内上写过,都获取不到
+    //oDiv.style.height 由于height并没有写在行内样式上(写在样式表里了),所以获取的结果依然是""
+
+    //2、通过 window.getComputedStyle 获取所有经过浏览器计算的样式(只要的你的元素在浏览器加载的时候渲染过,能够在页面中展示,那么当前元素的所有的样式都是经过浏览器计算的,哪怕你没有写)
+    //window.getComputedStyle(要操作的元素,元素的伪类(JS一般不用->null)) ->这个获取到的结果是一个对象数据类型的值(CSSStyleDeclaration内置类的一个实例),里面包含了我们所有经过浏览器计算过的样式属性名和属性值
+    //我们想获取其中某一个样式的值,只需要对象.属性名即可->获取的结果根据自身的情况是带这个单位的
+    //var obj = window.getComputedStyle(oDiv, null);
+    //console.log(obj.height);
+
+    //虽然上述的方法很好用,但是在IE6~8下不兼容 ->currentStyle
+    //var obj = oDiv.currentStyle;
+    //console.dir(obj);
+
+    /*
+     * getCss:获取指定元素的某一个样式属性的值
+     * @parameter
+     *    curEle:当前要操作的元素
+     *    attr:当前需要获取的样式的属性名
+     * @return
+     *    返回的是指定元素的指定的样式属性的值(把一些自带的单位去掉)
+     * by Team on 2015/12/15
+     */
+    //    function getCss(curEle, attr) {
+    //        var val = null, reg = null;
+    //        if ("getComputedStyle" in window) {
+    //            val = window.getComputedStyle(curEle, null)[attr];
+    //        } else {
+    //            //对于我们的IE6~8浏览器,透明度这个样式,它使用的不是opacity,而是filter,在部分浏览器中我们如果通过opacity获取透明度的话是获取不到的
+    //            if (attr === "opacity") {
+    //                //获取我们filter属性得到的结果 "alpha(opacity=11.11)"
+    //                val = curEle.currentStyle["filter"];
+    //                //我们根据它的返回值编写一个正则,可以把11.11捕获到
+    //                reg = /^alpha\(opacity=((?:\d|(?:[1-9]\d+))(?:\.\d+)?)\)$/;
+    //                //开始捕获我们需要的那个数字
+    //                var tempVal = reg.exec(val);
+    //                //判断是否捕获到,捕获到的话把第一个分组的结果给val,没有的话让默认的值100
+    //                val = tempVal ? tempVal[1] : 100;
+    //                //由于我们的filter是把opacity的值*100得到的,我们还需要把得到的值/100才和我们的opacity保持统一
+    //                val = val / 100;
+    //            } else {
+    //                val = curEle.currentStyle[attr];
+    //            }
+    //        }
+    //        //判断如果获取的val的值是(数字+单位)这种格式的,我们把单位去掉,否则获取的是啥我们就返回啥
+    //        reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?(px|pt|em|rem)$/;
+    //        return reg.test(val) ? parseFloat(val) : val;
+    //    }
+
+    function getCss(curEle, attr) {
+        var val = null, reg = null;
+        if ("getComputedStyle" in window) {
+            val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+            if (attr === "opacity") {
+                val = curEle.currentStyle["filter"];
+                reg = /^alpha\(opacity=((?:\d|(?:[1-9]\d+))(?:\.\d+)?)\)$/;
+                var tempVal = reg.exec(val);
+                val = tempVal ? tempVal[1] / 100 : 1;
+            } else {
+                val = curEle.currentStyle[attr];
+            }
+        }
+        reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?(px|pt|em|rem)$/;
+        return reg.test(val) ? parseFloat(val) : val;
+    }
+
+    var a = getCss(oDiv, "opacity");
+    console.log(a);
+</script>
+</body>
+</html>

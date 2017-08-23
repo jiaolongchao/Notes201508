@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+//实现jQuery风格的查找和保存
+//构造函数的作用
+//实现隐式遍历
+//实现链式写法
+//复习面向对象和原型等知识
+//认识jQuery中eq方法和get方法的区别（认识jQuery对象和JS原生对象的区别）
+</body>
+</html>
+<script>
+//$("div").width(100).height(100).bgColor("green").eq(3).bgColor("red").get(0).style.width=200+"px";
+//document.getElementsByTagName("*").item(0)
+
+function Query(selector){//selector是CSS选择器风格的字符串
+	//"div",".div1","#div1";
+	var regId=/^#(\w+)$/;
+	//匹配和捕获
+	var regClass=/^\.([a-z]\w*)$/i;
+	//abcd,a,
+	var regTag=/^[a-z]\w*$/i;
+	//document.getElementsByTagName("DIV");
+	if(regId.test(selector)){
+		var ele=document.getElementById(RegExp.$1);
+		this[0]=ele;
+		this.length=1;
+	}else if(regClass.test(selector)){
+		var eles=document.getElementsByClassName(RegExp.$1);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i]	
+		}
+		this.length=eles.length;
+	}else if(regTag.test(selector)){
+		var eles=document.getElementsByTagName(selector);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i]	
+		}
+		this.length=eles.length;
+	}
+	
+	
+}
+
+Query.prototype.width=function(n){//改变当前实例中保存的那些DOM元素的宽度的作用
+	for(var i=0;i<this.length;i++){
+		this[i].style.width=n+"px";
+	}
+	return this;//链式写法的关键
+	
+}
+
+Query.prototype.height=function(n){
+	for(var i=0;i<this.length;i++){
+		this[i].style.height=n+"px";
+	}
+	return this;//链式写法的关键
+}
+
+Query.prototype.bgColor=function(val){
+	for(var i=0;i<this.length;i++){
+		this[i].style.backgroundColor=val;
+	}
+	return this;//链式写法的关键
+}
+Query.prototype.get=function(n){//方法功能就是：返回原生的DOM对象
+	return this[n];//类上的方法里的this,都是指这个类当前创建的实例
+}
+
+Query.prototype.eq=function(n){//eq返回的是Query类的对象，返回的这个对象要保存n指定的这个元素
+	var obj=new Query;
+	obj[0]=this[n];
+	obj.length=1;
+	return obj;
+}
+var obj=new Query("div");
+
+//obj.bgColor("green").width(100).height(100).eq(3).bgColor("red").get(0).style.width="200px";
+//obj.bgColor("green").width(100).height(100).eq(3).bgColor("red")[0].style.width="200px";
+//get(0)==eq(3)[0];
+//document.getElementById("div1")[0]错的
+//document.getElementsByClassName("class")[0]正确
+
+function $(selector){
+	return new Query(selector);
+}
+
+$("div").bgColor("green").width(100).height(100).eq(3).bgColor("red").get(0).style.width="200px";
+(2).plus(6).reduce(3)//5
+Number.prototype.plus=function(n){
+	return this+6;
+}
+</script>

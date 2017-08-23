@@ -1,0 +1,13 @@
+//API1
+//->通过这个接口获取上面所有的日期
+http://matchweb.sports.qq.com/kbs/calendar?columnId=100000
+
+//API2
+//->根据我们的startTime/endTime获取当天的比赛列表
+//->startTime/endTime是同一个日期就是获取今天的比赛信息
+http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2016-01-21&endTime=2016-01-21
+
+原理:
+1、先通过API1获取所需要的时间数据,并且把它展示在页面中上面的时间列表中
+2、给时间列表中的每一个li绑定点击事件,当点击的时候,首先获取到当前点击这一项的时间是多少,然后调用API2,获取到所需要的数据,把它展示在下面的列表中
+

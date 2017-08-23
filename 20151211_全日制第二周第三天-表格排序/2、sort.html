@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //重要：sort实现排序的原理
+    //    var ary = [12, 23, 14, 34];
+    //    ary.sort(function (a, b) {
+    //        //console.log(a, b);
+    //        //a：每一次比较的时候，数组中的当前项
+    //        //b：每一次比较的时候，数组中的当前项的后一项
+    //
+    //        //return不一定非要返回的是a-b,它的核心原理:它返回的是一个大于零或者小于等于零的数；如果返回值>0，a和b交换位置，反之，如果<=0，a和b不交换位置...
+    //        return 1;//->此时你返回的是一个恒>0的数,那么不管a和b谁大都会交换位置->数组倒过来排列了
+    //    });
+    //    console.log(ary);
+
+    var data = [
+        {"name": "于治", "age": 24, "score": 98},
+        {"name": "邱晋龙", "age": 26, "score": 90},
+        {"name": "周珊", "age": 18, "score": 81},
+        {"name": "王文沙", "age": 19, "score": 91},
+        {"name": "王小波", "age": 48, "score": 84},
+        {"name": "王梦缘", "age": 84, "score": 48},
+        {"name": "于洪涛", "age": 18, "score": 88}
+    ];
+    //3、按照姓名进行排序
+    //对于汉字的我们就不能进行相减排序了(汉字相减是NaN,不是我们想要的数字)、我们需要中字符串的方法：localeCompare
+    data.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    });
+    console.log(data);
+
+
+    //1、按照每一项中score分数由小到大给数据进行排序
+    //    data.sort(function (a, b) {
+    //        //a其实就是当前项[object]
+    //        //b其实就是当前项的后一项[object]
+    //        return a - b;//[object]-[object]=NaN 实现不了交换
+    //    });
+    //    data.sort(function (a, b) {
+    //        return parseFloat(a.score) - parseFloat(b.score);
+    //    });
+    //    console.log(data);
+
+    //2、按照年龄由大到小排序
+    //    data.sort(function (a, b) {
+    //        return parseFloat(b.age) - parseFloat(a.age);
+    //    });
+    //    console.log(data);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{height:200px; background:red; padding:50px; border:50px solid green;}
+p{ width:600px; height:2em; background:#FC6; line-height:2em; }
+
+p::before{
+	content:"我是伪元素";
+	background:green;
+	color:red;
+	clear:both;
+	}
+p::after{
+	content:"我在后边负责修饰";
+	background:black;
+	color:white;
+	
+	}
+</style>
+</head>
+
+<body>
+<div id="div1">内容，内容，内容</div>
+
+<div style="clear:both"></div>
+<p>正文内容，内容，内容</p>
+
+</body>
+</html>
+<script>
+//以下的属性和高宽相关的，只有这两组
+var ele=document.getElementById("div1");
+//伪元素（伪类样式）,它是依附在元素上的样式
+
+var ele=document.getElementsByTagName("p").item(0);
+var content=getComputedStyle(ele,"before").content;
+alert(content);
+
+
+
+
+
+</script>

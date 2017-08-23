@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 50%;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #008000;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>91</li>
+    <li>95</li>
+    <li>93</li>
+    <li>100</li>
+    <li>90</li>
+    <li>81</li>
+</ul>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //需求:按照li里面的分数从小到大进行排序
+
+    //1)首先获取需要操作的元素
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+
+    //2)将元素集合的类数组转换为数组
+    var oLisAry = utils.listToArray(oLis);
+
+    //3)给我们的数组进行排序:按照每一个li中的内容进行排序
+    oLisAry.sort(function (a, b) {
+        return parseFloat(a.innerHTML) - parseFloat(b.innerHTML);
+    });
+
+    //4)按照数组中的顺序,把我们的li重新的添加到我们的页面中
+    //appendChild:在JS中把某一个元素对象添加到页面中指定容器的末尾位置
+    for (var i = 0; i < oLisAry.length; i++) {
+        oUl.appendChild(oLisAry[i]);
+    }
+
+    //DOM的映射机制
+    //->页面中的元素标签和JS通过DOM方法获取的元素对象是紧紧的绑定在一起的,一个改变另外一个也会发生改变
+    //[案例一]
+    //我们之前获取的元素集合和页面中的#ul1这个容器是映射到一起的,页面中新增加一个li,我不需要从新的获取oLis,oLis也同样会跟着改变
+    //    var oUl = document.getElementById("ul1");
+    //    var oLis = oUl.getElementsByTagName("li");
+    //    console.log(oLis.length);//->6
+    //    var oLi = document.createElement("li");
+    //    oUl.appendChild(oLi);
+    //    console.log(oLis.length);//->7
+</script>
+</body>
+</html>

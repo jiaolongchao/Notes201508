@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+在JS中，带var关键字或function关键字的是要预解释的，通俗点说就是在整个js代码执行之前，先声明好带var关键字和带function 关键字的变量，在内存里把它们安排好，
+但是带function关键字和带var关键字的预解析是有区别的
+
+带function关键字的就是定义函数，在整个脚本执行之前，就已经把函数名存在内存里安排好了，并且给这个函数名赋了值，就是函数体；
+但是用var去声明一个变量的时候，只会先声明，不会被赋值，就是只被预解析，但不是执行等号这个赋值运算，而用Function去定义的时候，不但会被提前声明，还要被初始化一个
+值。
+<script>
+    var num = 1; //2  //12
+    var obj = {num : 2}; //22
+    obj.fn = (function(num){
+        this.num = num *2;
+        num ++;  //2  //3  //4
+        return function (n){
+            this.num +=n;
+            num ++;
+            console.log(num)
+        }
+    })(num)
+    var fn = obj.fn;
+    fn(10);  //3
+    obj.fn(20) //4
+    console.log(num , obj.num); //12 //22
+
+</script>
+</body>
+</html>

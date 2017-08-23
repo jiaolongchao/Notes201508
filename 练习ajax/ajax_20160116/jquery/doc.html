@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script>
+        $.ajax({
+            // 是否为异步 默认为true
+            async: true,
+            // 调用ajax对象的send方法之前，执行该函数
+            beforeSend: function (xhr) {
+                // 会把ajax对象传进来
+                console.log('浏览器原生ajax对象',xhr)
+            },
+            // 是否走缓存，默认为true
+            cache:false,
+            // 不管成功还是失败 都会执行此方法，道理跟finally一样
+            complete:function(){
+                console.log(this.body);
+                // => document.body
+                console.info('complete')
+            },
+            // 默认值'application/x-www-form-urlencoded; charset=UTF-8'
+            // 只有加上了这个content-type 服务器才认为这个是表单提交。
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            // success erro complete这三个函数的this指向
+            // 上下文对象
+            context:document,
+            // 往服务器发送的数据，就是接口文档上需要传的参数。
+            data:{type:0},
+            // 把服务器返回的数据，格式化成指定的格式
+            dataType:'json',
+            // ajax过程失败，就会执行此方法
+            error:function(err){
+
+            },
+            // 自定义首部
+            headers:{'self':'bySelf'},
+            // http method
+            // jquery1.9之前统一用type 1.9之后统一用method
+            method:'get',
+            // 成功时执行的函数
+            success:function(data){
+                // 服务器返回的数据
+                console.log(data)
+            },
+            // 超时毫秒数，如果过了这个毫秒数服务器还没有响应
+            // 则执行error方法
+            timeout:3000,
+            // 请求的服务器接口
+            url:'data.json'
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

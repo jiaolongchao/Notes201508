@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{ width: 100px; height: 100px; position: absolute; background: red; border-radius: 50%;}
+        #div2{ width: 100px; height: 100px; position: absolute; background: red; border-radius: 50%; left:200px; top: 200px;}
+        #div3{ width: 100px; height: 100px; position: absolute; background: red; border-radius: 50%; left:400px; top: 200px;}
+    </style>
+    <script src="event2.js"></script>
+</head>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<script>
+var myInit = (function(){
+   //var ele = document.getElementById("div1");
+    //on(ele,"mousedown",down)
+    var x = null;y=null;mx=null;my=null;
+    //var MOVE = null;
+    //var UP = null;
+    //var MOVE = move.bind(ele)
+    //var UP = up.bind(ele);
+    function down(e){
+        x = this.offsetLeft;
+        y = this.offsetTop;
+        mx = e.pageX;
+        my = e.pageY;
+        if(this.setCapture){
+            this.setCapture();
+            on(ele,"mousemove",move)
+            on(ele,"mouseup",up)
+        }else{
+            this.MOVE = move.bind(this);
+            this.UP = up.bind(this);
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+        }
+    }
+    function move(e){
+        this.style.left = x +(e.pageX -mx) + "px";
+        this.style.top = y+(e.pageY - my) +"px";
+    }
+    function up(e){
+        if(this.releaseCapture){
+            this.releaseCapture();
+            off(ele,"mousemove",move)
+            off(ele,"mouseup",up)
+        }else{
+            off(document,"mousemove",this.MOVE)
+            off(document,"mouseup",this.UP)
+        }
+
+    }
+
+    function init(ele){
+        on(ele,"mousedown",down);
+    }
+    return init;
+})()
+var div1 = document.getElementById("div1");
+var div2 = document.getElementById("div2");
+var div3 = document.getElementById("div3");
+
+myInit(div1)
+myInit(div2)
+myInit(div3)
+</script>
+</body>
+</html>

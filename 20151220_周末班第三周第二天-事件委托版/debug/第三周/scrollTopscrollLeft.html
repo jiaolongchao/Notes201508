@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>scrollTop/scrollLeft</title>
+</head>
+<style>
+    /*渐变*/
+    body {
+        width: 100%;
+        height: 1000%;
+        background: red;
+        background: -webkit-linear-gradient(top left,#322343,#ddd,#eee,#322343);
+    }
+</style>
+<body>
+    
+</body>
+<script>
+    // scrollTop是存在最小值的，最小值是0，当我们设定的值小于最小值，元素的scrollTop也不会再继续发生改变了
+    // 设置当前页面的scrollTop值
+    // document.documentElement.scrollTop
+// 因为操作页面和浏览器的盒子模型，为了兼容所有的浏览器，每一次都要document.documentElement.xxx || document.body.xxx写起来非常的麻烦，而win是把一些每次必写的进行封装
+    function win(attr , value) {
+        if(typeof value == "undefined") {
+            return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+    }
+
+var reg = /[?|&]([a-z]+)=(\d+(\.\d+)|\d+)/g;
+var url="http://kbs.sports.qq.com/kbsweb/game.htm?mid=100000&cid=1467086&app=1.0";
+var obj = {},
+    res = reg.exec(url);
+while(res) {
+    obj[res[1]] =  res[2];
+    res = reg.exec(url);
+}
+console.log(obj);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

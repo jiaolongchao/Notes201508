@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数据绑定</title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 50%;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #999;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>习近平：坚持党校姓党根本工作原则</li>
+    <li>李克强推销中国产能：从冰天雪地到热带雨林</li>
+</ul>
+<script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onmouseover = function () {
+            this.style.backgroundColor = "orange";
+        };
+        oLis[i].onmouseout = function () {
+            this.style.backgroundColor = "";
+        };
+    }
+
+    var ary = ["习近平：坚持党校姓党根本工作原则", "李克强推销中国产能：从冰天雪地到热带雨林", "习近平：坚持党校姓党根本工作原则", "李克强推销中国产能：从冰天雪地到热带雨林", "习近平：坚持党校姓党根本工作原则", "李克强推销中国产能：从冰天雪地到热带雨林"];
+
+    //3、文档碎片->JS中临时用来存储元素的一个容器
+    var frg = document.createDocumentFragment();//->创建一个文档碎片
+    for (var i = 0; i < ary.length; i++) {
+        var oLi = document.createElement("li");
+        oLi.innerHTML = ary[i];
+        frg.appendChild(oLi);
+    }
+    oUl.appendChild(frg);
+    frg = null;
+
+    //1、字符串拼接
+    //    var str = "";
+    //    for (var i = 0; i < ary.length; i++) {
+    //        str += "<li>" + ary[i] + "</li>";
+    //    }
+    //    oUl.innerHTML += str;//->oUl.innerHTML=oUl.innerHTML+str;
+    //优势:
+    //我们把需要添加的li都事先的存放在我们的str中，都拼接完成后在统一的放入我们的 页面中只引发一次回流
+    //弊端:
+    //每一次oUl.innerHTML += str的时候,都是先把原有的HTML当做字符串获取出来,然后在和新的字符串进行拼接,最后把拼接好的字符串添加到页面中,浏览器重新的渲染和解析-->之前已经存在的元素上绑定的事件和效果都消失了
+
+    //2、动态创建元素标签的方式
+    //    for (var i = 0; i < ary.length; i++) {
+    //        var oLi = document.createElement("li");
+    //        oLi.innerHTML = ary[i];
+    //        oUl.appendChild(oLi);
+    //    }
+    //优势:
+    //appendChild是向指定容器的末尾追加元素,对原来已经存在的元素没有任何的影响
+    //弊端:
+    //每一次循环都向页面中添加了一个元素标签,页面的结构发生改变,引发一次回流...这样的话,我们一共引发六次回流,比较的消耗性能
+
+
+    //DOM的回流和重绘:
+    //回流:如果页面中的HTML结构发生了改变(增加、删除、位置改变...),浏览器会重新的计算一下DOM结构
+    //重绘:当前的一个元素的部分样式(颜色,透明度...)发生了改变,浏览器会重新的渲染这个元素的样式
+
+
+    //模板引擎->我们用市场上常用的一些类库(用来绑定数据的类库)来处理我们的数据绑定
+    //kTemplate.js、jade
+    //MVC模式(backbone.js)、MVVM模式(angular.js 双向数据绑定的引擎)
+    //JS和我们的HTML代码相分离
+</script>
+
+</body>
+</html>

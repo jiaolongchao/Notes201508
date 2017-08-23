@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, input, span, img {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        .box {
+            padding: 100px;
+            height: 323px;
+        }
+
+        .inputBox {
+            position: relative;
+            height: 37px;
+        }
+
+        .inputBox .tipSpan {
+            position: absolute;
+            top: 0;
+            left: 16px;
+            display: inline-block;
+            height: 37px;
+            line-height: 37px;
+            color: #ccc;
+        }
+
+        #userEmail {
+            padding: 0 15px;
+            width: 300px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #ccc;
+        }
+
+        #userEmailSpan {
+            display: none;
+            margin-top: 5px;
+            padding-left: 20px;
+            height: 18px;
+            line-height: 18px;
+            color: #fd5f39;
+            background: url("img/error.png") no-repeat left center;
+        }
+
+        #btnSubmit {
+            display: block;
+            margin-top: 40px;
+            width: 100px;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="inputBox">
+        <input type="text" id="userEmail" placeholder="请输入常用的邮箱地址"/>
+        <span id="userEmailSpan">请输入有效的邮箱地址</span>
+    </div>
+    <input type="button" value="注册" id="btnSubmit"/>
+</div>
+
+<script type="text/javascript">
+    var userEmail = document.getElementById("userEmail"), userEmailSpan = document.getElementById("userEmailSpan");
+
+    userEmail.onfocus = function () {
+        this.style.borderColor = "#00b38a";
+    };
+
+    userEmail.onblur = function () {
+        var val = this.value, reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        if (!reg.test(val)) {
+            this.style.borderColor = "#ff0000";
+            userEmailSpan.style.display = "block";
+            userEmailSpan.innerHTML = "请输入有效的邮箱地址";
+            return false;
+        }
+
+        //只有邮箱格式正确了我们在验证是否存在
+        if (reg.test(val)) {
+            //验证是否存在,我们的思路基本上有两种:
+            //->我们通过一个URL地址把用户输入的邮箱传递给后台,后台验证有没有,然后反馈给我们true/false(项目中最常用的)
+            //->我们通过URL把后台存储的邮箱地址都获取到,和用户的邮箱进行匹配,如果存在提示对应的信息(今天要用的)
+            var flag = checkIsExist(val.replace(/(^ +| +$)/g, ""));
+            if (flag) {
+                this.style.borderColor = "#ff0000";
+                userEmailSpan.style.display = "block";
+                userEmailSpan.innerHTML = "您的邮箱已经被注册过";
+                return false;
+            }
+        }
+
+        this.style.borderColor = "#ccc";
+        userEmailSpan.style.display = "none";
+        return true;
+    };
+
+    var btnSubmit = document.getElementById("btnSubmit");
+    btnSubmit.onclick = function () {
+        if (!userEmail.onblur()) {
+            return;
+        }
+        console.log(userEmail.value);
+    };
+
+    function placeholderFn() {
+        if (/MSIE/i.test(navigator.userAgent)) {
+            var span = document.createElement("span");
+            span.innerHTML = "请输入常用的邮箱地址";
+            span.className = "tipSpan";
+            userEmail.parentNode.appendChild(span);
+            span.onclick = function () {
+                userEmail.focus();
+            };
+            userEmail.onkeyup = function () {
+                span.style.display = this.value.length === 0 ? "block" : "none";
+            };
+        }
+    }
+    placeholderFn();
+
+
+    function checkIsExist(uEmail) {
+        var flag = false;
+        var xhr = createXHR();
+        xhr.open("get", "data.txt?_=" + Math.random(), false);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
+                var val = "JSON" in window ? JSON.parse(this.responseText) : eval("(" + this.responseText + ")");
+                for (var i = 0; i < val.length; i++) {
+                    if (val[i] === uEmail) {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        };
+        xhr.send();
+        return flag;
+    }
+    function createXHR() {
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest;
+        } else {
+            if (new ActiveXObject("Microsoft.XMLHTTP")) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (new ActiveXObject("Msxml2.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } else if (new ActiveXObject("Msxml3.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+        return xhr;
+    }
+</script>
+</body>
+</html>

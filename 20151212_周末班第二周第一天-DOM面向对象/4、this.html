@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script type="text/javascript">
+    //this是谁和函数在哪定义的或者在哪执行的都没有任何的关系,想要知道this的指向,我们可以按照如下的规律进行判断:
+
+    //1、方法执行,看方法名前面是否有".",有的话,"."前面是谁this就是谁,没有的话this就是window(但是在严格模式下,没有".",this指向的是undefined)
+    //"use strict";//使用严格模式
+    //    function fn(){console.log(this);}
+    //    var obj={fn:fn};
+    //    fn();//->window
+    //    obj.fn();//->obj
+
+    //[案例2]
+    //    function Fn(){this.x=100;}
+    //    Fn.prototype.getX=function(){console.log(this.x);};
+    //    var f=new Fn;
+    //    f.getX();//getX中的this->f
+    //    f.__proto__.getX();//getX中的this->f.__proto__
+    //    Fn.prototype.getX();//getX中的this->Fn.prototype
+
+    //2、自执行函数中的this永远是window(在严格模式下this指向的是undefined)
+    //    (function(){console.log(this);})();
+    //    ~function(){console.log(this);}();
+
+    //3、给元素的某一个行为绑定一个方法,当行为触发执行对应的方法,此时方法中的this是当前的元素
+    //    function fn(){console.log(this);}
+    //    oDiv.onclick=fn;//当点击的时候执行fn,fn中的this->oDiv
+    //    oDiv.onclick=function(){
+    //        //this->oDiv
+    //        fn();//fn中的this->window
+    //    };
+    //oDiv.onclick=fn();//把fn执行的返回结果赋值给onclick->oDiv.onclick=undefined
+
+    //4、在构造函数模式中,类中出现的this.xxx=xxx;中的this是当前类的一个实例
+    //    function Fn(){this.x=100;}//this->f
+    //    Fn.prototype.getX=function(){console.log(this.x);}
+    //    var f=new Fn;
+
+    //5、使用call/apply强制改变this的指向(不管之前的this是谁,call或者apply中第一个参数传递的是谁,this就是谁,如果和上述四条规律同时使用的话,以call为准)
+    //    var obj = {
+    //        fn: function () {
+    //            console.log(this);
+    //        }
+    //    };
+    //    obj.fn();//this->obj
+    //    obj.fn.call(12);//this->12
+
+    var obj = {};
+    function sum(num1, num2) {
+        this.total = num1 + num2;
+    }
+    //1)call->执行call方法的时候,我们让对应的方法执行,并且让对应方法中的this变为我们第一个参数传递的值
+    //语法:
+    //方法名.call([this],parameter1,parameter2...)
+
+    //注意:
+    //在非严格模式下,我们call中的第一个参数不写或者写null/undefined,默认的this都指向window
+    //在严格模式下,call中的第一个参数是谁this就是谁(写null,this指向null,写undefined,this就指向undefined),不写的话,this也指向undefined
+
+    //sum(100, 200);//->num1=100、num2=200  this->window
+    //sum.call(100, 200);//->num1=200、num2=undefined  this->100
+    //sum.call();//->num1=undefined、num2=undefined  this->window
+    //sum.call(obj, 100, 200);//->num1=100、num2=200  this->obj
+    //console.log(obj);
+
+    //2)apply->和call的用法基本上一模一样,都是在执行apply方法的时候,让对应的方法执行,并且让方法中的this指向第一个传递进来的参数值
+    //语法:
+    //方法名.apply([this],[parameter1,parameter2...])
+
+    //区别:
+    //call在传递函数的参数值的时候是一个个的传递进来,而apply是把需要传递的参数放到一个数组中一起传递进去(但是也相当于一个个的在给我们的函数传递参数值)
+    sum.call(obj, 100, 200);
+    sum.apply(obj, [100, 200]);
+</script>
+</body>
+</html>

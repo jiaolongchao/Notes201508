@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>冒泡查询</title>
+</head>
+<body>
+<script>
+    var ary=[1,8,99,47,2,74];
+    function sortAry(ary,type){
+        for(var i=0;i<ary.length-1;i++){
+            for(var j=0;j<ary.length-1-i;j++){
+                var cur=ary[j],next=ary[j+1];
+                if(cur>next){
+                    var temp=ary[j];
+                    ary[j]=ary[j+1];
+                    ary[j+1]=temp;
+                }
+            }
+        }
+        if(type===1){
+            ary.reverse();
+        }
+    }
+   sortAry(ary)
+   console.log(ary);
+
+</script>
+</body>
+</html>

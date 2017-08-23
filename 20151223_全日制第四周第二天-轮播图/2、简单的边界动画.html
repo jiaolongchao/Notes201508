@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #a3dbff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var tarLeft = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+    var count = 0;
+    var timer = null;
+    function move() {
+        window.clearTimeout(timer);
+        if (count >= tarLeft) {
+            return;
+        }
+        oDiv.style.left = (count += 10) + "px";
+        timer = window.setTimeout(move, 10);
+    }
+    oDiv.onclick = move;
+</script>
+
+</body>
+</html>

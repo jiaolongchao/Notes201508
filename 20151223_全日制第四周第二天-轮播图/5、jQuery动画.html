@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, input {
+            margin: 0;
+            padding: 0;
+        }
+
+        #btnMenu {
+            display: block;
+            margin: 20px;
+            width: 100px;
+            height: 30px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .box {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: forestgreen;
+        }
+    </style>
+</head>
+<body>
+<input type="button" id="btnMenu" value="按钮"/>
+
+<div class="box"></div>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //hide:实现元素的隐藏 "slow"、"fast"、指定的时间ms
+    //show:实现元素的展示
+    //toggle:当前是隐藏的我们显示,当前是显示的我们隐藏
+
+    //slideDown、slideUp、slideToggle 下拉收起
+    //fadeIn、fadeOut、fadeToggle 淡入淡出
+
+    //animate:目标值、运动的时间、运动的方式(linear匀速 还有其他的运动方式自己回去查)、运动完成做的事情
+    var tar = (document.documentElement.clientWidth || document.body.clientWidth) - 100;
+    $("#btnMenu").click(function () {
+        $(".box").fadeIn(500).animate(
+                {left: tar, height: 100, width: 100},
+                1000,
+                "linear",
+                function () {
+                    //this->.box这个我们当前操作的这个盒子
+                    $(this).fadeOut(500);
+                }
+        );
+    });
+
+    //jQuery中的animate实现了一个非常强大的动画:让一个元素在指定时间内,完成多方向的运动
+</script>
+</body>
+</html>

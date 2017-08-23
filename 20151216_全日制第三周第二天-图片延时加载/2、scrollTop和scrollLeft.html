@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //之前学习的client系列和offset系列以及scrollWidth、scrollHeight等11个属性都是"只读的属性"(只能获取值,不能修改值),例如：oDiv.clientWidth=1000; 元素的样式是不会发生任何改变的
+    //scrollLeft、scrollTop是"可读写的属性"(既可以获取值,也可以修改值)
+
+    //1、
+    //scrollTop:纵向滚动条卷去的高度
+    //scrollLeft:横向滚动条卷去的宽度
+
+
+    //2、scrollTop是存在最大值和最小值的,最小值是0,当我们设定的值小于最小值,元素的scrollTop也不会在继续发生改变了
+    //设置当前页面的scrollTop值
+    //document.documentElement.scrollTop=-1000;
+    //document.body.scrollTop=-1000;
+    //虽然设置的值已经比0小了,但是页面滚动到顶部将不会在继续滚动,并且我们在重新的获取document.documentElement.scrollTop||document.body.scrollTop,得到的结果依然是0
+    //对于一个页面来说最大的scrollTop=当前页面的高度 减去 一屏幕的高度
+    var maxST = win("scrollHeight") - win("clientHeight");
+    win("scrollTop", maxST);
+
+    //因为操作页面和浏览器的盒子模型,为了兼容所有的浏览器,每一次都要document.documentElement.xxx||document.body.xxx写起来非常的麻烦,而win是把一些每次必写的进行封装
+    //attr是我们要操作的属性名(scrollHeight/clientHeight...)
+    //value的情况特殊:传递了值,我们默认是给页面设置值,不传递值我们默认是获取页面的值
+    function win(attr, value) {
+        if (typeof value === "undefined") {
+            return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; left:0; top:0; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2" style="background:black; top:150px;"></div>
+<div id="div3" style="background:green; top:150px; left:150px;"></div>
+
+</body>
+</html>
+<script src="event2.js"></script>
+<script>
+var oDiv1=document.getElementById("div1");
+on(oDiv1,"mousedown",down);
+
+function down(e) {
+	this.x = this.offsetLeft;
+	this.y = this.offsetTop;
+	this.mx = e.pageX;
+	this.my = e.pageY;
+	if(this.setCapture) {
+		this.setCapture();
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else {
+		this.MOVE = move.bind(this);
+		this.UP = up.bind(this);
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+}
+	
+function move(e){
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+	
+	//move方法的执行，就是mousemove事件的触发。move方法执行一次，则是mousemove事件触发一次。鼠标每滑动一次，其实move方法会执行好多次
+	//如果是执行好多次的move方法，则“下”一次执行的时间戳-“上”一次的时间戳就是两次mousemove事件的时间差。算出这个时间差，当成“时间单位”，看这个时间单位里移动的距离，就可以当成速度
+	this.prevTime//前一次的时间戳
+	if(!this.prevTime){
+		this.prevTime=new Date;	
+		this.prevPosi=this.offsetLeft;
+	}else{
+		var currentTime=new Date;
+		console.log(currentTime-this.prevTime);//求两次mousemove事件之间的时间，就是为了验证mousemove事件是在一个差不多固定的时间内发生的
+		
+		this.prevTime=currentTime;//把现在变前任
+		this.speed=this.offsetLeft-this.prevPosi;//单位时间产生的位移，就是速度
+	}
+	
+	
+	
+}
+
+function up(){
+	if(this.releaseCapture){
+		this.releaseCapture();
+		off(this,"mousemove",move);
+		off(this,"mousedown",down)
+	}else{
+	
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+		
+		}
+}
+//计算速度的算法：单位时间内运动的距离越长，则飞出去的速度越快
+//关键是“单位时间”从那儿来？一个固定长度的时间段
+		
+
+</script>

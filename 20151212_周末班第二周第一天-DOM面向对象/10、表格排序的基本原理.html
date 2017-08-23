@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li>90</li>
+    <li>80</li>
+    <li>99</li>
+    <li>70</li>
+    <li>88</li>
+</ul>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //1、获取需要排序的列表/集合/元素
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+
+    //2、把类数组集合转换为数组
+    var ary = utils.listToArray(oLis);
+
+    //3、按照指定的规则进行排序
+    ary.sort(function (a, b) {
+        return parseFloat(a.innerHTML) - parseFloat(b.innerHTML);
+    });
+
+    //4、按照最新排列好的顺序把li增加到页面中
+    for (var i = 0; i < ary.length; i++) {
+        oUl.appendChild(ary[i]);
+    }
+
+
+    //appendChild是向页面中指定容器的末尾追加元素,但是在上述的案例中,我们之前有五个,后来又把排序后的ary中的每一个追加到oUl中,页面中应该有10个了，但是我们看到的确是5个,为什么?
+    //DOM的映射
+    //页面中有元素标签   JS中有通过方法获取的元素对象
+    //映射指的是,两者是紧紧的绑定到一起的,其中一个发生了改变,另外一个也会跟这改变
+    //    var oUl = document.getElementById("ul1");
+    //    var oLis = oUl.getElementsByTagName("li");
+    //    console.log(oLis.length);//->5
+    //
+    //    var oLi = document.createElement("li");
+    //    oUl.appendChild(oLi);
+    //
+    //    console.log(oLis.length);//->6 增加一个,我们不需要重新的获取oLis,它也会跟着自动的发生改变
+</script>
+</body>
+</html>

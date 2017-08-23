@@ -1,0 +1,75 @@
+1、心态辅导
+   "平常心:我们急需找工作，企业也在急需招聘，所以面试不是乞求职位，而是建立在平等基础上进行交易"
+
+2、准备一个一分钟的自我介绍：基本信息->姓名、来自于哪、工作几年了、毕业于哪个学校、获取的学历、我求职贵公司"前端开发攻城狮这个岗位"
+工作经历/项目经验：xxxx-xxxx 就职于 瑞祥装饰  担任技术经理职位  主要负责  在本家公司做了哪些项目
+最后一家公司的离职原因：(最好不要说上家公司坏话)
+
+3、准备一个word版的简历(精美大方一点，不要有错别字)
+  基本信息
+  姓名 年龄 性别 工作年限  学历  籍贯  现住址  (婚否、政治面貌)
+  电话
+  邮箱 QQ邮箱
+
+  求职信息
+  职位
+  期望薪资: 你要8K和要12K是有区别的  8K找工作更难找，面试的机会少，而且到公司工作量大技术含量低，发展不好  1年左右的 期望薪资 12~14  底线薪资 10~11   2~3年左右期望薪资14~18  底线薪资 13~14   3~5年的期望薪资 16~25  底线薪资 16~18 ...
+  何时可到岗
+
+  自我评价
+  技术：去各大招聘网站看招聘需求,人家需要什么写什么?原生JS突出描述(简历模板)
+  gulp、git、IIS发布页面进行移动端真机调试...
+  其他:一句话
+
+  工作经历
+  xxxx.xx-xxxx.xx 公司  职位
+  职责描述:一句话概括做什么，用到了哪些技术
+
+  ...多家的话，建议那些工作不到一年的公司可以合并了
+
+  项目经验
+  xxxx.xx-xxxx.xx 项目名称 职位
+  项目描述：一句话概括项目做什么，用到哪些技术，遇到了哪些问题，自己是如何解决的
+
+  项目经验写3~5条
+
+  教育信息/培训经历
+
+  语言能力
+
+  先写自己的word版简历，没问题后在到 智联、前程无忧 上去投递简历，一但投递，建议本次面试阶段就不要在改了
+
+4、面试小技巧
+  那个小本和笔 随时记录一下面试的邀请  在面试的时候 把一些不知道的记下来(当着经理面记下来)
+  把自己的笔记或者一些现在比较流行的书籍 了不起的node.js、MVC副应用开发、sea.js、angular.js、微信的二次开发...
+
+
+5、扫盲
+  [常用的网站]
+  gitHub:因为所有优秀类库的源码都在这里面托管着
+  w3cplus:http://www.w3cplus.com/ 关于css/css3/svg等方面介绍比较详细和深入的网站
+  w3cschool:http://www.w3cschool.cn/
+  w3cfuns:http://www.w3cfuns.com/
+  css88:http://www.css88.com/
+  web骇客:http://www.webhek.com/
+
+  知乎、CSDN、慕课网(免费视频)、极客学院、珠峰学堂
+
+  [css]
+  预处理器:less/sass + compass
+  animate.css 提供了常用的CSS3帧动画
+
+  [js->pc]
+  jQuery、bootstrap(既可以做移动端也可以做PC端 http://www.bootcss.com/ UI组件,我们只需要引入css和js,在按照它的结构编写，就可以实现了对应的操作效果)、React.js(Facebook公司研发的一款前端类库)、Ext.js(UI组件)、EasyUI(UI组件)、prototype.js、YahooUI、underscore
+
+  [js->移动端]
+  Zepto.js(移动端的小jQuery)、jQuery mobile、touch.js、fastClick、swipe.js、hammer.js、妹子UI(http://amazeui.org/getting-started 移动端使用的UI组件)
+
+  [js->模板引擎 绑定数据的]
+  template、jade、ember...
+
+  [Node->基于nodejs使用的]
+  自动化平台:grunt、gulp、fis、webpack...
+  模块化开发：require.js(AMD)、sea.js(CMD)
+  大型的框架(既有模块化开发也有模板引擎)：backbone.js(MVC三层开发)、angular.js(MVVM ->双向数据绑定引擎)
+  微信的二次开发：在微信平台中开发页面，调用微信提供好的相关的接口实现相关的功能(目前微信要求非常的严格，需要使用后台语言配合完成接口的调用) http://mp.weixin.qq.com/wiki/home/

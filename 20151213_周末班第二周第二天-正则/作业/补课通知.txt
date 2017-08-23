@@ -1,0 +1,6 @@
+1) 12月15日(周二) 20:00-22:00  补习toString专题和检测数据类型
+   提前看视频:http://www.zhufengpeixun.com/kecheng/detail_859484
+
+2) 12月17日(周四) 20:00-22:00  继承(原型继承、call继承、冒充对象继承、中间类继承)
+   提前看视频:http://www.zhufengpeixun.com/viewer.do?courseId=955223#currentPlaying=1648153 (课件7)
+

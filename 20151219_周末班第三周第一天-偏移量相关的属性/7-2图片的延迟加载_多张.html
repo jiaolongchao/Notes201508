@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:300px; background:green; line-height:300px; font-size:36px; text-align:center;}
+img{ width:200px; height:200px; margin:10px; display:block;}
+</style>
+</head>
+
+<body style="height:5000px;"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif">
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif">
+
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif">载
+
+</body>
+</html>
+<script src="DOM.js"></script>
+<script>
+var oImgs=document.getElementsByTagName("img");
+for(var i=0;i<oImgs.length;i++){
+	
+	var oImg=oImgs.item(i);
+	oImg.posi=offset(oImg).t+oImg.offsetHeight;
+}
+
+window.onscroll=function(){
+	
+	
+	for(var i=0;i<oImgs.length;i++){
+		var oImg=oImgs.item(i);
+	if(oImg.loaded)return;
+	
+	var wBottom=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);//可视窗口的底边
+	if(oImg.posi<wBottom){
+		/*var tempImg=new Image;
+		var src=oImg.getAttribute("realImg");
+		//src=oImg.realImg;//这种方式取不到自定义的HTML属性的值
+
+		src=src+"?"+Math.random();//
+		tempImg.src=src;
+		oImg.src="o_loading.gif";
+		tempImg.onload=function(){
+			oImg.src=src;
+			oImg.loaded=true;
+			
+		}*/
+		loadImg(oImg);
+	}
+	
+	}
+	
+}
+
+function loadImg(oImg){
+	var tempImg=new Image;
+		var src=oImg.getAttribute("realImg");
+		src=src+"?"+Math.random();//
+		tempImg.src=src;
+		oImg.src="o_loading.gif";
+		tempImg.onload=function(){
+			oImg.src=src;
+			oImg.loaded=true;
+			
+		}
+}
+
+
+</script>

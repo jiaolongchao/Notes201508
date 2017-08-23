@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv1{ width:100px; height: 100px; margin:100px auto; background:red;}
+    </style>
+</head>
+<body>
+//事件涉及的基本原则
+//this指向问题  顺序问题  不能重复绑定的问题
+
+<div id="odiv1">我是odiv</div>
+<script>
+    var innerHTML = "window";
+    var ele = document.getElementById("odiv1");
+    function fn1(){
+        alert(this.innerHTML)
+        counter ++;
+        if(counter == 2){
+            unbind(ele,"click",fn1)
+            unbind(ele,"click",fn2)
+        }
+    }
+    function fn2(){
+        alert(2)
+    }
+    function fn3(){
+        alert(3)
+    }
+    var counter = 0;
+    function fn4(){
+        alert(4)
+    }
+    function bind(ele,type,fn){
+        if(ele.addEventListener){
+            ele.addEventListener(type,fn,false)
+        }else{
+            var fnTemp = function(){fn.call(ele)}
+            if(!ele["aEvent" + type]){
+                ele["aEvent" + type] = [];
+            }
+            var a = ele["aEvent" + type];
+            for(var i =0;i< a.length;i++){
+                if(a[i].photo == fn) return;//避免数组里有重复的事件绑定
+            }
+            ele.attachEvent("on"+type,fnTemp);
+            ele["aEvent" + type].push(fnTemp);
+            fnTemp.photo = fn; //就是在这个经过包装的方法上加一个自定义属性photo, 让它指向真正绑定的fn方法
+        }
+    }
+    function unbind(ele,type,fn){
+        if(ele.removeEventListener){
+            ele.removeEventListener(type,fn,false);
+        }else{
+            //在这个数组里，没法识别出那个访求是fn改装之后的
+            var a = ele["aEvent" + type]
+            if(a){
+                for(var i = 0; i<a.length;i++){
+                    if(a[i].photo == fn){
+                        ele.detachEvent("on"+type,a[i]);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    function on(ele,type,fn){
+        if(!ele["onEvent" + type]){
+            ele["onEvent" + type] = [];
+        }
+        var a = ele["onEvent" + type];
+        a.push(fn)
+        bind(ele,type,run) //使on和真正事件联系在一起
+    }
+
+    function run(e){ //中间环节，用来联系事件和被驱动的方法
+        e = e || window.event;
+        var type = e.type; //当事件触发的时候，事件对象e的type属性就表示当前的事件类型
+        var a = this["onEvent" + type];
+        for(var i=0; i< a.length;i++){
+            if(typeof a[i] == "function"){
+                a[i].call(this,e);
+            }else{
+                a.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    function off(ele,type,fn){
+        var a = ele["onEvent" + type]
+        if(a){
+            for(var i=0;i< a.length;i++){
+                if(a[i].photo == fn){
+                    ele.attachEvent("on" + type,fn)
+                    //a.splice(i,1); //直接删除容易造成数组塌陷
+                    a[i] = null;
+                    break;
+                }
+            }
+        }
+    }
+   // bind(ele,"click",run);
+    on(ele,"click",fn1)
+    on(ele,"click",fn2)
+    on(ele,"click",fn3)
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+</body>
+</html>
+<script src="event2.js"></script>
+<script>
+
+var ele=document.getElementById("div1");
+var counter=0;
+function fn1(){
+	counter++;
+	if(counter==2){
+		off(this,"click",fn1);
+		off(this,"click",fn2);
+		off(this,"click",fn3);
+			
+	}
+	alert(this.innerHTML);
+}
+function fn2(){alert(2);}
+function fn3(){alert(3);}
+function fn4(){alert(4);}
+function fn5(){alert(5);}
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+on(ele,"click",fn5);
+
+
+//ele,click,run*2;
+//当click事件触发的时候，run会执行两次，每执行一次，都坐去遍历一遍数组
+
+</script>
+

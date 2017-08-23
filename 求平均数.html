@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+ function avgFn(){
+    //1.给传进来的参数进行排序
+     var ary = []
+    /* for(var i=0;i<arguments.length;i++){
+         ary[ary.length] = arguments[i];
+     }
+     ary.sort(function(a,b){return a-b})*/
+     ary.sort.call(arguments,function(a,b){ return a- b});
+     //return ary;
+     //2.去掉第一位和最后一位
+     /*ary.shift()
+     ary.pop();*/
+     ary.shift.call(arguments,0);
+     ary.pop.call(arguments,0);
+     //3.把剩下的几位相加并除以个数就是平均值
+     /*var total = 0;
+     for(var i = 0; i<ary.length;i++){
+         total += ary[i];
+     }*/
+     var total = eval( ary.join.call(arguments,'+'))/arguments.length;
+
+    // return total;
+     console.log(total);
+ }
+    avgFn(10,16,1,20)
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>和滚动条位置相关的属性</title>
+    <style>
+        #div1{ width:200px; height: 300px; margin: 0 auto; overflow: auto;}
+    </style>
+</head>
+<body>
+<div id="div1">
+    //4、如何修改元素的父级参照物
+    //->我需要获取inner的外边框距离outer的内边框的偏移,上面相减的办法太麻烦,我们可以让outer变为inner的父级参照物(inner.offsetLeft)
+    //我们想让父级参照物是谁,就让当前的元素增加一个叫做position:absolute/relative/fixed
+    //    outer.style.position = "relative";
+    //    //inner.offsetParent->outer
+    //    console.log(inner.offsetLeft);//->40
+
+    outer.style.position = "relative";
+    inner.style.position = "relative";
+    //    center.offsetParent ->inner
+    //    inner.offsetParent ->outer
+    //    outer.offsetParent ->body
+    //    body.offsetParent ->null
+    //我想获取center距离body的左偏移(详细分析步骤见图)
+
+    //获取当前元素curEle距离body的偏移量(不管它的父级参照物是谁都是获取距离body的),返回一个值:{left:xxx,top:xxx}
+    //    function offset(curEle) {
+    //        //获取自身距离父级参照物的左偏移和上偏移
+    //        var l = curEle.offsetLeft, t = curEle.offsetTop;
+    //        //获取自身的父级参照物
+    //        var p = curEle.offsetParent;
+    //        //实现数据的获取和累加
+    //        while (p) {
+    //            //在保准的IE8浏览器中,我们的offsetLeft是自己把边框算在内的,所以我们呢不需要再额外的增加边框的值即可
+    //            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+    //                //条件成立则代表当前的浏览器不是IE8浏览器
+    //                l += p.clientLeft;
+    //                t += p.clientTop;
+    //            }
+    //            l += p.offsetLeft;
+    //            t += p.offsetTop;
+    //            //基于上一次获取的父级参照物在继续往上找,一直到p的结果为null(已经找到body了)我们才停止查找
+    //            p = p.offsetParent;
+    //        }
+    //        return {left: l, top: t};
+    //    }
+</div>
+//我们有三种方式获取div的高,前提是没有设置div1的padding maring border
+<script>
+    var div1 = document.getElementById('div1')
+    /*var h1 = div1.clientHeight;
+     var h2 = div1.offsetHeight;
+     var h3 = getComputedStyle(div1,null).height;
+
+     console.log(h1,h2,h3)*/
+//scrollTop有最大值和最小值，现在来研究
+    //最小值是0
+    //最大值   div1.scrollHeight - div1.clientHeigth
+
+   /* div1.onscroll = function(){//当div1的滚动条滚去的时候，就执行后边的方法，就执行绑定的方法
+        console.log(this.scrollTop)
+    }*/
+    //scrollTop和scrollLeft和其它属性不同，它是可读写的，而其它的属性都是只读的
+
+    //无缝滚动
+    /*(function(){
+     div1.scrollTop++;
+     window.setTimeout(arguments.callee,10);
+     })();*/
+    //arguments.callee 是指当前运行的这个方法的定义
+
+    //无缝滚动2
+    ;(function(){
+        var h = ++div1.scrollTop;
+        if(h==div1.scrollTop){
+
+        }else{
+            div1.innerHTML += div1.innerHTML;
+        }
+        window.setTimeout(arguments.callee,10)
+    })()
+</script>
+
+</body>
+</html>

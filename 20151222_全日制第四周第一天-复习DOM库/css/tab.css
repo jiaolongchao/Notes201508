@@ -1,0 +1,48 @@
+body, div, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.tab {
+    margin: 20px auto;
+    width: 500px;
+}
+
+.tab ul {
+    position: relative;
+    top: 1px;
+    overflow: hidden;
+}
+
+.tab ul li {
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #008000;
+}
+
+.tab ul li.select {
+    background: #FFCF78;
+    border-bottom-color: #FFCF78;
+}
+
+.tab div{
+    display: none;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    border: 1px solid #008000;
+}
+
+.tab div.select{
+    display: block;
+    background: #FFCF78;
+}

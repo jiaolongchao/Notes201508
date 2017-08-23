@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, ul, li, input, a {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            color: #000;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        a, a:visited, a:hover, a:active {
+            text-decoration: none;
+            color: #000;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box {
+            margin: 30px auto;
+            width: 350px;
+            overflow: hidden;
+        }
+
+        #box input {
+            padding: 0 10px;
+            width: 328px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #999;
+        }
+
+        #box ul {
+            display: none;
+            border: 1px solid #999;
+            border-top: none;
+        }
+
+        #box ul li {
+
+        }
+
+        #box ul li a {
+            display: block;
+            padding: 0 10px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        #box ul li a:hover {
+            background: #08BECE;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <input type="text" id="search"/>
+    <ul id="boxList">
+        <li><a href="javascript:;">政治局审议通过全面振兴东北地区意见</a></li>
+        <li><a href="javascript:;">甘肃金昌女生坠亡家属讨说法</a></li>
+        <li><a href="javascript:;">何炅任首席内容官明星阵容能否拯救阿里音乐</a></li>
+        <li><a href="javascript:;">广州再曝"毒保姆"被指掐死老人涉案数恐更多</a></li>
+        <li><a href="javascript:;">成龙捐台湾故宫南院12兽首被泼红漆</a></li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    var search = document.getElementById("search");
+    var boxList = document.getElementById("boxList");
+
+    //onfocus:文本框获取焦点的事件
+    //onkeyup:键盘按下后抬起事件
+    search.onfocus = search.onkeyup = function () {
+        var val = this.value.replace(/(^ +| +$)/g, "");
+        boxList.style.display = val.length > 0 ? "block" : "none";
+    };
+
+    document.body.onclick = function (e) {
+        e = e || window.event;
+        //->获取事件源
+        var tar = e.target || e.srcElement;
+
+        //->当前点击的是文本框
+        if (tar.id === "search") {
+            return;
+        }
+
+        //->当前点击的是a标签,并且是#boxList盒子下的a标签
+        if (tar.tagName.toLowerCase() === "a" && tar.parentNode.parentNode.id === "boxList") {
+            boxList.style.display = "none";
+            search.value = tar.innerHTML;
+            return;
+        }
+
+        //->当前点击的是其它的元素
+        boxList.style.display = "none";
+    };
+</script>
+</body>
+</html>

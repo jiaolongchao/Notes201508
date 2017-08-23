@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style type="text/css">
+        body, div, video {
+            margin: 0;
+            padding: 0;
+        }
+
+        video {
+            display: block;
+            border: none;
+        }
+
+        .box {
+            height: 150px;
+            background: url("img/video.jpg") no-repeat center center;
+            background-size: cover;
+        }
+
+        .box video {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<!--
+  poster:封面图,只有开始preload="none"设置的封面图才会起作用
+-->
+<div class="box">
+    <video controls preload="none" id="video1">
+        <source src="file/kbs.mp4" type="video/mp4"/>
+        <!--同样也需要准备另外几种视频格式文件 webM、ogg、flash-->
+    </video>
+</div>
+</body>
+</html>

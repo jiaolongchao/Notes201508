@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container{ width: 1000px; height: 300px; margin: 10px auto; position: relative;}
+        #container div{ position: absolute; background: url(img/banner.jpg);}
+    </style>
+</head>
+<script src="tween.js"></script>
+<body>
+<!--<img src="img/banner.jpg">-->
+<div id="container">
+
+</div>
+</body>
+</html>
+<script>
+    var rows = 3;
+    var cols = 10;
+    var w = 1000/cols;
+    var h = 300 / rows;
+    var container = document.getElementById("container");
+    var a = [];
+    for(var i =0;i<rows*cols;i++){
+        var ele = document.createElement("div");
+        with(ele.style){  //一个封闭的作用域，先去查看这个作用域中是否有下面的属性，
+            height = h+'px';
+            width = w + "px";
+            var t = Math.floor(i/cols)*h;
+            var l = i%cols * w;
+            ele.t = t;
+            ele.l = l;
+            top = 100  + "px";//行索引号*高度
+            left = -400 + "px"; //列索引号*宽度
+           // background = "red";
+            backgroundPosition = "-"+l + "px " + "-" + t + "px";
+        }
+        a.push(ele);
+        container.appendChild(ele);
+    }
+    document.documentElement.onclick = function(){
+        for(var i=0;i< a.length;i++){
+            (function(i){
+                var ele = a[i];
+                window.setTimeout(function(){
+                    animate(ele,{left:ele.l,top:ele.t},800,3)
+                },i%cols*150)
+            })(i)
+
+        }
+    }
+</script>

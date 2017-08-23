@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //JS中实现动画需要使用的是定时器(setTimeout、setInterval)
+
+    //使用setInterval来实现轮询动画
+    //    var count = 0;
+    //    var timer = window.setInterval(function () {
+    //        count++;
+    //        console.log(count);
+    //        if (count >= 10) {
+    //            window.clearInterval(timer);
+    //        }
+    //    }, 1000);
+
+    //使用setTimeout来实现轮询动画(递归思想:自己执行的过程中在调用自己执行)
+    //    var count = 0;
+    //    var timer = null;
+    //    function move() {
+    //        window.clearTimeout(timer);//->进来执行的第一步就是把之前创造的定时器垃圾进行销毁
+    //        count++;
+    //        console.log(count);
+    //        if (count >= 10) {
+    //            return;
+    //        }
+    //        //在每一次执行完成move后,重新的设置一个定时器,让其1s后在执行move
+    //        //arguments.callee ->当前函数本身 ->move (但是不推荐大家使用,因为在严格模式下,我们的arguments.callee是被禁止使用的)
+    //        timer = window.setTimeout(move, 1000);
+    //    }
+    //    move();
+
+
+    //递归的应用:
+    //求出1+2+3+4...+26的结果是多少
+    //    function sum(num) {
+    //        if (num <= 0) {
+    //            return 0;
+    //        }
+    //        return num + sum(num - 1);
+    //    }
+    //    var res = sum(5);
+    //    console.log(res);
+    //第一次执行: return 5+sum(4)
+    //第二次执行: return 5+4+sum(3)
+    //第三次执行: return 5+4+3+sum(2)
+    //第四次执行: return 5+4+3+2+sum(1)
+    //第五次执行: return 5+4+3+2+1+sum(0)
+    //第六次执行: return 5+4+3+2+1+0
+
+    //求出1-100之间所有是3的倍数的和
+    function sum(num) {
+        if (num === 0) {
+            return 0;
+        }
+        var temp = num % 3 === 0 ? num : 0;
+        return temp + sum(num - 1);
+    }
+    var total = sum(10);
+    console.log(total);
+</script>
+</body>
+</html>

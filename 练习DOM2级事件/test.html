@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    window.onload = function(){
+        function creatPerson(name,age){
+            var obj = {};
+            obj.name = name;
+            obj.age = age;
+            return obj;
+        }
+        var zs = creatPerson('张三',10);
+        var ls = creatPerson('李四',20);
+        //alert(zs.name+ ': '+ls.name)
+
+        function Creat(name,age){
+            this.name = name;
+            this.age = age;
+            this.fun = function(){
+                alert(this.name);
+            }
+        }
+        var obj = new Creat('zs',20);
+        var obj2 = new Creat('ls',20);
+       // alert(obj.constructor == Creat)
+
+
+
+
+    }
+</script>
+
+<script>
+    window.val = 2;
+    var obj = {
+        val : 3,
+        fun : function(){
+            this.val *= 10;
+        }
+    }
+    obj.fun();
+    var fn = obj.fun;
+    fn();
+    obj.fun.call(window)
+   // alert(window.val + obj.val)
+</script>
+<style>
+    #abc{ width: 100px; height: 30px; background: red; border-radius: 50%}
+</style>
+<div id="abc">a</div>
+</body>
+</html>

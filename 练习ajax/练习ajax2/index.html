@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //这是标准浏览器   兼容性：chrome firefox opera safari ie7+
+        // 作用：使用这个对象可以执行ajax的操作
+        /*var xhr = new XMLHttpRequest();
+        //低版本这个方法必须得传一个string参数
+        //版本 1.0
+        var xhr2 = new ActiveXObject("Microsoft.XMLHTTP");
+        //版本 2.0
+        var xhr2 = new ActiveXObject("Msxml2.XMLHTTP")
+        //版本 3.0
+        var xhr3 = new ActiveXObject("Msxml3.XMLHTTP")*/
+
+        //获取当前浏览器最合适的那个ajax对象
+        //这种判断方式就叫feature detection 功能判断
+        //这是第一步
+        var getXHR = function(){
+            if(window.XMLHttpRequest){
+                return new XMLHttpRequest();
+            }
+            return new ActiveXObject("Microsoft.XMLHTTP")
+        }
+        //第二步
+        var xhr = getXHR();
+        //第三步 该方法有两个必传参数，三个可选参数，第一个参数就是需要调用的http方法，不区分大小写
+        //param1 http方法 不区分大小写
+        //param2 url请求的路径
+        //param3 是否为异步 默认异步true
+        //param4 服务器需要验证的用户名默认为undefined
+        //param4 服务器需要验证的密码默认为undefined
+        xhr.open('get','data.json',true,'zhangyatao','a123456');
+
+        //第三步
+        //在onreadystatechange属性上注册一个方法 用于接收服务器的响应
+        //只在要有onreadystatechange，必定会有readyState属性
+        xhr.onreadystatechange = function(){
+            //前面的判断是代表ajax事务完成  后面的判断是response的状态码是否为200
+            if(this.readyState === 4 && this.status === 200){
+                //拿到响应主体
+                console.log(this.responseText)
+            }
+        }
+        /**
+         * ajax对象的readyState属性 表示当前ajax对象的状态，就是ajax执行到哪一步了
+         * 默认为0 代表0 1 2 3 4
+         * 0等于xhr.UNSENT  ajax对象实例化完成
+         * 1等于xhr.OPEND   执行完成open方法 readyState自动变成1
+         * 2等于HEADERS_RECEIVED 已经开始接收到响应首部
+         * 3等于xhr.LOADING 正在接受响应主体
+         * 4等于xhr.DONE 整个ajax全部完成
+         * 每当readState改变的时候都会触发该方法
+         */
+
+
+        //第四步 发送ajax请求
+        //该方法的参数会放到请求主体
+        xhr.send();
+
+console.log('begin')
+    </script>
+</head>
+<body>
+ajax.html
+</body>
+</html>

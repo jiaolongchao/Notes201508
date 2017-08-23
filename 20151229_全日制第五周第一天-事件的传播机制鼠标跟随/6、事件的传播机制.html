@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #outer {
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+            background: #008CD7;
+        }
+
+        #inner {
+            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+            background: #008000;
+        }
+
+        #center {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            background: #AFD400;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var body = document.body;
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    body.onclick = function () {
+        console.log("body");
+    };
+
+    outer.onclick = function () {
+        console.log("outer");
+    };
+
+    inner.onclick = function () {
+        console.log("inner");
+    };
+
+    center.onclick = function (e) {
+        e = e || window.event;
+
+        //阻止冒泡传播
+        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+        console.log("center");
+    };
+
+    //事件的传播机制:
+    //捕获阶段
+    //冒泡阶段:当前元素的行为(click)触发的时候,它所有的上级元素的行为(click)也都会跟着触发
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div id="div1" style="opacity: 0.6; filter: alpha(opacity=60.0); width: 100px;position: absolute">
+    <div id="div2" style="width: 50px;height: 50px"></div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var oLis=oDiv.getElementsByTagName("li");
+    var oLi=oLis[2];
+    /*var val = utils.getCss(oDiv, "width");
+    console.log(val);
+    var div2 = document.getElementById("div2");
+    console.log(utils.offset(div2));*/
+    console.log(utils.prev(oLi));
+    console.log(utils.prevAll(oLi));
+    console.log(utils.next(oLi));
+    console.log(utils.nextAll(oLi));
+</script>
+</body>
+</html>

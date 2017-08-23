@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、toString:转换为字符串
+    //每一个数据类型都有toString方法
+
+    //1)null和undefined也是内置toString方法的,但是我们自己不能手动的操作,它都是在各种表达式中自己自动的进行转换的
+    //(null).toString()/(undefined).toString() ->Uncaught TypeError: Cannot read property 'toString' of undefined (不允许我们调)
+    //console.log("zhufeng" + undefined);//->"zhufengundefined" (自己默认的会把undefined转换为字符串)
+
+    //2)除了用对象({})的toString不是直接的转换为字符串,其余的都是把自己的值转换为了字符串
+    //({name:'zhufeng'}).toString() ->结果不是想象中的"{name:'zhufeng'}" 而是"[object Object]"
+
+    //->在Object的原型上定义的toString方法,不是单纯的转换为字符串,而是返回实例所属的类的信息,例如:"[object(固定) Object(所属的类)]"
+
+    //var obj = {name: 'zhufeng'};
+    //obj.toString() - > 让Object的原型上的toString方法执行, 方法中的this是obj, 而返回的是obj所属类的信息"[object Object]"
+    //->其实toString执行的时候时候是把自己方法中的this对应的所属类的信息返回
+
+
+    //用toString检测数据类型
+    //    Object.prototype.toString.call([]);//->"[object Array]"
+    //    Object.prototype.toString.call(1);//->""[object Number]""
+
+    /*
+     * isType:用来检测某一个值是否属于某一个数据类型
+     * @parameter
+     *    value:要检测数据类型的值
+     *    className:[string]要检测的数据类型所属的类名
+     * @return
+     *    [boolean]一个布尔类型值,如果是true代表value是className这个类型的,flase代表不是这个类型的
+     */
+    //    function isType(value, className) {
+    //        var trueType = Object.prototype.toString.call(value);
+    //        //trueType -> "[object Number]"
+    //        //"[object " + className + "]" -> "[object Number]"
+    //        return trueType === "[object " + className + "]";
+    //    }
+    //    var flag = isType(12, "Number");//->我想检测12是否为Number类型的
+    //    console.log(flag);//->true
+
+    //第一步优化：使用正则
+    function isType(value, className) {
+        var reg = new RegExp("^\\[object " + className + "\\]$", "i");
+        return reg.test(Object.prototype.toString.call(value));
+    }
+    var flag = isType(12, "number");
+    //console.log(flag);//->true
+
+    //第二步:使用柯理化函数进行数据类型检测库的封装
+    ~function () {
+        var utils = {};
+        var numObj = {
+            isNum: "Number",
+            isStr: "String",
+            isBoo: "Boolean",
+            isNul: "Null",
+            isUnd: "Undefined",
+            isObj: "Object",
+            isAry: "Array",
+            isFun: "Function",
+            isReg: "RegExp",
+            isDate: "Date"
+        };
+        var isType = function () {
+            var outerArg = arguments[0];
+            return function () {
+                var innerArg = arguments[0], reg = new RegExp("^\\[object " + outerArg + "\\]$", "i");
+                return reg.test(Object.prototype.toString.call(innerArg));
+            }
+        };
+        for (var key in numObj) {
+            if (numObj.hasOwnProperty(key)) {
+                utils[key] = isType(numObj[key]);
+            }
+        }
+
+        window.$util = utils;
+    }();
+
+    console.log($util.isNum(12));
+    console.log($util.isAry([]));
+    console.log($util.isFun([]));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+        <li class="tab selectedTab">选项一</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted ab-cd">选项三</li>
+        <li class="tab cd">选项四</li>
+        <li class="tab">选项五</li>
+        <li class="tab selectedTab ab">选项一ab</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted ab-cd">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+          <li class="promoted tab">选项五</li>
+            <li class="tab promoted">选项五</li>
+             <li class="tab  promoted ab">选项五ab</li>
+    </ul>
+</body>
+</html>
+<script>
+//这个方法不足是只能通过一个类名获得元素，如果是多类名就没办法了
+document.getElementsByClassName("ab ab-cd cd promoted");
+function byClass(strClass){
+	var reg=new RegExp("(^| )"+strClass+"( |$)");
+	var eles=document.body.getElementsByTagName("*");
+	var a=[]
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);
+		}
+	}
+	return a;
+}
+var a=byClass("tab");
+//以下是测试代码
+for(var i=0;i<a.length;i++){
+	a[i].style.backgroundColor="red";
+}
+</script>

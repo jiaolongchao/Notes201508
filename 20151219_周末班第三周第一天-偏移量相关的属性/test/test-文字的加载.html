@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+             height: 200px; background: red; color: white;line-height: 200px; font-size: 50px; text-align: center;
+        }
+    </style>
+</head>
+<body style="height: 5000px;">
+<div style="height: 3000px"></div>
+<div id="div1">我是原来的div</div>
+<script>
+    var odiv = document.getElementById('div1');
+    var boxBottom = offset(odiv).top + odiv.clientHeight;
+    window.onscroll = function(){
+        var brosBottom = (document.documentElement.clientHeight || document.body.clientHeight) + (document.documentElement.scrollTop || document.body.scrollTop);
+        if(boxBottom < brosBottom){
+            odiv.innerHTML = '快看呀，我变了';
+        }
+    }
+    //封装offset方法获取offset距离
+    function offset(ele){
+        var l = ele.offsetLeft;
+        var t = ele.offsetTop;
+        var p = ele.offsetParent;
+        while(true){
+            if(!p || p == document.body) break;
+            if(window.navigator.userAgent.indexOf('MSIE 8') > -1){
+                l += p.offsetLeft;
+                t += p.offsetTop;
+            }else{
+
+                l += p.offsetLeft + p.clientLeft;
+                t += p.offsetTop + p.clientTop;
+            }
+            p = p.offsetParent;
+        }
+        return {left:l,top:t};
+    }
+    //封装获取计算后的css样式的方法
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return getComputedStyle(ele,null)[attr]
+        }else{
+            return ele.currentStyle(attr);
+        }
+    }
+</script>
+</body>
+</html>

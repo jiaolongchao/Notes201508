@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body *{ padding: 50px; border:solid 10px white; display: block; background:blue;}
+    </style>
+</head>
+<script>
+    /*  var  eles = document.getElementsByTagName("*");
+     for(var i=0;i<eles.length;i++){
+     eles.item(i).onclick = function(e){
+     alert(this.id || this.targetName)
+     }
+     }*/
+    window.onload = function(){
+        document.documentElement.onclick = function(e){
+        //使用事件委托的方式 ，不再一一处理，而是把事件交给某一个上级元素或某一个顶级元素来处理，就是委托给某一个上级元素去统一处理。
+        //事件委托正是利用事件传播的机制
+            var e = e || window.event;
+            var target = e.target || e.srcElement; //得到事件源，事件开始的地方
+            alert(target.id || target.tagName)
+        }
+    }
+</script>
+<body>
+    <div id="outer">
+        outer
+        <div id="middle">
+            middle
+            <div id="inner" style="background:red">
+                inner
+                <p id="p1" style="background:yellow">
+                    p
+                    <span style="display: block">
+                        span
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

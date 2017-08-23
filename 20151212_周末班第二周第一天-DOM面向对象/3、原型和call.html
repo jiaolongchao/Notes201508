@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function fn() {
+        console.log(this);
+    }
+    //fn.call //->fn.__proto__.call  //->Function.prototype.call  找到Function基类原型中的call方法
+    //console.log(fn.call); //function call() { [native code] } call方法的定义
+    //fn.call(); //让我们获取的call对应的方法执行
+
+    //1、call方法的作用是什么?
+    //call方法在执行的时候,就是用来改变某一个函数中的this关键字的，例如：fn.call(obj) 在执行call方法的时候,让fn中的this变为第一个参数值obj
+    //fn.call(obj)
+    //1)首先fn通过__proto__找到Function.prototype上的call方法
+    //2)让原型上的call方法执行
+    //3)call方法执行的时候,形成一个私有的作用域(形参赋值->预解释->代码执行...)
+    //4)在call执行的时候,首先让fn中的this变为第一个参数值obj
+    //5)在执行我们的fn这个方法
+    //    Function.prototype.call = function (parameter1) {
+    //        //parameter1->obj
+    //        //this->fn 我们当前要操作的那个函数
+    //        //1、让fn中的this变为obj ->让this中的this关键字变为obj
+    //        //2、让fn执行 ->让this执行
+    //        this();
+    //    };
+    //    fn.call(obj);//call方法中的this->fn
+
+
+    //    fn();//fn中的this->window
+    //    var obj = {fn: fn};
+    //    obj.fn();//fn中的this->obj
+
+    //    var obj = {name: "珠峰"};//此时obj和我们的fn没有任何的关系
+    //    //我想让fn执行的时候里面的this变为我们的obj
+    //    //obj.fn() ->obj.fn的值是undefined ->undefined() ->报错
+    //    fn.call(obj);//fn中的this就变为了obj
+
+
+    //    Function.prototype.call = function (parameter1) {
+    //        //1、让this中的this关键字变为parameter1
+    //        //2、让this执行
+    //        this();
+    //    };
+
+    function fn1() {
+        console.log(1);
+    }
+    function fn2() {
+        console.log(2);
+    }
+    fn1.call(fn2);//让fn1执行,让里面的this变为fn2 ->1
+
+    fn1.call.call(fn2);//让fn1.call执行,让fn1.call中的this变为fn2 ->2
+    Function.prototype.call.call(fn1);//->1
+
+    //http://www.zhufengpeixun.com/viewer.do?courseId=859485#currentPlaying=1351238 (耿老师)
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训-JS兼容性处理的方式</title>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+    //检测浏览器是否兼容我们的getComputedStyle，兼容的话使用getComputedStyle,不兼容的话使用currentStyle
+
+    var oDiv = document.getElementById("div1");
+
+    //1、try catch 通过捕获异常信息来检测是否兼容
+    //前提：在try中执行的代码,遇到不兼容的浏览器需要抛出异常错误后我们才可以检测到,也就是不兼容报错才可以使用try catch检测兼容
+    //在IE6~8下执行我们的getComputedStyle方法出现了浏览器异常错误: “对象不支持“getComputedStyle”属性或方法
+    //    var val = null;
+    //    try {
+    //        val = window.getComputedStyle(oDiv, null).height;
+    //    } catch (e) {
+    //        val = oDiv.currentStyle.height;
+    //    }
+    //    console.log(val);
+
+    //2、对应大部分常用到的方法的兼容性处理,我们可以采用判断是否存在的方式来判断兼容性问题
+    //getComputedStyle:我们可以通过window下是否存在getComputedStyle这个属性来检测是否兼容
+    //1)获取window.getComputedStyle的属性值,兼容返回的是一个function,不兼容返回的是一个undefined ->通过把获取的结果转换为布尔类型的值来判断条件是否成立
+    //    if (window.getComputedStyle) {
+    //        //兼容情况下的代码
+    //    } else {
+    //        //不兼容情况下的代码
+    //    }
+
+    //2)获取window.getComputedStyle的属性值,兼容返回的是一个function,不兼容返回的是一个undefined ->通过检测数据类型来判断是否兼容
+    //    if (typeof window.getComputedStyle === "function") {
+    //        //兼容情况下的代码
+    //    } else {
+    //        //不兼容情况下的代码
+    //    }
+
+    //3)in直接的来检测是否兼容
+    //    if ("getComputedStyle" in window) {
+    //        //兼容情况下的代码
+    //    }else{
+    //        //不兼容情况下的代码
+    //    }
+
+    //3、如果你已经具体知道了当前的方法在哪个浏览器不兼容,我们只需要判断当前浏览器的类型和版本号进行兼容处理即可
+    var reg = /MSIE +([6-8]\.0)/;
+    if (reg.test(navigator.userAgent)) {
+        //说明是IE6~8的浏览器
+        //不兼容情况下的代码
+    } else {
+        //兼容情况下的代码
+    }
+
+    //    console.log(window.navigator.userAgent);//获取浏览器的版本号信息(字符串)
+    //    if(navigator.userAgent.indexOf("Chrome")>-1){
+    //        //"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.10 Safari/537.36"
+    //        //代表当前的浏览器是谷歌浏览器
+    //    }
+    //IE7 : Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)
+    //IE8 : Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E
+
+
+</script>
+</body>
+</html>

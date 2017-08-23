@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #outer{ width: 500px; height: 270px; margin: 100px auto; overflow: hidden; position: relative;}
+        #inner{width: 500px; height: 1350px; position: absolute; top: 0; left: 0; color: white; font-size: 36px; text-align: center;line-height: 270px;}
+        #inner div{width: 500px; height: 270px; background: red;}
+        #btn{ padding: 0; margin: 0; position: absolute; list-style:none;right: 30px; bottom: 30px}
+        #btn li{ width: 30px; height: 30px; float: left; font-size: 14px; font-weight: bold; border-radius: 50%; cursor: pointer; background: orange; color: red; margin: 10px; line-height: 30px; text-align: center;}
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id = "inner">
+        <div>一</div>
+        <div style="background:black">二</div>
+        <div style="background:green;">三</div>
+        <div style="background:pink">四</div>
+        <div style="background:yellow">五</div>
+        <div style="background:purple">六</div>
+    </div>
+    <ul id="btn">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <script src="animate.js"></script>
+    <script>
+        var oLis = document.getElementById('btn').getElementsByTagName('li');
+        for(var i = 0;i< oLis.length;i++){
+            oLis.item(i).i = i;
+            oLis.item(i).onclick = function(){
+                animate(inner,{top:this.i*-270},1000)
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

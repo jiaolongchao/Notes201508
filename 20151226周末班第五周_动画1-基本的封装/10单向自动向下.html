@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:100px auto; overflow:hidden; position:relative;}
+#inner{ width:500px; height:1350px; position:absolute; top:0; left:0; color:#fff; font-size:72px; text-align:center; line-height:270px; }
+#inner div{ width:500px; height:270px; background:red; }
+#btn{ padding:0; margin:0; position:absolute; list-style:none; right:30px; top:30px; }
+#btn li{ width:30px; height:30px;  font-size:14px; font-weight:bold; border-radius:50%; cursor:pointer; background:orange; color:red; margin:10px; text-align:center; line-height:30px; }
+#btn li.promoted{ color:#fff; background:black;}
+</style>
+
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div >一</div><div style="background:black;">二</div><div style="background:green; " >三</div><div style="background:purple">四</div><div style="background:yellow;" >五</div><div >一六</div>
+    </div>
+	<ul id="btn"><li class="promoted">1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+</div>
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+//var firstDiv=document.getElementById("inner").getElementsByTagName("div").item(0);
+//inner.appendChild(firstDiv.cloneNode(true));
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+var step=0;
+//如果是向上的：0-1-2-3-4-0-1
+//如果是向下的：0-4-3-2-1-0-4
+function autoDown(){
+	step--;
+	if(step<0){//length是5，可以走到索引为5的第六张，如果超过这一张，则把inner的坐标切换到0。
+	
+		//alert(step);
+		inner.style.top=5*-270+"px";//这个坐标是索引为的那张图的起点，也就是伪0张
+		step=4;
+		//alert(step);
+	}
+	animate(inner,{top:step*-270},1600);
+	
+}
+//window.setInterval(autoDown,2000);
+//inner.style.top=5*-270+"px"//0，1*-270，2*-270，3*-270，5
+oLis.item(0).onclick=autoDown;
+</script>

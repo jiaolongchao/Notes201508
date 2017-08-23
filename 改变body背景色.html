@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="button" value="按钮1"/>
+<input type="button" value="按钮2"/>
+<input type="button" value="按钮3"/>
+<input type="button" value="按钮4"/>
+<input type="button" value="按钮5"/>
+
+<script>
+    var ary=['red','yellow','pink','green','blue'];
+    var obtn = document.getElementsByTagName('input');
+    for(var i=0;i<obtn.length;i++){
+        obtn[i].index = i;
+        obtn[i].onclick = function(){
+            changebgColor(this.index)
+        }
+    }
+    function changebgColor(index){
+       var bgcolor = ary[index];
+        document.body.style.backgroundColor = bgcolor;
+    }
+</script>
+</body>
+</html>

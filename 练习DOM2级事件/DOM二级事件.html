@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+//所有元素都是从node中派生出来的，但node是从eventtarget从派生出来，事件绑定写在了eventarget类上，涉及到事件原理，
+//与dom核心相关的方法，都写在了node类中，可以做到无论是文本节点，还是注释节点，都可以使用这种方法，但是也有派出类中重写了父类中的方法，例如文本节点就屏蔽了appendchild
+DOM2级事件
+1,标准浏览器
+    addEventListener
+    removeEventListener
+2，IE
+    attachEvent
+    detachEvent
+//IE中的attachEvent的问题：绑定的方法，不按顺序执行，方法的This指向的widnow
+<ul>
+    <li>事件对象本身就不一样：标准浏览器是浏览器自动给绑定在事件属性上的方法传进去一个事件对象当参数，IE是window.event，但是chrome是二者都采用</li>
+    <li>事件源：标准e.target IE是e.srcElement</li>
+    <li>阻止事件传播:标准e.stopProgation()   IE是e.cancelBubble = true (从意思中我们就可以看出来前者是事件传播包含两个方向，后者为阻止事件冒泡)</li>
+    <li>阻止事件默认行为：标准：e.preventDefault()   IE是returnValue = false;  <strong>特别强调:return false也可以阻止事件默认行为，但是如果是用addEventListener绑定的方法，则一定要用e.preventDefault()来阻止默认行为，IE没有关系</strong></li>
+    <li>IE不支持e.pageX  e.pageY</li>
+    <li>DOM2级事件：在DOM2级事件中有一些细节也不一样 ： 不按顺序执行，方法中的this指向window</li>
+
+</ul>
+</body>
+</html>

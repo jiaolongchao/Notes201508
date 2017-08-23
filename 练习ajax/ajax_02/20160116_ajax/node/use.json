@@ -1,0 +1,20 @@
+{
+  "errno": 0,
+  "items": [
+    {
+      "type": "useful",
+      "name": "electric",
+      "price": "5"
+    },
+    {
+      "type": "useful",
+      "name": "guo",
+      "price": "15"
+    },
+    {
+      "type": "useful",
+      "name": "photo",
+      "price": "15"
+    }
+  ]
+}

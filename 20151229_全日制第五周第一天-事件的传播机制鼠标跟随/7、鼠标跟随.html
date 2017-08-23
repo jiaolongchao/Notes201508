@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: relative;
+            margin: 50px auto;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+
+        #mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #F9044E;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var offLeft = box.offsetLeft, offTop = box.offsetTop;
+
+    //onmouseover会出现一个问题,当从上往下滑动到的时候,鼠标会进入我们的mark中,触发mark的mouseover,由于事件存在冒泡传播的机制,所以也会把box的mouseover在触发一次,这样的话就会一直的在创建mark...
+    //onmouseenter和onmouseover一样都是鼠标滑过事件,但是onmouseenter不存在冒泡传播的机制(浏览器默认是禁止冒泡传播的)
+    box.onmouseenter = function (e) {
+        e = e || window.event;
+        var mark = document.createElement("div");
+        mark.id = "mark";
+        this.appendChild(mark);
+        mark.style.top = e.clientY - offTop + 20 + "px";
+        mark.style.left = e.clientX - offLeft + 20 + "px";
+    };
+    box.onmousemove = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (mark) {
+            mark.style.top = e.clientY - offTop + 20 + "px";
+            mark.style.left = e.clientX - offLeft + 20 + "px";
+        }
+    };
+    box.onmouseleave = function (e) {
+        e = e || window.event;
+        var mark = document.getElementById("mark");
+        if (mark) {
+            this.removeChild(mark);
+        }
+    };
+</script>
+</body>
+</html>

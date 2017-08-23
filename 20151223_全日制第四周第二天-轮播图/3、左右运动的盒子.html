@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #a3dbff;
+            cursor: pointer;
+        }
+
+        input {
+            display: block;
+            position: absolute;
+            top: 150px;
+            width: 100px;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        #btnLeft {
+            left: 100px;
+        }
+
+        #btnRight {
+            left: 250px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<input type="button" value="向左走" id="btnLeft"/>
+<input type="button" value="向右走" id="btnRight"/>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var btnLeft = document.getElementById("btnLeft");
+    var btnRight = document.getElementById("btnRight");
+
+    //获取左右的两个边界值
+    var tarLeft = 0, tarRight = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+
+    //编写方法实现我们的运动
+    //target:我们当前运动的目标值,通过目标值我们需要计算出是向右走还是向左走
+    //当前元素的位置(curL)
+    //curL>target ->向左走
+    //curL<target ->向右走
+    function move(target) {
+        ~function _move() {
+            window.clearTimeout(oDiv.timer);
+            var curL = utils.getCss(oDiv, "left");
+            if (curL > target) {//->向左走
+                if (curL <= target) {//->已经走到左边的边界了
+                    oDiv.style.left = target + "px";
+                    return;
+                }
+                oDiv.style.left = curL - 10 + "px";
+            } else if (curL < target) {//->向右走
+                if (curL >= target) {//->已经走到右边的边界了
+                    oDiv.style.left = target + "px";
+                    return;
+                }
+                oDiv.style.left = curL + 10 + "px";
+            } else {
+                return;
+            }
+            oDiv.timer = window.setTimeout(_move, 10);
+        }();
+    }
+
+    //给两个按钮绑定点击事件,当执行的时候我们把目标值传递给move实现我们的运动
+    btnLeft.onclick = function () {
+        move(tarLeft);
+    };
+    btnRight.onclick = function () {
+        move(tarRight);
+    };
+</script>
+
+</body>
+</html>

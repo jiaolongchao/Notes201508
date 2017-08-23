@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script language="javascript" src="event2.js"></script>
+    <style>
+        div{ width: 100px; height:100px; backgorund:red; position:absolute; cursor: move;}
+        div:nth-of-type(1){ background: darkblue; left:100px; top:100px}
+        div:nth-of-type(2){ background: darkmagenta; left:200px; top:200px;}
+        div:nth-of-type(3){ background:darkgoldenrod; left:150px; top:300px;}
+
+    </style>
+</head>
+<body>
+    <div class="odiv1"></div>
+    <div class="odiv2"></div>
+    <div class="odiv3"></div>
+    <script>
+        var odivs = document.getElementsByTagName("div");
+        for(var i=0;i<odivs.length;i++){
+            ~function(ele){
+                var x=null,y=null,mx=null,my=null;
+                function down(e){
+                    x = ele.offsetLeft;
+                    y = ele.offsetTop;
+                    mx = e.pageX;
+                    my = e.pageY;
+                    if(ele.setCapture){
+                        ele.setCapture();
+                        on(ele,"mousemove",move)
+                        on(ele,"mouseup",up);
+                    }else{
+                        on(document,"mousemove",move)
+                        on(document,"mouseup",up)
+                    }
+                    e.preventDefault();
+                }
+                function move(e){
+                    ele.style.left = x + (e.pageX - mx) + "px";
+                    ele.style.top = y + (e.pageY - my) + "px";
+                }
+                function up(e){
+                    if(e.releaseCapture){
+                        e.releaseCapture();
+                        off(ele,"mousemove",move);
+                        off(ele,"mouseup",up)
+
+                    }else{
+                        off(document,"mousemove",move);
+                        off(document,"mouseup",up);
+                    }
+                }
+                on(ele,"mousedown",down)
+            }(odivs.item(i))
+        }
+    </script>
+</body>
+</html>

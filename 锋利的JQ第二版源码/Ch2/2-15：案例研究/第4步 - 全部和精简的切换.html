@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+ <link rel="stylesheet" type="text/css" href="css/default.css" /> 
+ <style type="text/css">
+ li:contains('索尼'){ color:red;}
+ #li2+li{ color:red;}
+
+ #li1:hover~li{ display:none;}
+ li:first{ color:orange;}
+ li:odd{ background:blue;}
+ 
+ </style>
+</head>
+<body>
+<ul><li id="li1">索尼</li><li id="li2">索尼1</li><li>索尼2</li><li>索尼3</li><li>索尼4</li></ul>
+<div class="SubCategoryBox">
+<ul>
+<li ><a href="#">佳能</a><i>(30440) </i></li>
+<li ><a href="#">索尼</a><i>(27220) </i></li>
+<li ><a href="#">三星</a><i>(20808) </i></li>
+<li ><a href="#">尼康</a><i>(17821) </i></li>
+<li ><a href="#">松下</a><i>(12289) </i></li>
+<li ><a href="#">卡西欧</a><i>(8242) </i></li>
+<li ><a href="#">富士</a><i>(14894) </i></li>
+<li ><a href="#">柯达</a><i>(9520) </i></li>
+<li ><a href="#">宾得</a><i>(2195) </i></li>
+<li ><a href="#">理光</a><i>(4114) </i></li>
+<li ><a href="#">奥林巴斯</a><i>(12205) </i></li>
+<li ><a href="#">明基</a><i>(1466) </i></li>
+<li ><a href="#">爱国者</a><i>(3091) </i></li>
+<li ><a href="#">其它品牌相机</a><i>(7275) </i></li>
+</ul>
+<div class="showmore">
+<a href="more.html"><span>显示全部品牌</span></a>
+</div>
+</div>
+</body>
+</html>
+<script src="dom2.js"></script>
+<script src="../../scripts/jquery.js" type="text/javascript"></script>
+<script>
+var $lis=$(".SubCategoryBox>ul>li:gt(5):not(:last)");
+$lis.hide();
+//span是事件源 e.target 事件传播 -- 冒泡 bubble
+/*$(".showmore>a>span").click(function(){
+	alert(this.innerHTML);	
+});*/
+/*$lis.is(".li");
+$(".promoted").siblings(":eq(3)");
+$(".promoted").siblings().eq(3);
+$(".SubCategoryBox").children("div");
+$(".SubCategoryBox>div");
+//45和46行是等价的
+$(".SubCategoryBox li")
+$(".SubCategoryBox").find("li")
+//以上两行等价
+//jQuery中的筛选有三种常见的，需要我们能辨析清楚的
+//从子元素中筛选，从后代元素中筛选，从平级元素中筛选
+$(".SubCategoryBox>ul>li").filter(":gt(5):not(:last)");*/
+
+var $filter=$(".SubCategoryBox>ul>li").filter(":contains(三星),:contains(松下),:contains(爱国者)");
+/*var $filter=$(".SubCategoryBox>ul>li:contains(三星),:contains(松下),:contains(爱国者)")
+var $filter=$(".SubCategoryBox>ul>li:contains(三星),.SubCategoryBox>ul>li:contains(松下),.SubCategoryBox>ul>li:contains(爱国者)")
+注意体会以上三行代码的异同
+*/
+$(".showmore>a").click(function(){
+	if($lis.is(":visible")){
+		$lis.hide();
+		$filter.removeClass("promoted");
+		$(this).children("span").text("显示全部品牌").css("background-image","url(img/down.gif)")
+		/*$("span",this).text("显示全部品牌");
+			$(this).find("span").text("显示全部品牌");
+			以上两行代码相同的作用
+		*/
+	}else{
+		$lis.show();
+		$filter.addClass("promoted");
+		$(this).children("span").text("显示精减品牌").css("background-image","url(img/up.gif)")	
+	}
+	
+	return false;
+	
+})
+//$("li:first").css({"background":"orange",fontSize:18,"font-size":"19px"});
+//$("li:first-child").css("background","blue")
+
+</script>

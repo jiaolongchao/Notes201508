@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: 0;
+            width: 0;
+            height: 0;
+            background: brown;
+        }
+    </style>
+</head>
+<body>
+
+<div id="div1"></div>
+
+<script type="text/javascript" src="js/animate.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    animate(oDiv, {
+        width: 300,
+        height: 300,
+        marginLeft: -150,
+        marginTop: -150
+    }, 2000, 2, function () {
+        //this->oDiv
+        animate(this, {
+            top: (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight + 150
+        }, 1000, 4);
+    });
+
+
+    //    setCss(oDiv, "left", 100);
+    //    setCss(oDiv, "width", 100);
+    //    setCss(oDiv, "height", 100);
+    //    setGroupCss(oDiv, {
+    //        left: 100,
+    //        width: 100,
+    //        height: 100
+    //    });
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--已经拿到接口文档，数据格式也都定义好了，当时server接口还没有开发好-->
+    <!--接口名：/getMember-->
+    <!--参数：无-->
+    <!--返回格式：{status:0,list:[{name:'小张',age:'11',level:'1'}-->
+    <!--,{name:'小吴',age:'12',level:'2'},-->
+    <!--{name:'小刘',age:'14',level:'3'}]}-->
+    <!--mock测试 -> 模拟某些操作或者数据-->
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="mock.min.js"></script>
+    <script>
+        $(function () {
+            $.mockAjax.init();
+
+            $.mockAjax.setMockMap({
+                url: '/getMember',
+                infos: {
+                    success: {status: 0, list: [{name: '小张', age: '11', level: '1'}
+                            , {name: '小吴', age: '12', level: '2'},
+                            {name: '小刘', age: '14', level: '3'}]}
+                },
+                status: 'error'
+            });
+            var stats=$('#stats');
+
+            var getData=function(){
+                return $.ajax({
+                    url: '/getMember',
+                    method: 'get',
+                    mock: true,
+                    beforeSend:function(){
+                        stats.html('loading...')
+                    },
+                    error:function(err){
+                        console.error('请求失败')
+                    },
+                    complete:function(){
+                        stats.html('加载完成')
+                    },
+                    dataType: 'json'
+                })
+            };
+            // 这种实现方式就是使用的promise
+            getData().done(function(data){
+                console.log('成功');
+                console.info(data);
+            }).fail(function(){
+                console.error('error')
+            }).always(function(){
+               console.warn('不管成功还是失败都会执行')
+            });
+        })
+    </script>
+</head>
+<body>
+<div id="stats">未请求</div>
+<table>
+    <thead>
+    <tr>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>会员级别</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</body>
+</html>

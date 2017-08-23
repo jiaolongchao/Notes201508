@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+  var ary = [12,34,1,33,42,9]
+
+  //第一种方法 使用数组排序
+    /*ary.sort(function(a,b){return b-a})
+    var max = ary[0];
+    var min = ary[ary.length-1]
+    console.log(max,min)*/
+  //第二种方法 使用假设法
+   /* var max = min = ary[0];
+    for(var i=1 ;i<ary.length;i++){
+        var cur = ary[i];
+        cur < min ? min = cur : null;
+        cur > max ? max = cur : null;
+    }
+    console.log(max,min)*/
+    //第三种方法，使用apply方法
+    /*var max = Math.max.apply(null,ary)
+    var min = Math.min.apply(null,ary);
+    console.log(max,min)*/
+
+</script>
+</body>
+</html>

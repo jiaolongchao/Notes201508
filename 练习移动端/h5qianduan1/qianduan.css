@@ -1,0 +1,126 @@
+*{
+    margin:0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#main{
+    width: 640px;
+    height: 960px;
+    position: absolute;
+    left:50%;
+    top:0;
+    margin-left:-320px;
+    transform-origin: top;
+    -webkit-transform-origin: top;/*改变缩放的基准点*/
+}
+#list > li{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    background: url(images2/bg.jpg);
+    background-size: cover;
+    background-repeat:no-repeat ;
+
+}
+.zIndex{
+    z-index: 50;
+}
+#audio_btn {
+    background-repeat: no-repeat;
+    display: none;
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 50px;
+    z-index: 200;
+}
+.off {
+    background-image: url(images2/normalmusic.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.rotate {
+    animation:rotating 1.2s linear 0s normal none infinite ;
+}
+
+#list li:nth-child(1){
+    background-image: url(images2/scene01bg.jpg);
+}
+#list li:nth-child(2){
+    background-image: url(images2/scene02bg.jpg);
+}
+#list li:nth-child(3){
+    background-image: url(images2/scene03bg.jpg);
+
+}
+#list li:nth-child(4){
+    background-image: url(images2/scene04bg.jpg);
+}
+
+
+.scene01 .green_grass,.scene01 .plum{ width: 258px; height: 253px; position: absolute; left: 0; top: 0;}
+.scene01 .green_grass{background: url(images2/green_grass.png) no-repeat; }
+#scene01 .green_grass{animation: fadeIn 3.5s backwards;-webkit-animation: fadeIn 3.5s backwards;}
+.scene01 .plum{background: url(images2/plum.png) no-repeat; }
+#scene01 .plum{animation: fadeIn 3.5s backwards;}
+.scene01 .plum .petal{ position: absolute;}
+.scene01 .plum .petal:nth-child(1){ width: 44px; height: 50px; left: 52px; top: 18px;}
+.scene01 .plum .petal:nth-child(2){width: 41px; height: 46px; left:159px; top: 95px;}
+.scene01 .plum .petal:nth-child(3){width: 43px; height: 46px; left: 156px; top: 163px;}
+#scene01 .plum .petal{animation:zoomIn 3.3s ease 1.6s normal both 1}
+.scene01 .boat{ width: 128px; height: 50px; position: absolute; left: 280px;top: 522px; }
+#scene01 .boat{animation: fadeInLeft  4.5s ease-in backwards 4s;-webkit-animation: fadeInLeft  4.5s ease-in backwards 4s;}
+.scene01 .lotus,.scene01 .lotus-flower{ width: 245px; height: 250px; background: url(images2/lotus.png) no-repeat; position: absolute; left:0;bottom: 0;}
+#scene01 .lotus-flower{ background: none; left: 30px;  animation: wobble  10.5s infinite;}
+.scene01 .title{ width: 88px; height: 525px; background: url(images2/title.png) no-repeat bottom;position: absolute; left: 434px; bottom: 302px; }
+#scene01 .title{animation: title 3.5s forwards 4s;-webkit-animation: title 3.5s forwards 4s;}
+.scene02 .flower_disk{ width: 190px; height: 485px; position: absolute; top: 33px; left: -190px;}
+#scene02 .flower_disk{ animation: fadeInLeft_s 2.5s forwards;}
+.scene02 .plum{ width: 256px; height: 491px; position: absolute; top: -102px; right: -256px;}
+#scene02 .plum{animation: fadeInRight_s 2.5s forwards;}
+.scene02 .text,.scene02 .text2{width: 404px; height: 132px; position: absolute; left:175px;font-size: 30px; font-family: Helvetica; line-height: 1.5; text-shadow:1px 1px rgba(189, 189, 189,0.8),2px 2px rgba(189, 189, 189,0.8),3px 3px rgba(189, 189, 189,0.8),4px 4px rgba(189, 189, 189,0.8),5px 5px rgba(189, 189, 189,0.8),6px 6px rgba(189, 189, 189,0.8); font-weight: bold; }
+.scene02 .text{ top:346px; opacity: 0;}
+.scene02 .text2{top:480px; opacity: 0;}
+#scene02 .text{ animation: fadeInUp 1.5s forwards 2s;}
+#scene02 .text2{ animation: fadeInDown 1.5s forwards 2s;}
+
+
+.scene03 .plum{ width: 227px; height: 302px; opacity: 0; position: absolute; right: 0px; top: 0; background: url(images2/plum3.png) no-repeat; z-index: 38}
+#scene03 .plum{ animation: fadeIn 6.5s forwards 2.5s;}
+.scene03 .mist{ position: absolute; top: 0;}
+.scene03 .mist:nth-child(1){left: 0; transition: 3s;}
+.scene03 .mist:nth-child(2){right: 0; transition: 3s;}
+#scene03 .mist:nth-child(1){ left: -640px;}
+#scene03 .mist:nth-child(2){ right: -567px;}
+.scene03 .dropsink{ width: 221px; height: 223px; transform-origin: center; opacity: 0; left: 9px; top: 346px; position: absolute; background: url(images2/dropsink2.png) no-repeat; }
+#scene03 .dropsink{animation: zoomIn_s 4.5s forwards 6s;}
+.scene03 .sun{ width: 100%; height: 138px; background:url(images2/sun.png) no-repeat; z-index: 35; left:580px; position: absolute;}
+#scene03 .sun{animation: fadeInRight_s 4.5s forwards 1s; }
+.scene03 .text{ font-size: 24px;position: absolute;top: 376px; left: 292px; line-height: 1.8; width: 285px; padding: 5px; }
+#scene03 .text{animation: wobble 4.5s backwards 5s;}
+.scene03 .text:before,.scene03 .text:after{ content: ''; width: 10px; height: 10px; position: absolute; }
+.scene03 .text:before{ border-top:solid 3px #000; border-left: solid 3px #000; left: -10px;}
+.scene03 .text:after{ border-bottom:solid 3px #000; border-right: solid 3px #000; bottom: 0;right: 0;}
+
+.scene04 .willow{ width: 150px; height: 170px; right: 0; top: 0; position: absolute; }
+#scene04 .willow{animation: swing 10.5s infinite; transform-origin: right top;}
+.scene04 .jinqu{ width: 328px; height: 311px; opacity: 0; left:50%; margin-left: -164px; top: 50%; position: absolute; }
+#scene04 .jinqu{animation: zoomIn_s 4.5s forwards;}
+
+
+@keyframes title {
+     0% {
+         height: 525px;
+     }
+     100% {
+         height: 0;
+     }
+ }
+

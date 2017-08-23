@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">有本事点我啊~~~</div>
+<script type="text/javascript">
+    //DOM0级事件绑定 ->定义在当前元素对象的私有的属性上的 oDiv.onclick=function(e){}
+    //DOM2级事件绑定 ->定义在当前元素原型链上的EventTarget这个类的prototype上  addEventListener/removeEventListener
+
+    //1、DOM2相对于DOM0增加了哪些的优势?
+    //1)DOM0只能给一个元素的同一个行为绑定一次方法,第二次绑定的会把第一次的给覆盖掉；DOM2可以给一个元素的同一个行为绑定多个不同的方法；-->事件池/事件队列
+
+    //2)DOM0在事件的默认传播机制中我们能够操作的只有冒泡阶段(但是捕获阶段也存在,我们不能操作而已)(事件委托、阻止冒泡传播...)
+    //DOM2是既可以操作冒泡阶段,也可以操作捕获阶段-->addEventListener最后一个参数是false,代表在冒泡阶段我们进行操控(最常用的);最后一个参数是true,代表我们是在捕获阶段操控;
+
+    //3)DOM0中的事件行为DOM2中都有,DOM2中还提供了一些我们DOM0中没有的事件行为:DOMContentLoaded ->当页面上的HTML结构加载完成就会执行对应的操作
+
+    //window.onload:只有当页面中的HTML结构、图片、文字等所有资源都加载完成才会执行对应的操作 (在一个页面中只能使用一次,使用多次后面会把前面的覆盖掉->因为它是DOM0级事件绑定,如果改为DOM2事件绑定也是可以使用多次的) window.addEventListener("load",function(){},false);
+
+    //$(document).ready():只要页面中的HTML结构将加载完成就会执行对应的操作(一个页面可以使用多次)
+    //document.addEventListener("DOMContentLoaded",function(){},false);
+
+
+    var oDiv = document.getElementById("div1");
+    oDiv.onclick = function (e) {
+        console.log("ok");
+    };
+    oDiv.onclick = function (e) {
+        console.log("no");
+    };
+
+    oDiv.addEventListener("click", function (e) {
+        console.log("ok");
+    }, false);
+    oDiv.addEventListener("click", function (e) {
+        console.log("no");
+    }, false);
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //Ajax:
+    //    $.ajax({
+    //        url: "test.txt?_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "json",//->让返回的数据是JSON对象格式
+    //        async: true,//->一般不写,默认是true
+    //        success: function (data) {
+    //            //->data就是我们请求成功返回的数据
+    //            console.log(data);
+    //        }
+    //    });
+
+    //jsonp:http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18
+    $.ajax({
+        url: "http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18&_=" + Math.random(),
+        type: "get",
+        dataType: "jsonp",
+        //jsonp: "cb",//->把我们默认的callback这个名字改了,改为cb
+        jsonpCallback: "aaa",//->把callback后面传递的函数名改了,由随机的变为自定义的aaa
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    //jQuery    自动给我们添加了一个callback->&callback=jQuery1113008696380024775863_1453352137489 这个名字是jQuery随机生成的
+
+    //->http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18&_=1453352377524&cb=aaa
+</script>
+</body>
+</html>

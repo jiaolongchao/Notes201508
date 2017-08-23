@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:300px; background:green; line-height:300px; font-size:36px; text-align:center;}
+</style>
+</head>
+
+<body style="height:5000px;"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<div id="div1">
+	我是原来的文字
+
+</div>
+要求：当div1这个盒子完全，全部进入到了浏览器的可视窗口内部的时候，把里面的文字变成：我变给你看……
+第一步要明确的是：当浏览器滚动条变化时，进行计算
+第二步：要明确如果知道当前可视窗口的位置(范围)：
+scrollTop-scrollTop+document.documentElement.clientHeight
+还要明确的是：div1这个绿盒子的位置是固定的
+第三步：如何计算（如何div1已经进到了可视窗口内）
+如果绿盒子的底边<浏览器当前窗口的底边
+var boxBottom=offset(div1).t+div1.offsetHeight
+var broswerBottom=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight)
+</body>
+</html>
+<script src="DOM.js"></script>
+<script>
+window.onscroll=function(){
+	var boxBottom=offset(div1).t+div1.offsetHeight;//算div1的底边
+	var broswerBottom=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);//可视窗口的底边
+	var boxTop=offset(div1).t;
+	if(boxTop>broswerBottom){
+		div1.innerHTML="我是原来的文字";
+	}
+	if(boxBottom<broswerBottom){
+		div1.innerHTML="我变给你看……";
+	}
+	
+}
+
+</script>

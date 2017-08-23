@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //call继承的原理:在子类B的私有属性中,把父类A当做一个普通的函数执行,并且把里面的this变为子类B的一个实例b,这样的话,在执行A的时候,A中写的this.xxx=xxx都相当于给b增加的私有的属性
+    //1)call继承首先只能继承父类A中的私有的属性(this.xxx=xxx),并且和原型不一样,call继承是把A中的私有的属性复制一份直接的给了B的实例
+    //2)把父类A中的私有属性继承到子类B中的私有的属性
+    function A() {
+        //this->b
+        this.x = 100;//b.x=100 给b增加一个私有的属性x=100
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        //this->b
+        //A() ->作为一个普通的函数执行,this->window,A的原型是起不到作用的
+        A.call(this);//->执行A函数,把A里面的this变为b
+    }
+    var b = new B;
+
+
+</script>
+</body>
+</html>

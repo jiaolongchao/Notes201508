@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #outer{ width: 500px; height: 270px; margin: 100px auto; overflow: hidden; position: relative;}
+        #inner{width: 500px; height: 1350px; position: absolute; top: 0; left: 0; color: white; font-size: 36px; text-align: center;line-height: 270px;}
+        #inner div{width: 500px; height: 270px; background: red;}
+        #btn{ padding: 0; margin: 0; position: absolute; list-style:none;right: 30px; bottom: 30px}
+        #btn li{ width: 30px; height: 30px; float: left; font-size: 14px; font-weight: bold; border-radius: 50%; cursor: pointer; background: orange; color: red; margin: 10px; line-height: 30px; text-align: center;}
+    </style>
+</head>
+<body>
+
+<div id="outer">
+    <div id = "inner">
+        <div>一</div>
+        <div style="background:black">二</div>
+        <div style="background:green;">三</div>
+        <div style="background:pink">四</div>
+        <div style="background:yellow">五</div>
+        <div style="background:purple">六</div>
+    </div>
+    <ul id="btn">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+
+    <script>
+        function getCss(ele,attr){
+            if(window.getComputedStyle){
+                return parseFloat(getComputedStyle(ele,null)[attr])
+            }else{ //专门处理IE的方案
+                if(attr == 'opacity'){
+                    //filter: alpha(opacity = 10)
+                    var reg = /alpha\(opacity =(\d+)\)/
+                    var str = ele.currentStyle.filter;
+                    if(reg.test(str)){
+                        return RegExp.$1/100;
+                    }else{
+                        return 1;//如果滤镜样式没有写，或滤镜样式写了，但没有写opacity，则上面的判断为false，则应该把默认值1返回
+                    }
+                }
+                return parseFloat(ele.currentStyle[attr]);
+            }
+        }
+        function setCss(ele,attr,value){
+            if(attr == "opacity"){
+                ele.style.opacity = value;
+                ele.style.filter = "alpha(opacity = "+ value*100 +")";
+            }else{
+                ele.style[attr] = value + "px";
+            }
+        }
+
+        function animate(ele,oTarget,duration,callback){
+            //五组begin 和 五个Change
+            var oBegin = {};
+            var oChange = {};
+            var counter = 0; //只是一个标识，或叫一个计数器
+            for(var attr in oTarget){
+                var target = oTarget[attr];
+                begin = getCss(ele,attr);
+                change = target - begin;
+                //分别把每个属性（纬度） 上的值分别保存在各自对应的对象上
+                if(change){
+                    oBegin[attr] = begin;
+                    oChange[attr] = change;
+                    counter ++; //如果有有效值，则让计数器累加一次
+                }
+            }
+            if(counter === 0){ return } //如果没有有效运动距离，则退出此方法
+
+
+            var times = 0;
+            var interval = 15;
+            window.clearInterval(ele.timer)
+            function step(){
+                times += interval;
+                if(times < duration){
+                    for(var attr in oChange){  //把各个方向都移动一次
+                        var begin = oBegin[attr];
+                        var change = oChange[attr];
+                        var value = times / duration * change + begin;
+                        //var value = zhufengEffect.zfBounce.easeOut(times,)
+                        setCss(ele,attr,value)
+                    }
+                }else{
+                    for(var attr in oTarget){
+                        var target = oTarget[attr];
+                        setCss(ele,attr,target);
+                    }
+                    window.clearInterval(ele.timer);
+                    ele.timer = null;
+                    if(typeof callback == 'function'){
+                        callback.call(ele)
+                    }
+                }
+            }
+            ele.timer = window.setInterval(step,interval)
+        }
+        var oLis = document.getElementById("btn").getElementsByTagName("li");
+        for(var i =0;i< oLis.length; i++){
+            oLis.item(i).i = i;
+            oLis.item(i).onclick = function(){
+                animate(inner,{top:this.i*-270},600)
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:100px; width:100px; position:absolute; top:100px; left:150px; background:red;}
+</style>
+</head>
+
+<body>
+当前的位置=当前消耗的时间/总时间*(总距离)+起始位置
+单步的时间是多少？
+当前消耗的时间是单步时间的累加
+<div id="div1"></div>
+</body>
+</html>
+<script>
+
+var target=900;//终点
+var begin=150;//起点
+var change=target-begin;//变化的距离
+
+var duration=1000;//规定的总时间
+var times=0;//当前消耗的时间
+var interval=15;//每走一步的时间
+
+//当前的位置=times/duration*change+begin;//单步的算法
+var ele=document.getElementById("div1");
+var timer=null;
+function step(){
+	times+=interval;
+	if(times<duration){
+		ele.style.left=times/duration*change+begin+"px";
+	}else{
+		clearInterval(timer);
+		//clearTimeout
+		ele.style.left=target+"px";//到达终点要校正位置
+	}
+	timer=window.setTimeout(step,interval);
+}
+
+//var timer=window.setInterval(step,interval);
+step();
+</script>

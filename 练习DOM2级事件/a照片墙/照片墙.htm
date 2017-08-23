@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.zhufengpeixun.cn/stdemo/huhan/photoList.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>照片墙</title>
+<style type="text/css">
+ul,li{margin:0; padding:0; list-style:none;}
+img{border:none;}
+#content{width:480px; height:640px; position:relative; background-color:#ccc; margin:50px auto; padding:5px;}
+#content li{width:150px; height:150px; float:left; margin:5px; background-color:#4d8cc2; cursor:move;}
+#content li img{width:150px; height:150px;}
+</style>
+</head>
+
+<body>
+<ul id="content">
+	<li style="left: 10px; top: 10px; position: absolute; margin: 0px;"><img src="./照片墙_files/1.png"></li>
+    <li style="left: 170px; top: 10px; position: absolute; margin: 0px;"><img src="./照片墙_files/2.png"></li>
+    <li style="left: 330px; top: 10px; position: absolute; margin: 0px;"><img src="./照片墙_files/3.png"></li>
+    <li style="left: 10px; top: 170px; position: absolute; margin: 0px;"><img src="./照片墙_files/4.png"></li>
+    <li style="left: 170px; top: 170px; position: absolute; margin: 0px;"><img src="./照片墙_files/5.png"></li>
+    <li style="left: 330px; top: 170px; position: absolute; margin: 0px;"><img src="./照片墙_files/6.png"></li>
+    <li style="left: 10px; top: 330px; position: absolute; margin: 0px;"><img src="./照片墙_files/7.png"></li>
+    <li style="left: 170px; top: 330px; position: absolute; margin: 0px;"><img src="./照片墙_files/8.png"></li>
+    <li style="left: 330px; top: 330px; position: absolute; margin: 0px;"><img src="./照片墙_files/9.png"></li>
+    <li style="left: 10px; top: 490px; position: absolute; margin: 0px;"><img src="./照片墙_files/10.png"></li>
+    <li style="left: 170px; top: 490px; position: absolute; margin: 0px;"><img src="./照片墙_files/11.png"></li>
+    <li style="left: 330px; top: 490px; position: absolute; margin: 0px;"><img src="./照片墙_files/12.png"></li>
+</ul>
+
+<script src="./照片墙_files/event.js"></script>
+<script src="./照片墙_files/tween_aa.js"></script>
+<script>
+var oLis=document.getElementById('content').getElementsByTagName('li');
+var li=null
+for(var i=oLis.length-1; i>=0; i--){
+	li=oLis[i];
+	li.style.left=li.offsetLeft+'px';
+	li.style.top=li.offsetTop+'px';
+	li.style.position='absolute';
+	li.style.margin='0';
+	li.initialX=li.offsetLeft;
+	li.initialY=li.offsetTop;
+	on(li,'mousedown',down);
+	on(li,'dragStart',increaseZIndex);
+	on(li,'dragging',process);
+	on(li,'dragEnd',change);
+}
+
+var zIndex=0;
+function increaseZIndex(){
+	this.style.zIndex=++zIndex;
+	this.style.backgroundColor='#ebd969';
+}
+
+function goBack(){
+	animat(this,{left:this.initialX,top:this.initialY},500,4);
+}
+
+function test(cur,target){
+	if(cur.offsetTop+cur.offsetHeight<target.offsetTop||target.offsetLeft+target.offsetWidth<cur.offsetLeft||target.offsetHeight+target.offsetTop<cur.offsetTop||cur.offsetWidth+cur.offsetLeft<target.offsetLeft){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function process(){
+	this.test=[];
+	for(var i=0; i<oLis.length; i++){
+		if(oLis[i]!=this){
+			oLis[i].style.backgroundColor='';
+		}
+		if(test(this,oLis[i]) && this!=oLis[i]){
+			this.test.push(oLis[i]);
+			oLis[i].style.backgroundColor='#f15f6a';
+		}
+	}
+	
+}
+
+function change(){
+	var a=this.test;
+	var value=null;
+	for(var i=0; i<a.length; i++){
+		value=Math.pow(this.offsetLeft-a[i].offsetLeft,2)+Math.pow(this.offsetTop-a[i].offsetTop,2);
+		value=Math.sqrt(value);
+		a[i].style.backgroundColor='#4d8cc2';
+		a[i].distance=value;
+	}
+	a.sort(function(a,b){return a.distance-b.distance});
+	var ele=a[0];
+	var tempX=this.initialX, tempY=this.initialY;
+	animat(this,{left:ele.initialX,top:ele.initialY},500,4);
+	this.initialX=ele.initialX;
+	this.initialY=ele.initialY;
+	animat(ele,{left:tempX,top:tempY},500,4);
+	ele.initialX=tempX;
+	ele.initialY=tempY;
+	this.style.backgroundColor='#4d8cc2';
+	
+	delete this.test;
+}
+</script>
+</body></html>

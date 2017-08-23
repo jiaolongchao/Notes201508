@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//下班回家了，
+//烧水--- 40分钟
+//手机充电--充一晚上
+//前女友打电话：10
+//扫地，
+//喝热水
+//泡方便面
+//洗漱
+//-----水开通知的功能-----
+//烧水------------------喝热水||泡方便面||洗漱
+
+
+function EventEmitter(){};//事件发射器类
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["event"+type]){
+		this["event"+type]=[];
+	}
+	var a=this["event"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);
+	
+}
+EventEmitter.prototype.fire=function(type){//相当于学过的run方法
+	var a=this["event"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function")
+				a[i].call(this);	
+		}
+	}
+	
+}
+
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["event"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				break;	
+			}
+		}
+	}
+}
+
+function Kettle(){}
+Kettle.prototype=new EventEmitter;
+//Kettle.prototype.__proto__=EventEmitter.prototype;
+Kettle.prototype.boiling=function(){
+	var _this=this;
+	setTimeout(function(){
+		console.log("水已开");
+		
+		_this.fire("boiling");	//发布自定义事件，"boiling"就是指定的事件类型。也叫通知
+	},5000);
+}
+function clean(){
+	console.log("扫个地！");	
+}
+
+function drink(){
+	console.log("来杯开水！");
+}
+function washFace(){
+	console.log("开水洗脸更有姿色！");
+}
+function noodles(){
+	console.log("开水泡个面");
+}
+var k1=new Kettle;//k1是Kettle类的实例。
+
+
+k1.boiling();
+clean();
+
+/*i++;
+//
+//IO读写一次文件，流--
+for(var i=0;i<500000;i++){
+	
+}
+*/
+k1.on("boiling",drink);
+k1.on("boiling",washFace);
+k1.on("boiling",noodles);
+//ele.addEventListener("click",fn,false);
+
+</script>

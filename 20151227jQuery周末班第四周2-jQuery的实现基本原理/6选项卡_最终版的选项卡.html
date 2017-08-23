@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.tabbedPanels{ width:500px; margin:10px auto;}
+ul.tabGroup{ list-style:none; height:30px; line-height:30px; overflow:hidden; margin:0; padding:0;}
+li.tab{ width:70px; margin-left:20px; background:#CCC; font-size:16px; float:left; text-align:center; cursor:pointer; }
+li.selectedTab{ background:#09F; font-weight:bold;}
+div.contentGroup{ overflow:hidden; clear:both; }
+div.content{ height:400px; background:#09f; display:none; padding:10px;  }
+div.selectedContent{ display:block;}
+
+.promoted{ color:red; font-weight:bold;}
+
+</style>
+</head>
+
+<body>
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+</body>
+</html>
+<script src="jquery-1.9.1.js"></script>
+<script>
+//jQuery第一用途：查找元素-JavaScript Query
+//jQuery查找元素的风格和document.querySelectorAll,CSS选择器的风格
+/*
+$("div");
+$(".tab");
+$("#div1");
+$("ul li");//ul后代元素li
+$("ul>li");//ul子元素li
+$("div.tabbedPanels>ul.tabGroup>li.tab")
+$("li.#li1+div")//next
+$("li#li1~div");//nextAll*/
+$("li.tab").click(function(e) {
+    //alert(this.innerHTML);
+	//在使用jQuery的时候，要认清jQuery和js原生对象。如果是使用jQuery的方法，则需要用jQuery对象来调用
+	//this.className="tab selectedTab";//原生JS不严谨的写法
+	//this.addClass();//这是错的
+	var n2=$(this).addClass("selectedTab").siblings().removeClass("selectedTab").end().index();
+	//var n=$(this).index();
+	//alert(n2);
+	$(this).parent().next().children().removeClass("selectedContent").eq(n2).addClass("selectedContent");
+	//eq是指这一组元素中的第n索引个元素，它返回的jQuery对象
+});
+/*
+	以下写法都是错的
+	$("li.tab").onclick();
+	$("li.tab").click=function(){}*/
+</script>

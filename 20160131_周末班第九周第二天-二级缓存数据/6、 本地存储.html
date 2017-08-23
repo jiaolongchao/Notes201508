@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--
+ 1、本地存储:cookie、localStorage
+ 控制台->Resources->可以查看我们本地存储的数据
+
+ 2、不管是哪种都是明文存储:我们可以直接的看到->本地存储是不安全的
+ 对于重要的信息我们尽量不存储，如果非要存储的话，我们一定要把数据进行加密
+ [加密]
+ 可逆转的加密->自己编写加密规则(自己回去可以百度一些已经实现好的可逆转加密方式)
+ 不可逆转加密->md5.js
+
+ 3、cookie兼容所有的浏览器，而localStorage不兼容IE6~8
+
+
+
+-->
+
+<script type="text/javascript">
+    localStorage.setItem("zhufeng", 1000);
+    console.log(localStorage.getItem("zhufeng"));
+    localStorage.removeItem("zhufeng");
+    localStorage.clear();
+
+
+</script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript">
+    //console.log(hex_md5("000000"));//->"670b14728ad9902aecba32e22fa4f6bd"
+</script>
+</body>
+</html>

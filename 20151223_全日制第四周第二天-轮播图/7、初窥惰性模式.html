@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    var getCss = function (curEle, attr) {
+    //        if ("getComputedStyle" in window) {
+    //            return window.getComputedStyle(curEle, null)[attr];
+    //        }
+    //        return curEle.currentStyle[attr];
+    //    };
+    //    getCss();
+    //    getCss();
+    //问题:我们第一次执行getCss的时候需要判断一下当前的浏览器是否兼容getComputedStyle...
+    //我们第二次执行getCss的时候,我们发现我们还是同样需要判断一下是否兼容
+    //...
+    //不管执行多少次,我们都需要重新的检测是否兼容,但是我们知道这样是没有必要的,只需要第一次执行检测是否兼容,以后都不需要重新检测即可
+
+    //"惰性载入函数"
+    var getCss = (function () {//->执行函数执行形成的私有的作用域是不销毁的
+        var flag = "getComputedStyle" in window;
+        return function (curEle, attr) {//->返回的函数其实就是给getCss赋的值
+            if (flag) {
+                return window.getComputedStyle(curEle, null)[attr];
+            }
+            return curEle.currentStyle[attr];
+        }
+    })();
+    getCss();
+    getCss();
+    //现在这样处理,我们第一次给getCss赋值的时候,执行自执行函数形成一个不销毁的私有的作用域,用一个不销毁的私有变量flag记录了当前浏览器是否兼容我们的getComputedStyle
+    //以后在执行getCss方法,不需要重新的检测兼容,只需要判断flag是真还是假即可
+</script>
+</body>
+</html>

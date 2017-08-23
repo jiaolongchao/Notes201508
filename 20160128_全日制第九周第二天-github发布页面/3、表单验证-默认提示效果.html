@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, input, span, img {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        .box {
+            padding: 100px;
+            height: 323px;
+            background: #00b38a;
+        }
+
+        .inputBox {
+            position: relative;
+            height: 37px;
+        }
+
+        .inputBox span {
+            position: absolute;
+            top: 0;
+            left: 16px;
+            display: inline-block;
+            height: 37px;
+            line-height: 37px;
+            color: #ccc;
+        }
+
+        #userEmail {
+            padding: 0 15px;
+            width: 300px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="inputBox">
+        <input type="text" id="userEmail" placeholder="请输入常用的邮箱地址"/>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var userEmail = document.getElementById("userEmail");
+
+    //1、每一个input文本框都有一个天生自带的属性:placeholder->给文本框添加默认的提示文字->默认显示的是提示的文字,当我们用户手动输入内容的时候,提示的文字消失,当用户输入的内容为空的时候提示文字在显示
+    //虽然好用,但是IE浏览器大部分都不兼容,需要我们自己写JS实现这个效果
+
+    //2、兼容处理
+    //->在IE浏览器中,有的浏览器可以获取值,但是起不到效果;有的浏览器获取的值是undefined...我们想要处理兼容最好使用检测浏览器版本号的方式来进行处理
+    //console.log(userEmail.placeholder);
+    function placeholderFn() {
+        //->IE浏览器中统一使用JS来实现对应的效果
+        if (navigator.userAgent.indexOf("MSIE") > -1) {
+            //创建一个span标签来模拟placeholder效果
+            var span = document.createElement("span");
+            span.innerHTML = "请输入常用的邮箱地址";
+            userEmail.parentNode.appendChild(span);
+
+            //当点击的是span的时候让我们的文本框获取焦点
+            span.onclick = function () {
+                userEmail.focus();//->让文本框获取光标
+            };
+
+            //实现效果
+            userEmail.onkeyup = function () {
+                span.style.display = this.value.length === 0 ? "block" : "none";
+            };
+        }
+    }
+    placeholderFn();
+</script>
+</body>
+</html>

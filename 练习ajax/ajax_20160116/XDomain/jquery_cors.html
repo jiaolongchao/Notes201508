@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script>
+        $(function(){
+            $.ajax({
+                url:'http://localhost:3000/getInfo',
+                // 跨域资源共享可以用所有的http method
+                method:'post',
+                data:{type:''},
+                // 只有添加这个属性，jquery才认为这是跨域资源共享
+                crossDomain:true,
+                success:function(data){
+                    console.log(data)
+                },
+                dataType:'json'
+
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

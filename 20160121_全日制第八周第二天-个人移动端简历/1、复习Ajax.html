@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、同源/非同源
+    //协议:http、https、ftp...
+    //域名:一级域名(www.baidu.com)、二级域名(v.baidu.com)...
+    //端口:默认是80端口...
+    //同源是三个都一样的,非同源是只要有一个不一样
+
+    //2、同源策略->Ajax (async javascript and xml)
+    //Ajax就四步
+    //1)创建一个Ajax对象
+    function createXHR() {
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest;
+        } else {
+            if (new ActiveXObject("Microsoft.XMLHTTP")) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (new ActiveXObject("Msxml2.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } else if (new ActiveXObject("Msxml3.XMLHTTP")) {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+        return xhr;
+    }
+    var xhr = createXHR();
+
+    //2)打开一个API(前端向后台请求数据,需要通过一个网络地址,API就是请求的接口)请求
+    //第一个参数(请求的方式):get、post...
+    //->get和post的区别:
+    //a、缓存问题:get请求是存在缓存的(我们在地址后加一个随机数可以清除缓存),post不存在缓存
+    //b、大小问题:get请求是把传递给后台的数据拼接到url的后面,而url有长度的限制,标准浏览器中是8kb,IE下是2kb;post是把数据放在请求的主体中传递过去的,没有大小的限制;
+    //c、安全问题:get不安全(但是是最常用的),因为所有的内容都在URL中,别人可以做URL劫持获取你的数据;post相对安全一些;
+
+    //第二个参数:URL地址以及后面拼接的传递的参数
+    //第三个参数:async同步或者异步,默认是异步请求(true),写成false是同步请求 ->一般情况下我们使用的都是异步编程
+    xhr.open("get", "test.txt?_=" + Math.random(), true);
+
+    //3)监听当前的Ajax请求状态
+    //ajax状态readyState:0->UNSENT未发送 1->OPENED已经打开链接 2->HEADERS_RECEIVED响应头的信息已经获取到 3->LOADING相应主体的内容正在请求中 4->DONE请求完成
+    //网络状态status:200、301永久重定向、302临时重定向、304读取的是缓存的数据、404未找到对应的页面、403权限不够、500未知的服务器错误...
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
+            //获取内容:
+            var val = this.responseText;//->this.responseXML
+            val = "JSON" in window ? JSON.parse(val) : eval("(" + val + ")");
+            typeof callBack === "function" ? callBack(val) : null;
+        }
+    };
+
+    //4)发送请求
+    //get什么都不需要传,post需要把给后台的数据以json格式的字符串的方式写进来
+    xhr.send();
+
+
+    function callBack(data) {
+        console.log(data);
+    }
+
+    //3、非同源策略->jsonp(最常用的)  更多的跨域请求方式:http://note.youdao.com/share/web/file.html?id=d4fd79b9bdeb3cb98133a2f443bbe081&type=note
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+
+            width: 100px;
+            height: 100px;
+            background: #00b38a;
+
+            /*-webkit-transition:过渡动画 从当前的位置运动到另外一个位置设定相关的信息*/
+            -webkit-transition: all 1s linear 0s;
+            transition: all 1s linear 0s;
+            /*transition只是设定了一个运动的方式,但是具体的运动还需要触发才可以*/
+        }
+
+        /*使用伪类触发我们的动画*/
+        #div1:hover {
+            /*top: -200px;*/
+            /*-webkit-transform: translate(0, -200px);
+            transform: translate(0, -200px);*/
+            /*我们对于这些变换的效果最好使用-webkit-transform，因为这个属性开启了浏览器的硬件加速效果，实现的动画性能比使用具体的样式流畅一些*/
+            /*-webkit-transform: scale(2) rotate(45deg) skew(45deg);
+            transform: scale(2) rotate(45deg) skew(45deg);*/
+            /*-webkit-transform不是动画，它只是一个变形效果，不设置动画，立马变形到指定的样式，加上动画后才能有对应的过渡效果*/
+        }
+
+        /*使用媒体查询触发动画*/
+        @media screen and (min-width: 320px) {
+
+        }
+
+        @media all and (orientation: landscape) {
+            #div1 {
+                background: #FFCC66;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+    /*使用JS触发*/
+    var oDiv = document.querySelector("#div1");
+    oDiv.onclick = function () {
+        this.style.webkitTransform = "translate(0,-200px)";
+    };
+</script>
+
+<script type="text/javascript">
+    //在移动端HTML5开发中我们可以用css或者js检测出当前是横屏还是竖屏->但是我们不能禁止横竖屏切换
+    var supportsOrientationChange = "onorientationchange" in window,
+            orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+    window.addEventListener(orientationEvent, function () {
+        if (supportsOrientationChange) {
+            if (Math.abs(window.orientation) === 90) {
+                //横屏
+            } else {
+                //竖屏
+            }
+        }
+    }, false);
+</script>
+</body>
+</html>

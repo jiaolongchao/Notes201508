@@ -1,0 +1,47 @@
+*{margin:0;padding: 0;}
+body{ font-family: 'Micosoft Yahei'}
+ul{list-style: none}
+a{text-decoration: none}
+img{ display: block;}
+.headerLayout{ width: 100%; box-shadow: 1px 1px 10px rgba(0,0,0,0.3);height:83px; position: fixed;}
+.header{ height:83px;line-height: 83px; background:#fff;}
+.header a{ float:left; margin-left:10px;}
+.header ul{ float:right;}
+.header ul li{ float:left; margin:0 20px;color: #000; font-size: 1em;}
+.channer ul{ text-align: center; padding-top: 100px;}
+.channer ul li{ display:inline-block;margin: 0 10px; max-width: 23%;}
+.channer ul li img{ width: 100%;}
+.service{ text-align: center; margin-top: 25px;}
+.service ul li{ display:inline-block; width: 263px; vertical-align: top;}
+.service ul li h5{ font-size: 1.2em; padding: 10px 0;}
+.service ul li p{ font-size: 1em; line-height: 25px;}
+.service ul li img{ width: 100%;}
+@media screen and (min-width: 1000px){ /*屏幕的宽度大于或等于1000，设置以下样式*/
+    .header{
+        width:1000px;
+        margin:0 auto;
+    }
+}
+@media screen and (max-width: 999px){
+    .header ul li{ font-size: 14px; margin:0 10px}
+    .channer ul li.watch img,.channer ul li.phone img{
+        max-width: 50px;
+    }
+    .service { font-size: 1em;}
+    .service ul li{ width: 33.3%;}
+}
+@media screen and (max-width: 480px){
+    .headerLayout{position: absolute; height: 50px;}
+    .header{ height: 50px; line-height: 50px; background: skyblue}
+    .header a{ margin: 0; display: block; height: 50px; overflow: hidden; padding-top: 10px;}
+    .header ul{ background: skyblue;width: 100%;}
+    .header ul li{width: 100%; background: skyblue}
+
+}
+
+
+/*
+//transform-style:preserve-3d  在3d空间里  加到最外层div中表示当前的元素在3D空间中执行
+
+//prespective:800px 视距*/
+

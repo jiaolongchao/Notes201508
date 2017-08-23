@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #outer {
+            margin: 50px auto;
+            padding: 40px;
+            width: 220px;
+            height: 220px;
+            background: #008000;
+            border: 10px solid #08BECE;
+        }
+
+        #inner {
+            width: 200px;
+            height: 200px;
+            background: #ffe470;
+            border: 10px solid #ff3333;
+        }
+
+        #center {
+            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            background: #dddddd;
+            border: 10px solid #000000;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //1、溢出?->一个网页有多屏内容,所有超出第一屏幕的内容都属于我们的溢出内容
+    //获取页面可视窗口的高度(兼容所有的浏览器)->一屏幕的高度
+    //document.documentElement.clientHeight||document.body.clientHeight
+    //获取整个网页的高度->所有屏加起来的高度
+    //document.documentElement.scrollHeight||document.body.scrollHeight
+    //总结：如果你当前操作的是浏览器或者整个页面,想兼容所有的浏览器,需要写上 document.documentElement.xxx||document.body.xxx (而且顺序不能变)
+
+    var body = document.body;
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    //2、offsetParent->父级参照物   parentNode->父亲节点
+    //parentNode:在DOM的层级关系中,当前节点的上一级节点是父亲节点
+    //offsetParent:我们的一个页面一般情况下是一个二维平面,所有的元素都在这个平面中,它们默认的父级参照物body
+    //元素的父亲节点和父级参照物是没有必然的联系的
+    //    console.log(inner.parentNode);//->outer
+    //    console.log(inner.offsetParent);//->body
+    //    console.log(outer.parentNode);//->body
+    //    console.log(outer.offsetParent);//->body
+
+    //3、偏移量->当前元素(外边框)距离父级参照物的一个偏移的距离
+    //offsetTop:上偏移
+    //offsetLeft:左偏移
+
+    //    var innerL = inner.offsetLeft;//->inner距离body的偏移
+    //    var outerL = outer.offsetLeft;//->outer距离body的偏移
+    //    var spanL = innerL - outerL - outer.clientLeft;//->40 获取inner的外边框距离outer的内边框的偏移
+
+    //4、如何修改元素的父级参照物
+    //->我需要获取inner的外边框距离outer的内边框的偏移,上面相减的办法太麻烦,我们可以让outer变为inner的父级参照物(inner.offsetLeft)
+    //我们想让父级参照物是谁,就让当前的元素增加一个叫做position:absolute/relative/fixed
+    //    outer.style.position = "relative";
+    //    //inner.offsetParent->outer
+    //    console.log(inner.offsetLeft);//->40
+
+    outer.style.position = "relative";
+    inner.style.position = "relative";
+    //    center.offsetParent ->inner
+    //    inner.offsetParent ->outer
+    //    outer.offsetParent ->body
+    //    body.offsetParent ->null
+    //我想获取center距离body的左偏移(详细分析步骤见图)
+
+    //获取当前元素curEle距离body的偏移量(不管它的父级参照物是谁都是获取距离body的),返回一个值:{left:xxx,top:xxx}
+    //    function offset(curEle) {
+    //        //获取自身距离父级参照物的左偏移和上偏移
+    //        var l = curEle.offsetLeft, t = curEle.offsetTop;
+    //        //获取自身的父级参照物
+    //        var p = curEle.offsetParent;
+    //        //实现数据的获取和累加
+    //        while (p) {
+    //            //在保准的IE8浏览器中,我们的offsetLeft是自己把边框算在内的,所以我们呢不需要再额外的增加边框的值即可
+    //            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+    //                //条件成立则代表当前的浏览器不是IE8浏览器
+    //                l += p.clientLeft;
+    //                t += p.clientTop;
+    //            }
+    //            l += p.offsetLeft;
+    //            t += p.offsetTop;
+    //            //基于上一次获取的父级参照物在继续往上找,一直到p的结果为null(已经找到body了)我们才停止查找
+    //            p = p.offsetParent;
+    //        }
+    //        return {left: l, top: t};
+    //    }
+
+    function offset(curEle) {
+        var l = curEle.offsetLeft, t = curEle.offsetTop;
+        var p = curEle.offsetParent;
+        while (p.tagName.toLowerCase() != "body") {
+            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                l += p.clientLeft;
+                t += p.clientTop;
+            }
+            l += p.offsetLeft;
+            t += p.offsetTop;
+            p = p.offsetParent;
+        }
+        return {left: l, top: t};
+    }
+    var obj = offset(inner);
+    console.log(obj);
+
+
+    //思考题:jQuery中除了有一个叫做offset的方法外,还有一个叫做position的方法
+    function position(curEle) {
+        //获取当前元素距离它的parentNode的偏移量
+    }
+</script>
+</body>
+</html>

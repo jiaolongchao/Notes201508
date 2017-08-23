@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:300px; background:green; line-height:300px; font-size:36px; text-align:center;}
+</style>
+</head>
+
+<body style="height:5000px;"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<img width="200" height="200" src="default.gif">
+外链资源的缓存机制：相同的外链资源，如果原来请求（下载），第二次再去请求，则不会去远程服务器上去下载了，而是在本地下载
+
+</body>
+</html>
+<script src="DOM.js"></script>
+<script>
+var oImg=document.getElementsByTagName("img").item(0);
+oImg.posi=offset(oImg).t+oImg.offsetHeight;//把这个图片底片的位置保存在这张图片元素的自定义属性posi上
+window.onscroll=function(){
+	//下面计算浏览器的底边的位置
+	if(oImg.loaded)return;//则loaded这个属性来判断此图片是否原来被加载过
+	var wBottom=(document.documentElement.scrollTop||document.body.scrollTop)+(document.documentElement.clientHeight||document.body.clientHeight);//可视窗口的底边
+	
+	if(oImg.posi<wBottom){
+		//oImg.src="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg?"+Math.random();//在正常链接后边，加一个?，在?后边再加一串随机数，则达到了欺骗的效果：相当于产生了一个新的请求地址，让浏览器强制去远程服务器去下载这个资源
+		var src="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg?"+Math.random();
+		var tempImg=document.createElement("img");
+		var tempImg=new Image();
+		tempImg.src=src;//一但赋值成功，则这个tempImg会自动的去远程服务器下载这张图片。不需要把tempImg添加到文档中。
+		//
+		tempImg.onload=function(){//当图片资源成功的加载到了网页中，则会触发这个事件，其实这张图片不会显示在网页，而是在缓存里
+		oImg.src=src;		
+		oImg.loaded=true;//这是用来标识图片是否已经成功加载的记号
+			
+		}
+		oImg.src="o_loading.gif";
+		//先执行30行，再执行36行，最后执行33行
+		//老虎和o_loading.gif这两张图片，默认是缓存的
+		
+		
+	}
+}
+
+</script>

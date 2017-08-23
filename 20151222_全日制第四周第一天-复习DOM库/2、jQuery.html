@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、什么是jQuery?
+    //jQuery就是用原生的JS编写的兼容所有浏览器的常用方法库
+    //版本:
+    //jQuery-1.xxx.js 兼容所有的浏览器(是我们目前在PC端常用的一个类库)
+    //jQuery-2.xxx.js 忽略了IE6~8的兼容(用的不多,移动端我们一般都用Zepto.js)
+
+    //2、如何学习jQuery?
+    //买一本书:"锋利的jQuery第二版"
+    //http://jquery.cuishifeng.cn/
+
+    //3、jQuery的实现原理?
+    //1)jQuery是采用构造函数模式封装的,jQuery本身就是一个类
+    //2)在jQuery类的原型上定义了很多常用的方法,而且把jQuery作为普通的对象,也给它增加了一些属性名和属性值
+    //3)$()->创建jQuery这个类的一个实例 所以它就可以调用原型上的方法执行了
+    //4)$.ajax() ->直接的执行在jQuery上定义的属性方法
+
+    //分析源码:
+    //    (function () {
+    //        var jQuery = function (selector, context) {
+    //            return new jQuery.fn.init(selector, context);//->在返回jQuery这个类的一个实例
+    //        };
+    //        jQuery.fn = jQuery.prototype = {
+    //            //我们学习的jQuery中常用的方法,大部分都是定义在jQuery类的原型上的公有的方法
+    //            addClass: function () {
+    //
+    //            }
+    //        };
+    //
+    //        jQuery.ajax = function () {
+    //            //把jQuery当做一个普通的对象,给它增加的私有的属性
+    //        };
+    //        window.jQuery = window.$ = jQuery;
+    //    })();
+    //    //jQuery();//->在实行上述的方法,返回一个jQuery这个类的实例
+    //    //$();//->和上面jQuery执行是一个意思
+    //
+    //    $();//->jQuery类库的选择器->创建一个jQuery这个类的实例->这个实例就可以使用我们jQuery这个类原型上的方法了
+    //    $().addClass();
+    //    $.ajax();
+</script>
+</body>
+</html>

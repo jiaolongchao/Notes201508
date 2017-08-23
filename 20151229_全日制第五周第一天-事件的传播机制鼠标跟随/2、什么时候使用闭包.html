@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>什么时候使用闭包?</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、什么是闭包?
+    //函数执行会形成一个私有的作用域,来保护里面的私有变量不受外界的干扰,我们把这种保护机制叫做"闭包"
+
+    //2、什么时候用?
+    //1)函数的封装其实就是利用了闭包的原理
+    //把实现一个功能的代码进行封装,以后再用这个功能的时候,直接的执行这个函数即可,而且多次执行,相互也不会冲突-->"封装"：低耦合高内聚
+
+    //2)如果我们使用全局变量或者全局函数的话,名字相同了会相互冲突,为了解决这个问题,我们可以把这些代码都放在一个自执行函数中,让他们变为互不影响的私有的变量-->"私有变量是不受外界的干扰的"
+    //    (function () {
+    //        var jQuery = function (selector, context) {
+    //            return new jQuery.fn.init(selector, context);
+    //        };
+    //        jQuery.fn = jQuery.prototype = {
+    //            init: function (selector, context) {
+    //
+    //            }
+    //        };
+    //        window.jQuery = window.$ = jQuery;
+    //    })();
+
+    //3)有些时候我们需要保存一个值,让这个值不受外界的影响,这样的话我们就可以形成一个不销毁的私有的作用域,把需要保存的内容保存下来-->"作用域还可以不销毁":我们的惰性思想和柯理化函数的思想都是应用这个而产生的
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].onclick = (function (i) {
+    //            return function () {
+    //                changeTab(i);
+    //            }
+    //        })(i);
+    //    }
+
+    //    var getCss = (function () {
+    //        var flag = "getComputedStyle" in window;
+    //        return function (curEle, attr) {
+    //            if (flag) {
+    //
+    //            }
+    //        }
+    //    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+    #odiv{ width:100px; height:100px; background:red; margin:100px auto;}
+</style>
+</head>
+<body>
+<div id="odiv"></div>
+<script>
+    var odiv = document.getElementById("odiv")
+    var n = 0;
+   function fn1(){
+       n++
+       alert(n)
+   }
+    function fn2(){
+        n++
+        alert(n)
+    }
+    function fn2(){
+        n++
+        alert(n)
+    }
+    odiv.addEventListener("click",fn1,false)
+    odiv.addEventListener("click",fn2,false)
+
+    //为了处理兼容封装一个bind方法
+    function bind(ele,type,fn){
+        if(ele.addEventListener){
+            ele.addEventListener(type,fn,false)
+        }else{
+            ele.attachEvent("on"+type,fn);
+        }
+    }
+    function unbind(ele,type,fn){
+        if(ele.removeEventListener){
+            ele.removeEventListener(type,fn,false)
+        }else{
+            ele.detachEvent("on"+type,fn);
+        }
+    }
+//IE的DOM二级事件绑定，this不指向被绑定的DOM元素，
+    //而是成了window
+    //顺序是乱的
+    //IE里可以重复给同一个元素的同一个事件绑定多次
+
+
+//
+
+</script>
+</body>
+</html>
+
+

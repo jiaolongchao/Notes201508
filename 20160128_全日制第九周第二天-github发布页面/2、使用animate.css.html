@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="animate.css"/>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            background: #008000;
+        }
+
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+    var oDiv = document.querySelector("#div1");
+    oDiv.onclick = function () {
+        var _this = this;
+        _this.className = "animated bounce";
+
+        window.setTimeout(function () {
+            _this.className = null;
+        }, 1000);
+    };
+
+
+</script>
+</body>
+</html>

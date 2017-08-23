@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script language="javascript" src="event2.js"></script>
+    <style>
+        div{ width: 100px; height:100px; backgorund:red; position:absolute; cursor: move;}
+        div:nth-of-type(1){ background: darkblue; left:100px; top:100px}
+        div:nth-of-type(2){ background: darkmagenta; left:200px; top:200px;}
+        div:nth-of-type(3){ background:darkgoldenrod; left:150px; top:300px;}
+
+    </style>
+</head>
+<body>
+<div class="odiv1"></div>
+<div class="odiv2"></div>
+<div class="odiv3"></div>
+<script>
+    var odivs = document.getElementsByTagName("div");
+    var Drag = (function(){
+        var x=null,y=null,mx=null,my=null,MOVE = null,UP = null;
+        var count = 0;
+        function down(e){
+            x = this.offsetLeft;
+            y = this.offsetTop;
+            mx = e.pageX;
+            my = e.pageY;
+            if(this.setCapture){
+                this.setCapture();
+                on(this,"mousemove",move)
+                on(this,"mouseup",up);
+            }else{
+                MOVE = processThis(this,move);
+                UP = processThis(this,up)
+                on(document,"mousemove",MOVE)
+                on(document,"mouseup",UP)
+            }
+            e.preventDefault();
+            count++;
+            this.innerHTML = "点击了" + count + "次";
+        }
+        function move(e){
+            this.style.left = x + (e.pageX - mx) + "px";
+            this.style.top = y + (e.pageY - my) + "px";
+        }
+        function up(e){
+            if(e.releaseCapture){
+                e.releaseCapture();
+                off(this,"mousemove",move);
+                off(this,"mouseup",up)
+
+            }else{
+                off(document,"mousemove",MOVE);
+                off(document,"mouseup",UP);
+            }
+        }
+        return {down:down,up:up}
+    })()
+    for(var i=0;i<odivs.length;i++){
+        on(odivs.item(i),"mousedown",Drag.down)
+    }
+</script>
+</body>
+</html>

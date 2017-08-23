@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style>
+        body,div{ margin: 0; padding: 0;}
+        #div1{ position: absolute; left: 0;top: 0; bottom: 0; right: 0; margin: auto; width: 100px; height: 100px; background:green; /*不需要具体的宽高，也可以让div具中*/}
+    </style>
+    <link rel="stylesheet" href="js/animate.css"/>
+</head>
+<body>
+<div id="div1" class=""></div>
+<script>
+   /* var oDiv = document.querySelector("#div1");
+    oDiv.onclick = function(){
+        this.className = "animated bounce";
+    }*/
+</script>
+<script src="js/zepto.js"></script>
+<script>
+    $("#div1").singleTap(function(){
+        $(this).addClass("animated bounce");
+        var _this = this;
+        window.setTimeout(function(){
+            $(_this).removeClass("animated bounce")
+        },1000)
+    })
+</script>
+
+</body>
+</html>

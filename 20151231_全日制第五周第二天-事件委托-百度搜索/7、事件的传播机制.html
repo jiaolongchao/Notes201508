@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #outer {
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+            background: #008CD7;
+        }
+
+        #inner {
+            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+            background: #008000;
+        }
+
+        #center {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            background: #AFD400;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //事件的传播分为两个阶段:
+    //捕获阶段、冒泡阶段 ->捕获在前，冒泡在后
+    //捕获阶段:从外向内执行
+    //冒泡阶段:从内向外执行
+
+
+    var body = document.body;
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    body.addEventListener("click", function (e) {
+        console.log("body 冒泡")
+    }, false);
+
+    body.addEventListener("click", function (e) {
+        console.log("body 捕获")
+    }, true);
+
+
+    center.addEventListener("click", function (e) {
+        console.log("center 冒泡")
+    }, false);
+
+    center.addEventListener("click", function (e) {
+        console.log("center 捕获")
+    }, true);
+
+
+    inner.addEventListener("click", function (e) {
+        console.log("inner 冒泡")
+    }, false);
+
+    inner.addEventListener("click", function (e) {
+        console.log("inner 捕获")
+    }, true);
+
+
+    outer.addEventListener("click", function (e) {
+        console.log("outer 冒泡")
+    }, false);
+
+    outer.addEventListener("click", function (e) {
+        console.log("outer 捕获")
+    }, true);
+</script>
+</body>
+</html>

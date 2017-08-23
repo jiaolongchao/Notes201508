@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //    function Fn() {
+    //        this.x = 100;
+    //    }
+    //    Fn.prototype = {
+    //        constructor: Fn,
+    //        getX: function () {
+    //            console.log(this.x);
+    //        }
+    //    };
+
+    //[构造函数模式-类/实例]
+    //    var f = new Fn;
+    //    f.getX();//getX中的this->f  console.log(f.x) ->100
+    //    Fn.prototype.getX();//getX中的this->Fn.prototype->f.__proto__  console.log(f.__proto__.x)  ->undefined
+    //    console.log(f.constructor);//在不进行任何的处理情况下,结果是Object
+
+    //[普通函数模式-普通的函数执行]
+    //    var f = Fn();//这种方式只是把Fn当做一个普通的函数执行的,和我们所谓的类是没有什么关系的;在函数体中没有写return,默认的返回值是undefined;Fn执行前面没有".",函数体中的this是window;
+    //    console.log(f);//->undefined
+    //    console.log(window.x);//->100
+
+    //重要：所有的函数数据类型都有prototype属性，这个属性是给当前的类和所属的实例添加公有的属性和方法用的；而普通函数执行，没有类和实例这样的概念，我们的prototype属性也是没用的；
+
+    //[函数也是一个普通的对象]
+    //也可以像obj一样给自己增加属性名和属性值
+    //    function sum() {
+    //        var n = 100;//->作为一个普通函数执行里面形成的私有的变量
+    //        console.log(n);//->100
+    //
+    //        this.x = 100;//->作为一个类,这句话是在给实例s增加一个x的私有的属性
+    //    }
+    //    sum.prototype.getX = function () {
+    //
+    //    };
+    //    sum.zhufeng = "珠峰培训";//当做普通对象  ->sum["zhufeng"]="珠峰培训"
+    //    sum();//普通函数执行
+    //    var s = new sum;//构造函数模式执行
+    //    console.log(s.n);//->undefned
+    //    console.log(s.zhufeng);//->undfined
+    //    console.log(sum.zhufeng);//->"珠峰培训"
+
+
+    //jQuery把函数的多面性体现的非常的好
+    //$===jQuery
+    //$("#div1").show();//show是定义在jQuery.prototype上的方法->$("#div1")是jQuery的一个实例
+    //$.ajax();//它是把jQuery当做一个普通的对象,而ajax只是它的一个属性名
+
+    //函数内置的一些属性:
+    //prototype:作为类的时候我们可以在里面定义公有的属性和方法
+    //name:"fn" 函数的名字
+    //length:0 函数形参的个数
+    //__proto__:Function的原型
+    function fn(num1, num2) {
+
+    }
+    console.dir(fn);
+
+</script>
+</body>
+</html>

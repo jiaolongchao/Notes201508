@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    #div1 {
+        height: 300px;
+        margin: 0 auto;
+        background: red;
+        overflow: auto;
+    }
+</style>
+<body>
+    <p style="height:900px;"></p>
+    <div id="div1">我是原来的文字</div>
+    <div style="height: 200px; "></div>
+</body>
+<script>
+    function offset(ele) {
+        var l = ele.offsetLeft;
+        var t = ele.offsetTop;
+        var p = ele.offsetParent;
+        while(1) {
+            if (!p||p==document.body) break;
+            if(window.navigator.userAgent.indexOf("MSIE 8") > -1 )  {
+                l += p.offsetLeft;
+                t += p.offsetTop;
+            } else {
+                l += p.offsetLeft + clientLeft;
+                t += p.offsetTop + clientTop;
+            }
+            p = p.offsetParent;
+        }
+        return {l:l,t:t};
+    }
+</script>
+</html>

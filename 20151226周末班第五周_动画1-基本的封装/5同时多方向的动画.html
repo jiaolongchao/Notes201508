@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:100px; width:100px; position:absolute; top:100px;  background:red;  left:150px; }
+#left,#right{ width:100px; height:100px; background:black; color:white; margin:20px; position:absolute; top:200px; left:0; opacity:0.1 }
+</style>
+</head>
+
+<body>
+
+<div id="div1"></div>
+<div id="left">左</div><div id="right" style="left:110px;">右</div>
+</body>
+</html>
+<script>
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		//return parseFloat("a"+getComputedStyle(ele,null)[attr]);
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{//专门处理IE的方案
+		if(attr=="opacity"){
+			//filter:alpha(opacity=10)
+			var reg=/alpha\(opacity=(\d+)\)/
+			var str=ele.currentStyle.filter;
+			if(reg.test(str)){
+				RegExp.$1//这就是匹配的正则中的第一个分组的值	
+				return RegExp.$1/100;
+			}else{
+				//如果滤镜样式没有写，或滤镜样式写了但没有opacity的值，则上边的判断为false,则应该把默认值1返回
+				return 1;	
+			}
+			
+		}
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+function setCss(ele,attr,value){
+	if(attr=="opacity"){
+		ele.style.opacity=value;
+		ele.style.filter="alpha(opacity="+value*100+")";
+	}else{
+		ele.style[attr]=value+"px";
+	}
+}
+
+function animate(ele,/* attr,target */oTarget,duration,callback){
+	
+	
+	var oBegin={};//用来各方向开始值
+	var oChange={};//用来保存各方向的距离值
+	var counter=0;//只是一个标识，或叫一个记数器
+	var f=true;
+	for(var attr in oTarget){//把各维度的begin和change分解出来
+		var target=oTarget[attr];
+		begin=getCss(ele,attr);//应该有五个begin
+		change=target-begin;//应该有五个change
+		
+		//分别把每个属性（维度）上的值分别保存在各自对应的对象上
+		if(change){//确保change不是0，再保存。就是说：只保存有效的运动维度
+			oBegin[attr]=begin;
+			oChange[attr]=change;//
+			counter++;//如果有有效值，则让记数器累加一次
+			f=false;//这样用和counter的技巧一样
+		}
+	}
+	
+	if(counter===0)return;//如果没有有效运动距离，则退出此方法。（不必再浪费性能了）
+	if(f)return;
+	
+	
+	var times=0;
+	var interval=15;
+	window.clearInterval(ele.timer);//清除动画积累的
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			for(var attr in oChange){//把各方向都移动一次
+				var begin=oBegin[attr];//对应58行和63，
+				var change=oChange[attr];
+				var value=times/duration*change+begin;
+				setCss(ele,attr,value);			
+			}
+		}else{
+			for(var attr in oTarget){
+				var target=oTarget[attr];
+				setCss(ele,attr,target);//最后的校正
+				
+			}
+			window.clearInterval(ele.timer);
+			ele.timer=null;
+			if(typeof callback=="function"){
+				callback.call(ele);	
+			}	
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+}
+div1.onclick=function(){
+	//animate(this,{left:400,top:333,width:200,height:290,opacity:0.1},1000);	
+	animate(this,{left:150},1000);
+}
+
+
+</script>

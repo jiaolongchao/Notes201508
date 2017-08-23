@@ -1,0 +1,56 @@
+什么是跨域？
+url的结构 <scheme>://<hostname>:<port>
+任何一个网络请求，前面必须含有域名信息
+
+同域请求，就是域名信息同样的请求
+跨域请求，就是域名信息不相同的请求
+
+https://www.baidu.com:443 -> https://tieba.baidu.com:443
+
+什么是同源策略?
+浏览器厂商为了网站安全强制给浏览器添加的一种安全限制。
+
+
+跨域接口文档：
+在http://localhost:63342里请求该接口。
+接口:
+jsonpcallback：valName
+http://localhost:3000/getName?valName=xxx
+
+
+在html里可以访问外部资源的html标签！
+script -> 把外部的资源加载到本页面内，强制当成脚本来执行。
+link -> 把外部的资源加载到本页面内，强制当成css来执行。
+如果目标文件不是css文件，则不加载任何内容。
+img -> 把外部的资源加载到本页面内，强制当成图片来显示。
+iframe -> 只能加载进来外部的html，当时不能操作。
+
+什么是jsonp？
+jsonp是用于实现跨域请求的一种方案。
+使用script标签
+为什么叫jsonp？
+json-padding=>在json前填充一段内容(方法名)
+jsonp需要注意的点：
+1、因为jsonp是基于script标签来实现的，所以jsonp只能是http get 方法
+get系方法有的特点 jsonp全有
+2、对方服务器必须提供jsonpcallback
+3、jsonpcallback后面跟的那个方法名，必须是全局作用域下的。
+
+百度的jsonp接口
+https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su
+?cb=jQuery172017119622905738652_1453017767594
+&wd=b
+&sc=hao123
+
+
+跨域资源共享->CORS
+属于ajax的范畴。
+
+
+jsonp和跨域资源共享的不同点：
+1、jsonp只能使用get method，cors可以使用所有的http method
+2、jsonp没有兼容性，cors只支持ie8+
+3、jsonp不安全，cors相对比较安全
+jsonp和跨域资源共享的相同点：
+1、都是跨域请求
+2、都需要对方服务器支持

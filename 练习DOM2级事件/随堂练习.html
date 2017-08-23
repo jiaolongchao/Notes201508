@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{ width:100px; height: 100px; background:red; position: absolute;}
+    </style>
+</head>
+<script src="event2.js"></script>
+<script src="darg.js"></script>
+<body>
+<div></div>
+<script>
+    var odiv = document.getElementsByTagName("div")[0];
+    on(odiv,"mousedown",down)
+    //现在拖拽是一组单独的功能，其它的效果则其它功能，为了把这些功能组合在一起，我们把代码写在了一起，如果再去添加一些新的功能给拖拽，还要不断的去修改原来的
+    //拖拽代码。
+    //在编程中有一种原则叫做低耦合:指定的代码只做指定的事儿，职责单一原则
+    //接口就是一套规范，一套能够使不同的人或函数共同工作的规范，这个概念在js中比较宽泛
+    //规划首先要提前约定好，提前制定，然后大家共同遵循，有一套设计原则
+</script>
+</body>
+</html>

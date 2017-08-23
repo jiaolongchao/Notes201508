@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{height:200px; background:red; padding:50px; border:50px solid green;}
+
+</style>
+</head>
+
+<body>
+<div id="div1">内容，内容，内容</div>
+</body>
+</html>
+<script>
+//以下的属性和高宽相关的，只有这两组
+var ele=document.getElementById("div1");
+ele.clientWidth;//内容+padding
+ele.clientHeight;//内容+上下的padding
+
+ele.offsetHeight;//offsetHeight>=clientHeight;clientHeight+borderWidth(上下)
+ele.offsetWidth;//clientWidth+(左右的)borderWidth
+
+//在JS中，没有直接获取内容的高宽的属性，也没有直接获得包括margin的宽度的属性
+
+
+//通过CSS的样式，来计算出一个盒子更多的，更具体的属性值
+//凡是CSS的样式，都可以计算出来
+window.getComputedStyle(ele,null).width
+getComputedStyle//得到计算的样式，把这个盒子在浏览器显示的结果计算出来
+//这是标准浏览器的方法
+var obj=getComputedStyle(ele,null);//第一个参数ele是被计算的那个DOM元素，第二个参数可选，计算指定的伪类（伪元素）的样式对象。 它的返回值是一个对象，这个对象里包含的当前这个浏览所支持的所有的CSS属性
+var width=obj.width;
+var height=obj.height;
+
+
+
+
+</script>

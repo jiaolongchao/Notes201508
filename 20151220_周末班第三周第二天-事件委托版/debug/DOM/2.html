@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .tabbedPanels {
+            width: 500px;
+            margin: 10px auto;
+        }
+
+        ul.tabGroup {
+            list-style: none;
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        li.tab {
+            width: 70px;
+            border-radius: 10px;
+            margin-left: 20px;
+            background: orangered;
+            font-size: 18px;
+            float: left;
+            cursor: pointer;
+        }
+
+        li.selectedTab {
+            background: yellow;
+            font-weight: bold;
+        }
+
+        div.contentGroup {
+            overflow: hidden;
+            clear: both
+        }
+
+        div.content {
+            height: 400px;
+            background: orange;
+            display: none;
+            border-radius: 10px;
+            margin: 2px auto;
+            padding: 20px
+        }
+
+        div.selectedContent {
+            display: block;
+        }
+
+        .promoted {
+            color: #8ae6ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab ">选项1</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                    <li>CSS</li>
+                </ol>
+            </div>
+            <div class="content">内容二</div>
+            <div class="content">内容三</div>
+            <div class="content">内容四</div>
+            <div class="content">内容五</div>
+        </div>
+    </div>
+</div>
+<script src="utils.js"></script>
+<script>
+    var oLis = document.getElementsByClassName("tab");
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onclick = changTab();
+    }
+    function changTab() {//实现核心的选项卡功能的方法
+        var index = getIndex(this);
+        alert(index);
+        this.className = "tab selectedTab";
+        var nodes = this.parentNode.childNodes;
+        var aSiblings = [];//用来保存兄弟节点
+        for (var i = 0; i < nodes.length; i++) {
+            //  if(nodes[i]==this)continue;
+            if (nodes[i] != this && nodes[i].nodeType === 1) {
+                aSiblings.push(nodes[i]);
+            }
+        }
+        for (var i = 0; i < aSiblings.length; i++) {
+            aSiblings[i].className = "tab";
+        }
+    }
+</script>
+</body>
+</html>

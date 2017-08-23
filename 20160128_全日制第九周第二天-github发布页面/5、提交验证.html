@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, input, span, img {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        .box {
+            padding: 100px;
+            height: 323px;
+        }
+
+        .inputBox {
+            position: relative;
+            height: 37px;
+        }
+
+        .inputBox .tipSpan {
+            position: absolute;
+            top: 0;
+            left: 16px;
+            display: inline-block;
+            height: 37px;
+            line-height: 37px;
+            color: #ccc;
+        }
+
+        #userEmail {
+            padding: 0 15px;
+            width: 300px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #ccc;
+        }
+
+        #userEmailSpan {
+            display: none;
+            margin-top: 5px;
+            padding-left: 20px;
+            height: 18px;
+            line-height: 18px;
+            color: #fd5f39;
+            background: url("img/error.png") no-repeat left center;
+        }
+
+        #btnSubmit {
+            display: block;
+            margin-top: 40px;
+            width: 100px;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="inputBox">
+        <input type="text" id="userEmail" placeholder="请输入常用的邮箱地址"/>
+        <span id="userEmailSpan">请输入有效的邮箱地址</span>
+    </div>
+    <input type="button" value="注册" id="btnSubmit"/>
+</div>
+
+<script type="text/javascript">
+    var userEmail = document.getElementById("userEmail"), userEmailSpan = document.getElementById("userEmailSpan");
+
+    userEmail.onfocus = function () {
+        this.style.borderColor = "#00b38a";
+    };
+
+    userEmail.onblur = function () {
+        var val = this.value, reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        if (!reg.test(val)) {
+            this.style.borderColor = "#ff0000";
+            userEmailSpan.style.display = "block";
+            return false;
+        }
+        this.style.borderColor = "#ccc";
+        userEmailSpan.style.display = "none";
+        return true;
+    };
+
+    //->点击提交的时候同样需要验证
+    var btnSubmit = document.getElementById("btnSubmit");
+    btnSubmit.onclick = function () {
+        if (!userEmail.onblur()) {
+            //->不成立
+            return;
+        }
+        console.log(userEmail.value);
+    };
+
+    function placeholderFn() {
+        if (/MSIE/i.test(navigator.userAgent)) {
+            var span = document.createElement("span");
+            span.innerHTML = "请输入常用的邮箱地址";
+            span.className = "tipSpan";
+            userEmail.parentNode.appendChild(span);
+            span.onclick = function () {
+                userEmail.focus();
+            };
+            userEmail.onkeyup = function () {
+                span.style.display = this.value.length === 0 ? "block" : "none";
+            };
+        }
+    }
+    placeholderFn();
+</script>
+</body>
+</html>

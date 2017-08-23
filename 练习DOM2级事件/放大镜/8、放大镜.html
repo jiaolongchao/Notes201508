@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            overflow: hidden;
+        }
+
+        #box {
+            position: relative;
+            float: left;
+            margin: 20px;
+            width: 350px;
+            height: 350px;
+            border: 1px solid #008000;
+        }
+
+        #box img {
+
+        }
+
+        #mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+           /* width: 175px;
+            height: 175px;*/
+            background: #000;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            cursor: move;
+        }
+
+       #boxBig {
+            width: 350px;
+            height: 350px;
+            border: 1px solid #008000;
+            overflow: hidden;
+           position: absolute;
+        }
+
+       /* #boxBig img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 700px;
+            height: 700px;
+        }*/
+    </style>
+</head>
+<body>
+<div id="box">
+    <img src="img/iphone.jpg"/>
+</div>
+<!--<div id="boxBig">
+    <img src="img/iphone_big.jpg"/>
+</div>-->
+
+<script type="text/javascript">
+   var osmall = document.getElementById("box");
+   var w = 350 /700 * 350;
+   var h = 350 /700 * 350;
+   osmall.onmouseenter = function(e){
+        var oMask = document.createElement("div");
+        oMask.id = "mark";
+        with(oMask.style){
+            left = 0;
+            top = 0;
+            width = w + "px";
+            height = h + "px";
+        }
+        this.appendChild(oMask);
+   }
+   osmall.onmousemove = function(e){
+       var oShow = document.createElement("div");
+       var oMask = document.getElementById("mark");
+
+       //以下是创建显示区
+
+       oShow.id = "boxBig";
+       with(oShow.style){
+           left = this.offsetWidth + 10 + "px";
+           top = 0;
+       }
+       this.appendChild(oShow);
+       var oImg = document.createElement("img");
+       oImg.src = "img/iphone_big.jpg";
+       oShow.appendChild(oImg);
+
+
+        if(oMask){
+            var l = e.pageX - this.offsetLeft - oMask.offsetWidth/2;
+            var t = e.pageY - this.offsetTop - oMask.offsetHeight/2;
+            with(oMask.style){
+                if(l<=0){
+                    left = 0;
+                }else if(l>=this.offsetWidth - oMask.offsetWidth){
+                    left = this.offsetWidth - oMask.offsetWidth + "px";
+                }else{
+                    left = l+"px";
+                    oShow.scrollLeft = l*(700/350) ;
+                }
+                if(t<=0){
+                    top = 0
+                }else if(t >= this.offsetHeight - oMask.offsetHeight){
+                    top = this.offsetHeight - oMask.offsetHeight + "px";
+                }else{
+                    top = t + "px";
+                    oShow.scrollTop = t*(700/350);
+                }
+            }
+
+
+
+
+
+        }
+    }
+   osmall.onmouseleave = function(e){
+       var oMask = document.getElementById("mark")
+        if(oMask){
+            this.removeChild(oMask)
+        }
+
+       var oShow = document.getElementById("boxBig");
+       if(oShow){
+           this.removeChild(oShow)
+       }
+    }
+</script>
+</body>
+</html>

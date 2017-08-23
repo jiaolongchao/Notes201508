@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv{ width: 100px; height: 100px; background:-webkit-linear-gradient(360deg, #ace, #f96); position: absolute; left: 100px; top: 100px;}
+        #oleft,#oright{ width: 100px; height:30px; line-height: 30px; color: #fff; background-color: darkblue; text-align: center; border-radius: 5px; box-shadow: 2px 2px 3px #ccc; position: absolute; left: 200px; top: 400px; cursor: pointer;}
+        #oright{ left: 600px;}
+    </style>
+</head>
+<body>
+<div id="odiv"></div>
+<div id="oleft">向左</div>
+<div id="oright">向右</div>
+<script>
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr])
+        }else{
+            if(attr == 'opacity'){
+                var str = ele.currentStyle.opacity;
+                var reg = /alpha\(opacity=(d+)\)/
+                if(reg.test(str)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1;
+                }
+            }
+            return ele.currentStyle[attr];
+        }
+    }
+    function animate(ele,attr,target,durction){
+        var times = 0;
+        var interval = 15;
+        var begin = getCss(ele,attr)
+        var change = target - begin;
+        window.clearInterval(ele.timer);
+        function step(){
+            times += interval;
+            if(times < durction){
+                ele.style[attr] = times / durction * change + begin + "px";
+            }else{
+                ele.style[attr] = target + 'px';
+                window.clearInterval(ele.timer)
+                this.timer = null;
+            }
+        }
+        ele.timer = window.setInterval(step,interval)
+    }
+    odiv.onclick = function(){
+        if(this.timer){
+            clearInterval(this.timer);
+            this.timer = null;
+        }else{
+            animate(this,"left",900,3000)
+        }
+    }
+    oleft.onclick = function(){
+        animate(odiv,"left",900,3000)
+    }
+    oright.onclick = function(){
+        animate(odiv,"left",100,3000)
+    }
+</script>
+</body>
+</html>

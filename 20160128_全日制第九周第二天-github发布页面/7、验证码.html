@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, span, input {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        input {
+            display: block;
+            outline: none;
+        }
+
+        span {
+            display: block;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 500px;
+            border: 1px solid #008000;
+            overflow: hidden;
+        }
+
+        .box .left {
+            float: left;
+            width: 300px;
+        }
+
+        .box .right {
+            float: left;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            background: lemonchiffon;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .box .left input {
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border: 1px solid #00A5FF;
+        }
+
+        .box .left span {
+            height: 30px;
+            line-height: 30px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="left">
+        <input type="text" id="userCode"/>
+        <span id="errorCode">请输入四位验证码</span>
+    </div>
+    <div class="right" id="divCode">As3D</div>
+</div>
+<script type="text/javascript">
+    var divCode = document.getElementById("divCode"), userCode = document.getElementById("userCode"), errorCode = document.getElementById("errorCode");
+
+    //1、生成一个四位的随机验证码,要求大小写字母和数字组成(不重复)
+    //->真实项目中,为了安全起见,我们的验证码都是由后台生成,前端首先通过Ajax地址把生成的验证码(一般都是一张图片)请求回来,然后显示在页面上；当用户输入完成，我们获取用户输入的内容，在通过ajax地址专递给后台，后台返回输入的是否正确，我们完成验证 ->"前端为了安全最好不要去做验证码的生成"
+    function createCode() {
+        var str = "abcdefghijklmnopqrstuvwxyz" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "0123456789";
+        var res = "";
+        while (res.length < 4) {
+            var ran = Math.round(Math.random() * 61);
+            var temp = str[ran], reg = new RegExp(temp, "i");
+            if (!reg.test(res)) {
+                res += temp;
+            }
+        }
+        divCode.innerHTML = res;
+    }
+    createCode();
+    divCode.onclick = createCode;
+
+
+    //2、验证用户输入的是否正确
+    userCode.onfocus = function () {
+        errorCode.innerHTML = "请输入四位验证码";
+        errorCode.style.color = "#ccc";
+    };
+
+    userCode.onblur = function () {
+        //->val.trim()去除字符串的首尾空格,但是火狐浏览器不兼容
+        var val = this.value.replace(/(^ +| +$)/g, "");
+        var anVal = divCode.innerHTML.toLowerCase();
+        if (val.toLowerCase() === anVal) {
+            errorCode.innerHTML = "输入的验证码正确";
+            errorCode.style.color = "green";
+            return true;
+        }
+
+        if (val.toLowerCase() !== anVal) {
+            errorCode.innerHTML = "输入的验证码错误";
+            errorCode.style.color = "red";
+            return false;
+        }
+    };
+
+    //输入的长度超过四位禁止输入
+    userCode.onkeydown = function (e) {
+        var val = this.value.replace(/(^ +| +$)/g, "");
+        if (val.length >= 4) {
+            this.value = val.substr(0, 4);
+            setNotEdit(e);
+        }
+    };
+
+    //禁止文本框输入数据
+    function setNotEdit(e) {
+        e = e || window.event;
+        e.keyCode = e.keyCode || e.which;
+        if (e.keyCode < 37 || e.keyCode > 40) {
+            //->剩余的键 四个方向键不在这个范围,其余的键都在这个范围
+            if (e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 46) {
+                //->回退BackSpace键8 ->Tab键9 ->Enter键13 ->空格Space键32 ->shift键16 ->删除Delete键46
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

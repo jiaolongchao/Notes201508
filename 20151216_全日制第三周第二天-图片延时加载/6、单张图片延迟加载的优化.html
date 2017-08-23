@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        #div1 {
+            margin: 1000px auto;
+            width: 300px;
+            height: 150px;
+        }
+
+        #div1 img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <!--trueImg是自己定义的属性,存储图片的真实地址-->
+    <img src="img/default.jpg" trueImg="img/10.jpg"/>
+</div>
+
+<script type="text/javascript">
+    //上一个案例中还存在一个问题,当我们第一已经把真实图片加载完成了,然后在滚动的时候还会触发我们的onscroll事件,绑定图片会一直重复的进行处理
+
+    var oDiv = document.getElementById("div1");
+    var oDivImg = oDiv.getElementsByTagName("img")[0];
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+    var imgT = offset(oDiv)["top"];
+    var imgH = oDiv.offsetHeight;
+
+    window.onscroll = function () {
+        if (oDivImg.isLoad) {//如果标识上记录了已经加载完成了,我们在滚动的时候下面的代码就没必要执行了
+            return;
+        }
+
+        var winT = document.documentElement.scrollTop || document.body.scrollTop;
+        if ((winT + winH) >= (imgH + imgT)) {
+            var trueImg = oDivImg.getAttribute("trueImg");
+            var oImg = new Image;
+            oImg.src = trueImg;
+            oImg.onload = function () {
+                oDivImg.src = trueImg;
+                //oDivImg.isLoad = true;//->当真实图片加载完成后我们给它加一个isLoad=true的自定义属性,告诉浏览器我们已经加载完成了
+            };
+            oDivImg.isLoad = true;//->只要我们把真实的地址赋值给oImg.src了说明我们已经开始请求图片了,此时我就记录已加载(防止图片不存在的情况下,放在里面会记录不了isLoad,对于不存在的图片会重复的执行加载)
+        }
+    };
+
+    function offset(curEle) {
+        var l = curEle.offsetLeft, t = curEle.offsetTop;
+        var p = curEle.offsetParent;
+        while (p.tagName.toLowerCase() != "body") {
+            if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+                l += p.clientLeft;
+                t += p.clientTop;
+            }
+            l += p.offsetLeft;
+            t += p.offsetTop;
+            p = p.offsetParent;
+        }
+        return {left: l, top: t};
+    }
+</script>
+</body>
+</html>

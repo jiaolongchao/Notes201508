@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:100px auto; overflow:hidden; position:relative;}
+#inner{ width:500px; height:1350px; position:absolute; top:0; left:0; color:#fff; font-size:72px; text-align:center; line-height:270px; }
+#inner div{ width:500px; height:270px; background:red; }
+#btn{ padding:0; margin:0; position:absolute; list-style:none; right:30px; top:30px; }
+#btn li{ width:30px; height:30px;  font-size:14px; font-weight:bold; border-radius:50%; cursor:pointer; background:orange; color:red; margin:10px; text-align:center; line-height:30px; }
+#btn li.promoted{ color:#fff; background:black;}
+</style>
+
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div >一</div><div style="background:black;">二</div><div style="background:green; " >三</div><div style="background:purple">四</div><div style="background:yellow;" >五</div>
+    </div>
+	<ul id="btn"><li class="promoted">1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+</div>
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+for(var i=0;i<oLis.length;i++){
+	
+	oLis.item(i).i=i;
+	oLis.item(i).onclick=function(){
+		animate(inner,{top:this.i*-270},600);	
+		window.clearInterval(autoTimer);
+		//过五秒之后，还要再自动播放--怎么办？还是每隔两秒播放一次
+		autoTimer=window.setTimeout(function(){
+			autoTimer=setInterval(autoMove,2000);
+		},3000);
+		step=this.i;
+		tips();
+		
+	}
+}
+
+//setTimeout和setInterval
+
+/*setTimeout(function(){animate(inner,{top:1*-270},600);},2000);
+setTimeout(function(){animate(inner,{top:2*-270},600);},4000);
+setTimeout(function(){animate(inner,{top:3*-270},600);},6000);
+setTimeout(function(){animate(inner,{top:4*-270},600);},8000);
+setTimeout(function(){animate(inner,{top:0*-270},600);},10000);
+setTimeout(function(){animate(inner,{top:1*-270},600);},12000);
+setTimeout(function(){animate(inner,{top:2*-270},600);},14000);
+setTimeout(function(){animate(inner,{top:3*-270},600);},16000);
+setTimeout(function(){animate(inner,{top:4*-270},600);},18000);
+setTimeout(function(){animate(inner,{top:0*-270},600);},20000);
+setTimeout(function(){animate(inner,{top:1*-270},600);},22000);
+setTimeout(function(){animate(inner,{top:2*-270},600);},24000);
+setTimeout(function(){animate(inner,{top:3*-270},600);},26000);
+setTimeout(function(){animate(inner,{top:4*-270},600);},28000);
+setTimeout(function(){animate(inner,{top:0*-270},600);},30000);
+setTimeout(function(){animate(inner,{top:1*-270},600);},32000);
+setTimeout(function(){animate(inner,{top:2*-270},600);},34000);
+setTimeout(function(){animate(inner,{top:3*-270},600);},36000);
+setTimeout(function(){animate(inner,{top:4*-270},600);},38000);
+setTimeout(function(){animate(inner,{top:0*-270},600);},40000);*/
+
+var step=0;
+function autoMove(){
+	step++;
+	if(step>=oLis.length)step=0;
+	animate(inner,{top:step*-270},600);
+	tips();
+	//window.setTimeout(autoMove,2000);
+}
+
+autoTimer=window.setInterval(autoMove,2000);
+
+function tips(){
+	for(var i=0; i<oLis.length; i++){
+			oLis[i].className = "";
+	}
+	oLis[step].className = 'promoted'
+}
+
+</script>

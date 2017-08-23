@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>获取数组中的最大值和最小值</title>
+</head>
+<body>
+<script type="text/javascript">
+    var ary = [12, 23, 34, 45, 13, 14, 16];
+
+    //3、使用Math.min/Math.max获取最大值个最小值
+    //apply虽然传递的是一个数组,但是也相当于一个个的传递参数,利用apply传递参数的原理,我们实现数组的最大值和最小值的求取
+    var min = Math.min.apply(null, ary);
+    var max = Math.max.apply(null, ary);
+    console.log(min, max);
+
+    //Math.min是获取一堆数中的最大值个最小值,直接的把数组放进去是获取不到结果的
+    //    var min = Math.min([12, 23, 34, 45, 13, 14, 16]);
+    //    console.log(min);//->NaN
+    //    min = Math.min(12, 23, 34, 45, 13, 14, 16);
+    //    console.log(min);//->12
+
+    //第一次尝试,把数组转换为字符串
+    //    var min = Math.min("12,23,34,45,13,14,16");
+    //    console.log(min);//->NaN
+
+    //第二次尝试,把字符串转换为JS表达式->eval
+    //console.log(eval("12+23"));//->"12+23" ->12+23 ->35
+    //    var min = Math.min(eval("12,23,34,45,13,14,16"));
+    //    console.log(min);//->16
+    //    //eval("12,23,34,45,13,14,16")的结果只有16
+    //括号表达式:一个括号中放多项内容,中间用","隔开的,我们最后获取的只有最后一项
+    //    function fn(){console.log(this);}
+    //    var obj={};obj.fn=fn;
+    //    (fn,obj.fn)();//执行的只有obj.fn ->里面的this不是obj而是window
+    //    (obj.fn)();//->obj
+
+
+    //2、假设法:先假设第一个是最小值,然后和数组后面的每一项进行比较,如果比我们的当前值还要小,说明我们假设的是错误的,我们让假设的值变为当前最小的值....(最大值同理) ->假设法是我们JS中非常常用的一种编程的技巧(重点推荐大家去学习和理解)
+    //    var min = max = ary[0];
+    //    for (var i = 1; i < ary.length; i++) {
+    //        var cur = ary[i];
+    //        cur < min ? min = cur : null;
+    //        cur > max ? max = cur : null;
+    //    }
+    //    console.log(min, max);
+
+    //1、先数组排序,然后在掐头去尾
+    //    ary.sort(function (a, b) {
+    //        return a - b;
+    //    });
+    //    var min = ary[0];
+    //    var max = ary[ary.length - 1];
+    //    console.log(min, max);//12、45
+</script>
+</body>
+</html>

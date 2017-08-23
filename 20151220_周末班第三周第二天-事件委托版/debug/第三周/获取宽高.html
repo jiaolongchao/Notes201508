@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盒子偏移量</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 总结：如果你当前错做的是浏览器或者整个页面，想兼容所有的浏览器，需要协商document.documentElement.xxx || document.body.xxx(而且顺序不变)
+
+// 2.
+// offsetTop
+// offsetLeft
+// offsetParent
+
+// offsetParent->父级参照物
+// parentNode->父亲节点
+// parentNode:在DOM的层级中，当前节点的上一级节点是父亲节点
+// offsetParent:我们的一个页面一般情况下是一个二维平面，所有的元素都这这个平面中，它们默认的父级参照物都是body
+
+// 元素的父亲节点和父级参照物是没必然联系的
+// 偏移量->当前元素(外边框)距离父级参照物的一个便宜的距离
+// offsetTop: 上偏移
+// offsetLeft: 左偏移
+
+// 如果修改元素的父级参照物
+// 需要取inner的外边框距离outer的内边框的偏移，上面详见的办法太麻烦，我们可以让outer变为inner的父级参照物(inner.offsetLeft);
+// 我们想让父级参照物是谁，就让当前元素增加一个position的属性：absolute,relative,fixed;
+
+//获取center距离body的左偏移(详细fenix步骤见图)(不管他的父级参照物是谁都是获取距离body的)，返回一个值：{left:xxx,top:xxx}
+function offset(curEle) {
+    // 获取自身距离父级参照物的左偏移和上偏移
+    var l = curEle.offsetLeft,
+        t = curEle.offsetTop;
+    // 获取自身距离父级参照物的左偏移和上偏移
+}
+</script>
+</html>

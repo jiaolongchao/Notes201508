@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{height:200px; background:red; padding:50px; border:50px solid green;}
+p{ width:600px; height:2em; background:#FC6; line-height:2em; }
+
+p::before{
+	content:"我是伪元素";
+	background:green;
+	color:red;
+	clear:both;
+	}
+p::after{
+	content:"我在后边负责修饰";
+	background:black;
+	color:white;
+	
+	}
+</style>
+</head>
+
+<body>
+<div id="div1">内容，内容，内容</div>
+
+<div style="clear:both"></div>
+<p>正文内容，内容，内容</p>
+
+</body>
+</html>
+<script>
+//以下的属性和高宽相关的，只有这两组
+var ele=document.getElementById("div1");
+//var h=getComputedStyle(ele,null).height;
+var h=ele.currentStyle.height;//在IE里,获得CSS样式集合对象的是一个属性
+alert(h);
+
+document.body
+document["body"];
+var attr="documentElement";
+document[attr]
+ 
+
+/*	function getCss(ele,attr){//DOM元素，attr是CSS属性
+		if(window.getComputedStyle){
+			return getComputedStyle(ele,null)[attr];//属性的变量表示法，这样可以更灵活的表达属性（动态的指定属性名）
+			return getComputedStyle(ele,null).attr;//这是固定的属性表示法，就表示attr这个属性本身
+			return getComputedStyle(ele,null)["attr"]//这是属性的另一种表示方式
+		}else{
+			return ele.currentStyle[attr];
+		}
+		
+	}*/
+
+
+function getCss(ele,attr){//DOM元素，attr是CSS属性
+		//if(getComputedStyle){//如果直接判断，在标准浏览器中不会报错，因为浏览器这个方法是一个已经存在的、内置的function；但是在IE7中，不存在这个方法，则会抛出 getComputedStyle未定义的异常
+		
+		if(typeof getComputedStyle=="function"){//一个变量未定义，可以用typeof去运算，这是安全的方式
+			return getComputedStyle(ele,null)[attr];//属性的变量表示法，这样可以更灵活的表达属性（动态的指定属性名）
+			
+		}else{
+			return ele.currentStyle[attr];
+		}
+		
+	}
+
+
+function getCss(ele,attr){
+	try{
+		return getComputedStyle(ele,null)[attr];
+	}catch(e){
+		return ele.currentStyle[attr];
+	}
+	
+}
+var h=getCss(ele,"height");
+alert(h);
+</script>

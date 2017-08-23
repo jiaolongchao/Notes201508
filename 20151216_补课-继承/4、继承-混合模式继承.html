@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //混合模式继承：call继承+原型继承
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+    function B() {
+        A.call(this);
+    }
+    B.prototype = new A;
+    var b = new B;
+</script>
+</body>
+</html>

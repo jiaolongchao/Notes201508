@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="utils.js"></script>
+<script>
+    function queryparmterurl(url){
+        var obj = {};
+        //detail.html?num=009
+        var reg = /([^?=&])=([^?=&])/g;
+        url.replace(reg,function(){
+            obj[arguments[1]=arguments[2]]
+        });
+        return obj;
+    }
+    var url = window.location.href;
+    var num = queryparmterurl(url)["num"];
+
+    utils.ajax('data.text',function(){
+        for(var i=0;i<data.length;i++){
+            var cur = data[i];
+            if(cur['num'] === num){
+                document.write("name:" + cur[num] + "sex:" + cur[sex] + "score:" + cur[score])
+                break;
+            }
+        }
+    })
+</script>
+</body>
+</html>

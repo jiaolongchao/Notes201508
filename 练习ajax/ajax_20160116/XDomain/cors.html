@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>跨域资源共享</title>
+    <script>
+        // 在标准浏览器中使用跨域资源共享
+        /**
+         * 与同域的ajax不同，如果使用此对象进行跨域ajax请求需要注意：
+         * 1、只有该对象函数含有‘withCredentials’，才支持跨域
+         * 2、需要对方服务器添加相应的响应头才能访问
+         * 只有服务器添加这个响应头之后 Access-Control-Allow-Origin
+         * 才可以成功请求。
+         * @type {XMLHttpRequest}
+         */
+        // var xhr = new XMLHttpRequest();
+        //        if ('withCredentials' in xhr) {
+        // 在低版本ie里undefined可以被重写
+        // 所以使用void 0代替
+//        if (xhr.withCredentials !== void 0) {
+//            console.log('支持跨域资源共享')
+//        }
+        /**
+         * ie里调用ajax跨域请求
+         * @type {XDomainRequest}
+         * 兼容性：ie8+
+         */
+//        var xhr2 = new XDomainRequest();
+
+
+        var getCORS = (function () {
+            var supportedCORS = (function () {
+                if (window.XMLHttpRequest) {
+                    return 'withCredentials' in (new XMLHttpRequest())
+                }
+                return false;
+            })();
+            if (window.XDomainRequest) {
+                return function () {
+                    return new XDomainRequest();
+                }
+            } else if (supportedCORS) {
+                return function () {
+                    return new XMLHttpRequest();
+                }
+            }
+            return null;
+        })();
+
+        /**
+         * 跨域资源请求也是分4步
+         */
+
+        // 1/4
+        var cors = getCORS();
+
+        if(cors===null){
+            throw new ReferenceError('不支持此功能');
+        }
+
+        // 2/4
+        cors.open('get','http://localhost:3000/getInfo',true);
+
+        // 3/4
+        // 这个onload执行的时候就相当于ajax对象readyState为4的时候
+        cors.onload=function(){
+            if(cors.status==200){
+                console.log(cors.responseText);
+            }
+        };
+
+        // 4/4
+        cors.send();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

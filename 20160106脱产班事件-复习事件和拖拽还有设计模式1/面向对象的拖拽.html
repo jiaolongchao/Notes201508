@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; -webkit-user-select:none; position:absolute; top:0; left:0; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event3.js"></script>
+<script>
+//把拖拽行为模式按“类”来开发。
+//一些技术实现上的设计原则：类方法里的this是指当前类的实例，而不是被拖拽的元素
+//这一点要和我们原来写的拖拽分清
+//原来讲的down,move,up方法的this是采用的事件里的原则：就是把这个方法绑定给那个元素，则这个方法里的this就是那个元素
+
+//现在以上两种原则会冲突，我们采用第一种原则：让类方法里的this是这个类当前实例
+
+function Drag(ele){//构造方法，负责初始化
+	//ele是被拖拽的DOM元素，把这个对象传进来之后，需要保存下来，留到进行拖拽的时候用。
+	this.ele=ele;
+	//var str=null;
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+	//以上是初始化了四个属性（预留），用来保存ele的几个初始值
+	//on(this.ele,"mousedown",this.down);//如果这样绑定的话，down在运行的时候，down里的this会是ele
+	 //我们的原则是，让这里定义的down,move,up方法里的this都要指向当前的实例
+	this.DOWN=processThis(this,this.down);
+	this.MOVE=processThis(this,this.move);
+	this.UP=processThis(this,this.up);
+	on(ele,"mousedown",this.DOWN);
+}
+//活的对象，就是指一个作用域，作用域里的变量可以看成是这个活动对象的属性
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	
+	e.preventDefault();
+}
+
+Drag.prototype.move=function(e){
+	this.ele.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.ele.style.top=this.y+(e.pageY-this.my)+"px";
+}
+
+Drag.prototype.up=function(e){
+	if(this.ele.releaseCapture){
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);
+		this.ele.releaseCature();	
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);	
+	}
+}
+new Drag(div1);//只需new一下，就可以实现对参数div1的拖拽了
+//new Drag(div2);
+//new Drag(div3);
+//var s="abcd";1,2,3,4;
+
+
+
+</script>

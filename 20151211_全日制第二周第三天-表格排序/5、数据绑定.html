@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 20px auto;
+            width: 50%;
+        }
+
+        #ul1 li {
+            height: 35px;
+            line-height: 35px;
+            border-bottom: 1px dashed #08BECE;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li>习近平五大发展理念贯穿十三五全程</li>
+    <li>复旦投毒案凶手林森浩被执行死刑</li>
+</ul>
+
+<script type="text/javascript">
+    var ary = ["习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑", "习近平五大发展理念贯穿十三五全程", "复旦投毒案凶手林森浩被执行死刑"];
+
+    var oUl = document.getElementById("ul1");
+    var oLis = oUl.getElementsByTagName("li");
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onmouseover = function () {
+            this.style.backgroundColor = "#ccc";
+        };
+        oLis[i].onmouseout = function () {
+            this.style.backgroundColor = "";
+        };
+    }
+
+    //3、文档碎片->创建一个文档碎片,把要添加的元素都先放到文档碎片中,最后统一添加到我们的页面中
+    //优势:即不用回流多次,也不会影响之前的元素
+    var frg = document.createDocumentFragment();//创建一个文档碎片
+    for (i = 0; i < ary.length; i++) {
+        var oLi = document.createElement("li");
+        oLi.innerHTML = ary[i];
+        frg.appendChild(oLi);
+    }
+    oUl.appendChild(frg);
+
+
+    //把ary中的数据动态的绑定到我们的#ul1中
+    //1、用动态创建元素标签的方式来实现
+    //    for (i = 0; i < ary.length; i++) {
+    //        var oLi = document.createElement("li");
+    //        oLi.innerHTML = ary[i];
+    //        oUl.appendChild(oLi);
+    //    }
+    //优势:我只是向容器的末尾追加新的元素,之前的元素并没有操作,也不会受到影响
+    //弊端:每一次循环都添加到页面上,引发一次回流...都添加完成后,引发了10多次回流,浏览器需要重新计算DOM结构10多次，比较的浪费性能
+
+    //2、用字符串拼接的方式(真实的项目中最常用)
+    //    var str = "";
+    //    for (i = 0; i < ary.length; i++) {
+    //        str += "<li>" + ary[i] + "</li>";
+    //    }
+    //    oUl.innerHTML = oUl.innerHTML + str;
+    //优势:把需要创建的li统一的添加到了字符串中,最后一次性增加到页面容器中,只引发一次回流
+    //弊端:这样添加后,之前元素绑定的所有的事件和效果都消失了(原因->innerHTML相当于先把之前的li当做字符串获取下来,然后和新的字符串进行拼接,最后在统一的添加到容器中,在这个过程中,我们已经把原来的li进行了处理,所以原来li绑定的事件都消失了)
+
+    //DOM的回流/重绘
+    //回流:页面中的HTML结构发生改变(增加、删除了元素、元素的位置发生改变...)，浏览器会重新的计算我们的DOM结构-->每一次回流都是消耗性能的
+    //重绘:页面中元素标签的样式(比如颜色)发生改变,浏览器会重新的渲染当前的这个元素
+</script>
+</body>
+</html>

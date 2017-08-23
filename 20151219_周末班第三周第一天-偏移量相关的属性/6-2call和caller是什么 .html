@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+function fn1(){
+	console.log(arguments.callee==fn1);//callee是指当前执行的这个方法
+	//callee上还会有一个属性叫caller，caller是调用callee的那个方法
+	console.log(arguments.callee.caller==fn2);
+}
+function fn2(){
+	arguments.callee//fn2
+	fn1();
+}
+function fn3(){
+	fn1();	
+}
+fn2();
+fn3();
+</script>

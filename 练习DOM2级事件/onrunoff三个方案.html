@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1,#div2,#div3{ width: 100px; height: 100px; position: absolute;}
+        #div1{ background: red; left: 100px; top: 30px;}
+        #div2{ background: green; left:150px; top: 90px;}
+        #div3{ background: blue; left: 200px; top: 120px;}
+    </style>
+</head>
+<body>
+<a href="www.baidu.com" id="baidu">百度</a>
+<script>
+    function on(ele,type,fn){
+        if(ele.addEventListener){ //标准
+            ele.addEventListener(type,fn,false);
+        }else{// IE
+            if(!ele['aEvent'+type]){
+                ele['aEvent'+type] = [];
+                ele.attachEvent('on'+type,function(){run.call(ele)})//绑定run方法 解决this关键字儿的问题
+            }
+            var a = ele['aEvent'+type];
+            for(var i=0;i< a.length;i++){  //解决重复绑定的问题
+                if(a[i] == fn){
+                    return;
+                }
+            }
+            a.push(fn);
+        }
+    }
+    function run(e){
+        var e = window.event;
+        var type = e.type;
+        e.target = e.srcElement;
+        e.pageX = (document.documentElement.scrollTop || document.body.scrollTop) + e.clientX;
+        e.pageY = (document.documentElement.scrollLeft || document.body.scrollLeft) + e.clientY;
+        e.stopPropagation = function(){e.cancelBubble = true;};
+        e.preventDefault = function () {e.returnValue = false;}
+        var a = this['aEvent' + type];
+        if(a && a.length != 0){
+            for(var i=0;i< a.length;){
+                if(typeof a[i] != 'function'){
+                    a.splice(i,1);
+                }else{
+                    a[i].call(this,e);
+                    i++;
+                }
+            }
+        }
+    }
+    function off(ele,type,fn){
+        if(ele.removeEventListener){
+            ele.removeEventListener(type,fn,false);
+        }else{
+            var a = ele['aEvent' + type];
+            for(var i=0;i< a.length;i++){
+                if(a[i] == fn){
+                    a[i] = null;
+                    return;
+                }
+            }
+        }
+    }
+    var baidu = document.getElementById('baidu');
+    function fn1(e){
+        this.innerHTML = e.pageX;
+        e.preventDefault();
+    }
+    on(baidu,'click',fn1)
+</script>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<script>
+    function prrecssThis(obj,fn){
+        return function(e){fn.call(obj,e)}
+    }
+    var zIndex = 1;
+    function down(e){
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+
+        if(this.setCapture){
+            this.setCapture();
+            on(this,'mousemove',move);
+            on(this,'mouseup',up);
+        }else{
+            this.MOVE = prrecssThis(this,move);
+            this.UP = prrecssThis(this,up);
+            on(document,'mousemove',this.MOVE);
+            on(document,'mouseup',this.UP);
+        }
+        this.style.zIndex = ++zIndex;
+        e.preventDefault();
+    }
+    function move(e){
+        this.style.left = this.x + (e.pageX - this.mx) + 'px';
+        this.style.top = this.y + (e.pageY - this.my) + 'px';
+    }
+    function up(e){
+        if(this.releaseCapture){
+            this.releaseCapture();
+            off(this,'mousemove',move);
+            off(this,'mouseup',up);
+        }else{
+            off(document,'mousemove',this.MOVE);
+            off(document,'mouseup',this.UP);
+        }
+    }
+    var odivs = document.getElementsByTagName('div');
+    for(var i=0;i<odivs.length;i++){
+
+        on(odivs[i],'mousedown',down);
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="oul">
+    <li>111111111111</li>
+    <li>112222221111</li>
+    <li>333333331111</li>
+    <li id="oli">144444444111</li>
+    <!--http://www.zhufengpeixun.cn/jscourse/jscourse383.html-->
+    <li>555555555555</li>
+    <li>666666666666</li>
+    <li>777777777777</li>
+    <li>888888888888</li>
+    <li>112222221111</li>
+</ul>
+<script>
+   var oul = document.getElementById('oul');
+    var oli = document.getElementById('oli');
+   //在Jq中，获取元素的下一个节点的方法是next()
+    //console.log(oli.previousElementSibling) //ie中返回的是 object HTMLLIElement  不兼容
+   function next(obj){
+        var cur = obj.nextSibling;
+        while(cur && cur.nodeType != 1){
+            cur = cur.nextSibling;
+        }
+        console.log(cur)
+    }
+    //next(oli)
+
+    function nextAll(obj){
+        var cur = obj.nextSibling;
+        var ary = [];
+        while(cur){
+            if(cur.nodeType == 1 ){
+                ary.push(cur)
+            }
+            cur = cur.nextSibling;
+        }
+        console.log(ary);
+    }
+    nextAll(oli)
+
+
+    function sum(){
+        var total = null;
+        for(var i =0;i<arguments.length; i++){
+            var cur = arguments[i];
+            var ary = [];
+            if(Number(cur)){
+                total += cur;
+            }else{
+                ary.push(cur);
+                //alert('第' + i + '项不是有效数字' )
+            }
+        }
+        console.log(total);
+    }
+    sum(1,2,8,1,'aaa')
+
+    function getrandom(n,m){
+        var curn = Number(n);
+        var curm = Number(m);
+        if(!isNaN(curn) && !isNaN(curm)){
+            console.log(Math.round(Math.random() * (m -n) + n))
+
+        }else if(n > m){
+            var temp = n;
+            n = m;
+            m = temp;
+        }
+        else{
+            console.log(Math.random())
+        }
+    }
+    getrandom(50,45)
+
+  var ary=[1,2,3,4];
+   function fn(ary){
+       ary[0]=0;
+       ary=[0];
+       ary[0]=100;
+       return ary;
+   }
+   var res=fn(ary);
+   console.log(ary); //[0,2,3,4]
+   console.log(res); //[100]
+
+
+
+
+
+</script>
+</body>
+</html>

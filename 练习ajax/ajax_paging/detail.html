@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新建文件</title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+</body>
+</html>
+<script src="js/tools.js"></script>
+<script charset="UTF-8" type="text/javascript">
+    var queryToObj = function (url) {
+        var obj = {};
+        var reg = /([^?=&]+)=([^?=&]+)/g;
+        url.replace(reg, function () {
+            obj[arguments[1]] = arguments[2];
+        });
+        return obj;
+    };
+    var url = window.location.href;
+    var num = queryToObj(url)["num"];
+    tools.ajax("data.txt", function (data) {
+
+        for (var i = 0; i < data.length; i++) {
+            var cur = data[i];
+            if (cur["num"] === num) {
+                var val = cur["sex"] === 1 ? "男" : "女";
+                document.write("<h1>学号" + cur["num"] + "</h1><h1>性别：" + val + "</h1><h1>分数" + cur["score"] + "</h1>")
+            }
+        }
+    })
+</script>

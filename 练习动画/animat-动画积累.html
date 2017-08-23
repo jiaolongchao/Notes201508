@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv1{ width:100px; height:100px; position:absolute; left:600px; top:30px; background:red;}
+        #odiv2{ width:100px; height:100px; position:absolute; left:600px; top:150px; background:green;}
+        #redToLeft{ width:150px; height:100px; position:absolute; left:250px; top:350px; background:red;}
+        #redToRight{ width:150px; height:100px; position:absolute; left:900px; top:350px; background:red;}
+        #greenToLeft{ width:150px; height:100px; position:absolute; left:250px; top:500px; background:green;}
+        #greenToRigth{ width:150px; height:100px; position:absolute; left:900px; top:500px; background:green;}
+    </style>
+</head>
+<body>
+<div id="odiv1"></div>
+<div id="odiv2"></div>
+<div id="redToLeft">红盒子向左</div>
+<div id="redToRight">红盒子向右</div>
+<div id="greenToLeft">绿盒子向左</div>
+<div id="greenToRigth">绿盒子向右</div>
+<script>
+    function getClass(obj,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(obj,null)[attr])
+        }else{
+            return parseFloat(obj.currentStyle[attr]);
+        }
+    }
+    function animate(ele,attr,target,duration){
+        window.clearInterval(ele.timer)
+        var times = 0;
+        var interval = 15;
+        var begin = getClass(ele,attr);
+        var changet = target - begin;
+
+        function step(){
+            times += interval;
+            if(times < duration){
+                ele.style[attr] = (times / duration) * changet + begin  + "px";
+            }else{
+                window.clearInterval(ele.timer);
+                ele.style[attr] = target + "px";
+            }
+
+        }
+        ele.timer = setInterval(step,interval)
+    }
+
+    var odiv1 = document.getElementById("odiv1");
+    var odiv2 = document.getElementById("odiv2");
+    var redToLeft = document.getElementById("redToLeft");
+    var redToRight = document.getElementById("redToRight");
+    var greenToLeft = document.getElementById("greenToLeft");
+    var greenRight = document.getElementById("greenToRigth");
+    redToLeft.onclick = function(){
+        animate(odiv1,"left",0,1000)
+    }
+    redToRight.onclick = function(){
+        animate(odiv1,"left",1000,1000)
+    }
+    greenToLeft.onclick = function(){
+        animate(odiv2,"left",0,1000)
+    }
+    greenRight.onclick = function(){
+        animate(odiv2,"left",1000,1000)
+    }
+</script>
+</body>
+</html>

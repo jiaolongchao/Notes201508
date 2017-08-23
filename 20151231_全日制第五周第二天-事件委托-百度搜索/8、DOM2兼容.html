@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">珠峰培训</div>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+
+    function fn1() {
+        console.log(1);
+    }
+    function fn2() {
+        console.log(2);
+    }
+    function fn3() {
+        console.log(3);
+    }
+    function fn4() {
+        console.log(4);
+    }
+    function fn5() {
+        console.log(5);
+    }
+    function fn6() {
+        console.log(6);
+    }
+    function fn7() {
+        console.log(7);
+    }
+    function fn8() {
+        console.log(8);
+    }
+    function fn9() {
+        console.log(9);
+    }
+    function fn10() {
+        console.log(10);
+    }
+    function fn11() {
+        console.log(11);
+    }
+    function fn12() {
+        console.log(12);
+        console.log(this);
+    }
+
+
+    oDiv.attachEvent("onclick", fn1);
+    oDiv.attachEvent("onclick", fn2);
+    oDiv.attachEvent("onclick", fn3);
+    oDiv.attachEvent("onclick", fn4);
+    oDiv.attachEvent("onclick", fn5);
+    oDiv.attachEvent("onclick", fn6);
+    oDiv.attachEvent("onclick", fn7);
+    oDiv.attachEvent("onclick", fn8);
+    oDiv.attachEvent("onclick", fn9);
+    oDiv.attachEvent("onclick", fn10);
+    oDiv.attachEvent("onclick", fn11);
+    oDiv.attachEvent("onclick", fn12);
+    oDiv.attachEvent("onclick", fn12);
+    oDiv.attachEvent("onclick", fn12);
+
+
+    //DOM2兼容问题:
+    //在标准的浏览器中采用addEventListener/removeEventListener，在IE6~8中不支持这个，需要使用attachEvent/detachEvent；
+    //oDiv.addEventListener("click",fn1,false);//三个参数,行为不需加on
+    //oDiv.attachEvent("onclick",fn1);//两个参数,行为需要加on,第三个参数没有说明我们的这个只能在冒泡阶段发生
+
+    //1)顺序问题->标准浏览器中绑定多个方法,方法的执行顺序和绑定的顺序保持一致,而在IE6~8中顺序是混乱的
+    //2)重复问题->标准浏览器中是对于给一个元素的同一个行为绑定多次一样的方法,浏览器会自己把重复的过滤掉，而在IE6~8中是不进行过滤的,绑定重复了也会执行多次
+    //3)this问题->标准浏览器中绑定的方法中的this是当前的元素,而IE6~8中是window
+
+
+    //如何处理兼容?
+    //JS按照时间分类-->第五周3:基础事件库...
+    //4、5、6、6-2、7 (必看)
+
+
+
+
+    //移除：在DOM2移除的时候,我们需要保证三个参数高度的一致才能移除
+    //    function fn(e) {
+    //        console.log("ok");
+    //        oDiv.removeEventListener("click", fn, false);
+    //    }
+    //    oDiv.addEventListener("click", fn, false);
+
+
+    /*解决this和重复的问题*/
+    function bind(curEle, evenType, evenFn) {
+        if (document.addEventListener) {
+            curEle.addEventListener(evenType, evenFn, false);
+            return;
+        }
+        //1)给每一次传递进来需要绑定的方法进行化妆
+        var tempFn = function () {
+            evenFn.call(curEle);
+        };
+        //把化妆前的放到脑门上,后期需要拿化妆前的比较
+        tempFn.photo = evenFn;
+
+        //2)把它存储到一个容器中(容器中存储的是所有需要绑定的方法化妆后的函数)
+        if (!curEle["my" + evenType]) {
+            curEle["my" + evenType] = [];
+        }
+        var ary = curEle["my" + evenType];
+        for (var i = 0; i < ary.length; i++) {
+            var cur = ary[i];
+            if (cur.photo === evenFn) {
+                return;
+            }
+        }
+        ary.push(tempFn);
+        curEle.attachEvent("on" + evenType, tempFn);
+    }
+
+    function unbind(curEle, evenType, evenFn) {
+        if (document.removeEventListener) {
+            curEle.removeEventListener(evenType, evenFn, false);
+            return;
+        }
+        var ary = curEle["my" + evenType];
+        for (var i = 0; i < ary.length; i++) {
+            var tempFn = ary[i];
+            if (tempFn.photo === evenFn) {
+                curEle.detachEvent("on" + evenType, tempFn);
+                break;
+            }
+        }
+    }
+
+    /*顺序问题:内置的事件池不能用了,我们自己写一套事件池来执行我们的方法*/
+    function on(curEle, evenType, evenFn) {
+        !curEle["myEvent" + evenType] ? curEle["myEvent" + evenType] = [] : null;
+        var ary = curEle["myEvent" + evenType];
+        for (var i = 0; i < ary.length; i++) {
+            if (ary[i] == evenFn) {
+                return;
+            }
+        }
+        ary.push(evenFn);
+        bind(curEle, evenType, run);
+    }
+
+    //off:在自己的事件池中，把需要移除的方法去掉
+    function off(curEle, evenType, evenFn) {
+        var ary = curEle["myEvent" + evenType];
+        for (var i = 0; i < ary.length; i++) {
+            if (ary[i] == evenFn) {
+                ary[i] = null;
+                break;
+            }
+        }
+    }
+
+    //run:按照自己的事件池，依次执行我们的绑定的方法
+    function run(e) {
+        e = e || window.event;
+        var flag = e.target ? true : false;
+        if (!flag) {
+            e.target = e.srcElement;
+            e.pageX = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+            e.pageY = e.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+            e.preventDefault = function () {
+                e.returnValue = false;
+            };
+            e.stopPropagation = function () {
+                e.cancelBubble = true;
+            };
+        }
+
+        //this->curEle
+        var ary = this["myEvent" + e.type];
+        for (var i = 0; i < ary.length; i++) {
+            var curFn = ary[i];
+            if (typeof curFn === "function") {
+                curFn.call(this, e);
+            } else {
+                ary.splice(i, 1);
+                i--;
+            }
+        }
+    }
+</script>
+</body>
+</html>

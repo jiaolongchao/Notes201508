@@ -1,0 +1,20 @@
+{
+  "errno": 0,
+  "items": [
+    {
+      "type": "food",
+      "name": "hanbaobao",
+      "price": "9.5"
+    },
+    {
+      "type": "food",
+      "name": "cola",
+      "price": "5"
+    },
+    {
+      "type": "food",
+      "name": "shutiao",
+      "price": "6"
+    }
+  ]
+}

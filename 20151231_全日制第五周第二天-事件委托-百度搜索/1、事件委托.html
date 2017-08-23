@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>事件委托</title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #outer {
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+            background: #008CD7;
+        }
+
+        #inner {
+            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+            background: #008000;
+        }
+
+        #center {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            background: #AFD400;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    //事件委托的原理:
+    //利用了事件默认会进行冒泡传播的机制,我们给最外层的元素绑定一个方法,当里面元素的相关行为触发的时候,最外面的绑定的方法也会执行,我们可以通过事件对象中的事件源判断当前点击的是哪一个元素,从而进行不一样的处理
+
+    var body = document.body;
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    //给最外面的body绑定一个点击事件,当里面的某一个元素的点击行为被触发的时候,在不阻止冒泡传播的情况下,body的click行为都会被触发,我们为其绑定的那个方法也会执行
+    //e.target是事件源:就是我们当前点击的这个元素
+    body.onclick = function (e) {
+        e = e || window.event;
+        e.target = e.target || e.srcElement;
+
+        if (e.target.id === "center") {
+            console.log("center");
+        } else if (e.target.id === "inner") {
+            console.log("inner");
+        } else if (e.target.id === "outer") {
+            console.log("outer");
+        } else {
+            console.log("body");
+        }
+    };
+
+    //对于一个容器中我们多个元素都要绑定相关的行为,做不同的处理,我们测试后的结果发现：使用事件委托的方式处理，比一个个的单独绑定事件，在执行和处理的速度上提升了一倍（事件委托非常的重要）
+    //对于一些其他的需求,除了事件委托你是处理不了的
+</script>
+</body>
+</html>

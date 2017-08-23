@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        #panel {
+            width: 163px;
+            background-color: #cccccc;
+            border: 1px solid rosybrown;
+            position: absolute;
+            left: 72px;
+            top: 25px;
+        }
+
+        #panel ul {
+            list-style: none;
+        }
+
+        #panel ul li {
+            width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+            height: 24px;
+            line-height: 24px;
+            padding-left: 10px;
+            cursor: pointer;
+        }
+
+        #panel ul li:hover {
+            background-color: aliceblue;
+        }
+
+    </style>
+    <script src="jsonp.js"></script>
+    <script>
+        /**
+         * 判断键盘输入是否合法
+         * @param keyCode {Number} 输入的keycode
+         * @returns {boolean} 是否合法
+         */
+        var isRightInput = function (keyCode) {
+            // a-z 65-90
+            // 0-9 48-57
+            return (65 <= keyCode && keyCode <= 90) || (48 <= keyCode && keyCode <= 57);
+        };
+        window.onload = function () {
+            /**
+             * 输入框
+             * @type {HTMLElement}
+             */
+            var searchText = document.getElementById('search-text');
+            /**
+             * 搜索按钮
+             * @type {HTMLElement}
+             */
+            var searchBtn = document.getElementById('search-btn');
+            /**
+             * 拿到ul
+             * @type {HTMLElement}
+             */
+            var ul = document.getElementById('ul-content');
+            /**
+             * 拿到div
+             * @type {HTMLElement}
+             */
+            var panel = document.getElementById('panel');
+            /**
+             * 调用百度的搜索jsonp接口
+             */
+            var searchHandler = function () {
+                var searchValue = searchText.value.trim();
+                if (searchValue) {
+                    jsonp('https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                            {
+                                // 需要搜的内容
+                                wd: searchValue,
+                                sc: 'hao123'
+                            }, 'cb', function (data) {
+                                // 返回的数据格式
+                                // {q:"b",p:false,s:["baidu","bt","btchina","beyond","bbs","bbc","blog","bobo组合","bb霜"]}
+                                var list = data['s'];
+                                // 循环数据 生成dom 拼接到ul里
+                                var fragement = document.createDocumentFragment();
+                                for (var i = 0, l = list.length; i < l; i++) {
+                                    var li = document.createElement('li');
+                                    li.innerHTML = list[i];
+                                    fragement.appendChild(li);
+                                }
+                                ul.innerHTML = '';
+                                ul.appendChild(fragement);
+                                // 显示panel
+                                panel.style.display = 'block';
+                            }
+                    )
+                }
+            };
+            // 因为onkeydonw可以有效判断当前是不是输入法
+            // 绑定输入框的onkeydown事件
+            searchText.onkeydown = function (e) {
+                // 判断是否输入合法
+                if (isRightInput(e.keyCode) || e.keyCode == 229) {
+                    setTimeout(function () {
+                        // 执行搜索逻辑
+                        searchHandler();
+                    }, 0)
+                }
+
+            };
+            // 搜索按钮点击事件
+            // 打开新的浏览器tab页
+            searchBtn.onclick = function () {
+                var searchValue = searchText.value;
+                if (searchValue) {
+                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(searchValue))
+                }
+
+            };
+
+            // 利用冒泡，得到点击的哪个内容
+            ul.onclick = function (e) {
+                e = e || window.event;
+                var target = e.target || e.srcElement;
+                if (target.nodeName === 'LI') {
+                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(target.innerHTML))
+                }
+                // 阻止冒泡
+                e.stopPropagation();
+                e.cancelBubble = true;
+                return false;
+            };
+            // 当click事件源为非ul中的元素时 隐藏panel
+            document.body.onclick = function () {
+                panel.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+<span>百度搜索</span>
+<input id="search-text" type="text">
+<button id="search-btn" type="button">搜索</button>
+<div id="panel" style="display: none">
+    <ul id="ul-content">
+    </ul>
+</div>
+</body>
+</html>

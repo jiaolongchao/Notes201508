@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv1{ width:100px; height:100px; position:absolute; left:100px; top:200px; background:red;}
+        #left,#right{ width: 100px;height: 30px; background:green; position: absolute; top: 350px; left: 10px;}
+    </style>
+</head>
+<body>
+<div id="odiv1"></div>
+<div id="left"></div>
+<div id="right" style="left: 500px"></div>
+<script>
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr])
+        }else{
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+    function animate(ele,attr,target,duration,callback){
+        var begin = getCss(ele,attr);
+        var change = target-begin;
+        var times = 0;
+        var interval = 15;
+        window.clearInterval(ele.timer)
+        function setp(){
+            times += interval;
+            if(times < duration){
+                ele.style[attr] = times / duration * change + begin + 'px';
+            }else{
+                ele.style[attr] = target + 'px';
+                window.clearInterval(ele.timer)
+                ele.timer = null;
+                if(typeof callback == "function"){
+                    callback.call(ele);
+                }
+            }
+        }
+        ele.timer = window.setInterval(setp,interval);
+    }
+    function callback(){
+        this.style.backgroundColor = 'pink';
+    }
+    var odiv = document.getElementById("odiv1")
+    var oleft = document.getElementById("left")
+    var oright = document.getElementById("right")
+    //让三个div动画停止后，背景都变为绿色
+    odiv.onclick = function(){
+        if(this.timer){
+            clearInterval(this.timer);
+            this.timer= null;
+        }else{
+            animate(this,"left",900,1000,callback);
+        }
+    }
+    oleft.onclick = function(){
+        animate(this,"left",900,1000,callback);
+    }
+    oright.onclick = function(){
+        animate(this,"top",900,1000,callback);
+    }
+    //当我们在执行下一个动画之前，先要把原来的动画停掉  在step执行之前，先把动画清掉 是为了清除积累的
+    //我可以判断出：这个元素是否在执行动画，如果正在动画中，则不掺和了
+    //if(ele.timer)就能知道它是否在动画中，
+</script>
+</body>
+</html>

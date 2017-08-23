@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、两种定时的区别
+    //window.setTimeout([function],[interval]) ->设置一个等待时间[interval],当到达时间后执行我们的[function],执行完成当前定时器停止(执行一次)
+
+    //window.setInterval([function],[interval]) ->设置一个等待时间[interval],当到达时间后执行我们的[function],执行完成后,定时器并没有停止,而是以后每隔这么常时间都会执行一次[function](执行多次)
+
+    //2、定时器是有返回值的
+    //返回值是一个number类型的值,代表当前是第几个定时器
+    //即使上面的定时器清掉,我们的数字也是累加的,例如:设置一个定时器,然后在把定时器删除,然后在设置一个定时器,此时虽然第一个定时器没有了,但是第二个定时器的返回值还是2(这个和银行排队号是一样的)
+    //    var timer = window.setTimeout(function () {}, 1000);
+    //    console.log("timer:" + timer);//->1
+    //    window.clearTimeout(timer);
+    //    var timer2 = window.setTimeout(function () {}, 1000);
+    //    console.log("timer2:" + timer2);//->2
+
+
+    //3、定时器是异步编程的
+
+    //同步:只有当前处理的事情结束了,才会去做下一件事情
+    //珊姐姐回家喜欢喝咖啡看书->先去煮咖啡,需要半个小时才能煮好,在煮的过程中,啥事都不干,一直干盯着等,只有咖啡煮好了,才去看书
+    //我们的for循环其实就是一个简单的同步:只有循环10次都结束了,才会执行循环外面的代码
+    //    for (var i = 0; i < 10; i++) {
+    //        if (i === 9) {
+    //            console.log("循环结束~~");
+    //        }
+    //    }
+    //    console.log("ok");
+
+    //异步:在当前的事情还处于等待时间的时候,我们先执行下面的事情,当下面的事情执行完成后在返回头看当前的事情是否到达时间,时间到了在执行
+    //穆哥哥回家喜欢喝咖啡看书->先去煮咖啡,需要半个小时才能煮好,在煮的过程中,不会干等着,继续执行下面的事情看书,只有等看书的事情结束后,才想起我们的咖啡已经煮了10个小时了
+
+    //先输出0在输出1
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);//->2) 1
+    //    }, 1000);
+    //    console.log(count);//->1) 0
+
+    //我们给定时器设置一个时间,但是不一定是到时间就执行,只有等while循环结束后才会看定时器是否到时间,那时在执行
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);
+    //    }, 10);
+    //    var i = 0;
+    //    while (i < 1000000) {
+    //        i++;
+    //    }
+
+    //每个浏览器对于定时器都有一个默认的最小时间(谷歌5~6 IE10~13),即使你的时间写0也不是立即执行,在谷歌下需要等待5~6ms后才会执行
+    //    var count = 0;
+    //    window.setTimeout(function () {
+    //        count++;
+    //        console.log(count);//->2) 1
+    //    }, 0);
+    //    console.log(count);//->1) 0
+
+
+    //4、所有的事件绑定都是异步编程的
+    //我们发现当我们点击的时候,函数中的i已经变为最后一次循环完成的结果了
+    //    for (var i = 0; i < oLis.length; i++) {
+    //        oLis[i].onclick = function () {
+    //            changeTab(i);
+    //        }
+    //    }
+    //任务:自己回去用异步编程和作用的原理来详细的阐述为什么不能的原因
+</script>
+</body>
+</html>

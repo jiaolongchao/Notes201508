@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        #tab {
+            width: 500px;
+            margin: 100px auto;
+
+        }
+        #tab ul{
+            height: 30px;}
+        #tab ul li{
+            float: left;
+            width: 100px;
+            text-align: center;
+            line-height: 30px;
+
+        }
+        #tab ul li.active{ background:#08BECE;}
+        #tab div{
+            width: 100%;
+            height: 100px;
+        line-height: 100px;
+            text-align: center;
+            border: 1px solid #ffe470;
+            margin-top: -1px;
+            display: none;}
+        #tab div.active{
+            display: block;}
+    </style>
+</head>
+<body>
+<div id="tab">
+    <ul>
+        <li class="active">选项卡一</li>
+        <li>选项卡二</li>
+        <li>选项卡三</li>
+    </ul>
+    <div class="active">
+        选项卡一内容
+    </div>
+    <div>
+        选项卡二内容
+    </div>
+    <div>
+        选项卡三内容
+    </div>
+</div>
+<script>
+    var oTab=document.getElementById('tab');
+    var oLis=oTab.getElementsByTagName('li');
+    var oDiv=oTab.getElementsByTagName('div');
+
+    for(var i=0; i<oLis.length;i++){
+        oLis[i].index=i;
+        oLis[i].onclick=function(){
+            tab(this.index);
+        }
+    }
+
+    function tab(n){
+        for(var i=0; i<oLis.length;i++){
+            oLis[i].className=null;
+            oDiv[i].className=null;
+        }
+        oLis[n].className="active";
+        oDiv[n].className="active";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.tabbedPanels{ width:500px; margin:10px auto;}
+ul.tabGroup{ list-style:none; height:30px; line-height:30px; overflow:hidden; margin:0; padding:0;}
+li.tab{ width:70px; margin-left:20px; background:#CCC; font-size:16px; float:left; text-align:center; cursor:pointer; }
+li.selectedTab{ background:#09F; font-weight:bold;}
+div.contentGroup{ overflow:hidden; clear:both; }
+div.content{ height:400px; background:#09f; display:none; padding:10px;  }
+div.selectedContent{ display:block;}
+
+.promoted{ color:red; font-weight:bold;}
+
+</style>
+</head>
+
+<body>
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+</body>
+</html>
+<script src="DOM.js"></script>
+<script>
+//var oLis=document.getElementsByClassName("tab");
+document.body.onclick=function(e){
+	if(e.target.className==="tab"){
+		changeTab.call(e.target);
+	}
+	if(e.target.id=="inner"){
+		//做相应的处理	
+	}
+}
+function changeTab(){
+	//只有这个方法由事件直接触发的情况下，才会得到一个由浏览器传进来的实参
+	//arguments[0]//肯定会有值，但是不需要用
+	//this.className="tab selectedTab";
+	DOM.addClass(this,"selectedTab");
+	var tabSiblings=DOM.siblings(this);
+	for(var i=0;i<tabSiblings.length;i++){
+		var oTab=tabSiblings[i];
+		//oTab.className="tab";
+		DOM.removeClass(oTab,"selectedTab");
+	}
+	
+	//以上是操作li
+	
+	var aContents=DOM.children(DOM.next(this.parentNode));
+	//从以上的div中，找到和点击的li对应的那个div
+	var n=DOM.getIndex(this);//计算索引值
+	var selectedContent=aContents[n];//通过索引值找到对应的内容div
+	//selectedContent.className="content selectedContent";
+	DOM.addClass(selectedContent,"selectedContent");
+	var contentSiblings=DOM.siblings(selectedContent);//找到内容div的兄弟元素
+	for(var i=0;i<contentSiblings.length;i++){
+		//contentSiblings[i].className="content";
+		DOM.removeClass(contentSiblings[i],"selectedContent")
+	}
+}
+
+
+</script>

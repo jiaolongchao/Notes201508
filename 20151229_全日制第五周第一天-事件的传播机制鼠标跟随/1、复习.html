@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript" src="js/css.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    utils.css(oDiv, "width", 100);
+    utils.css(oDiv, {
+        height: 100,
+        background: "red",
+        opacity: 0.5
+    });
+    console.log(utils.css(oDiv, "opacity"));
+</script>
+</body>
+</html>

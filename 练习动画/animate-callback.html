@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{color: white; font-size: 16px;}
+        #odiv_red{ width:100px; height:100px; position:absolute; left:200px; top:30px; background:red;}
+        #odiv_green{ width:100px; height:100px; position:absolute; left:200px; top:130px; background:green;}
+        #odiv_yellow{ width:100px; height:100px; position:absolute; left:200px; top:230px; background:yellow;}
+        #odiv_blue{ width:100px; height:100px; position:absolute; left:200px; top:330px; background:blue;}
+        #odiv_pink{ width:100px; height:100px; position:absolute; left:200px; top:430px; background:pink;}
+    </style>
+</head>
+<body>
+<div id="odiv_red">小红</div>
+<div id="odiv_green">小绿</div>
+<div id="odiv_yellow">小黄</div>
+<div id="odiv_blue">小蓝</div>
+<div id="odiv_pink">小粉</div>
+<script>
+    function getClass(obj,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(obj,null)[attr])
+        }else{
+            return parseFloat(obj.currentStyle[attr]);
+        }
+    }
+    
+    function animate(ele,attr,target,duration,callback){
+        window.clearInterval(ele.timer)
+        var times = 0;
+        var interval = 15;
+        var begin = getClass(ele,attr);
+        var changet = target - begin;
+
+        function step(){
+            times += interval;
+            if(times < duration){
+                ele.style[attr] = (times / duration) * changet + begin  + "px";
+            }else{
+                window.clearInterval(ele.timer);
+                ele.style[attr] = target + "px";
+
+                if(typeof callback == "function"){
+                    callback.call(ele)
+                }
+            }
+
+        }
+        ele.timer = setInterval(step,interval)
+    }
+    function changBg(){
+        this.style.backgroundColor = 'black';
+    }
+    var odiv_red = document.getElementById("odiv_red");
+    var odiv_green = document.getElementById("odiv_green");
+    var odiv_yellow = document.getElementById("odiv_yellow");
+    var odiv_blue = document.getElementById("odiv_blue");
+    var odiv_pink = document.getElementById("odiv_pink");
+    var odiv = document.getElementsByTagName('div');
+    for(var i=0;i<odiv.length;i++){
+        odiv[i].onclick = function(){
+            animate(this,"left",600,1000,changBg)
+        }
+    }
+
+</script>
+</body>
+</html>

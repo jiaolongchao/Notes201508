@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var con = 1;
+    function fn2(){
+        con++;
+        console.log(con)
+        //window.setTimeout(arguments.callee,1000)
+        console.log(arguments.callee == fn2)
+        console.log(arguments.callee.caller == fn3)
+    }
+ function fn3(){
+     fn2()
+ }
+    fn3()
+</script>
+</body>
+</html>

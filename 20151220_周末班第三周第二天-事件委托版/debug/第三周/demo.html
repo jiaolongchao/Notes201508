@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    p {
+        height: 100px;
+    }
+</style>
+<body>
+    
+    <p>2sdfdsf</p>
+</body>
+<script>
+    var p = document.getElementsByTagName("p");
+    function getCss(ele, attr) {
+        if(window.getComputedStyle) {
+            return getComputedStyle(ele,null)[attr];
+        } else {
+            return ele.currentStyle[attr];
+        }
+    }
+    var h = getCss(p,"height");
+    alert(h);
+</script>
+</html>

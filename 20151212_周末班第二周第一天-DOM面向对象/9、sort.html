@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>sort</title>
+</head>
+<body>
+<script type="text/javascript">
+    //var ary = [12, 23, 34]; 一维数组
+    var ary = [
+        {name: "马丽", age: 18},
+        {name: "李晨曦", age: 20},
+        {name: "王小金", age: 16},
+        {name: "杨大伟", age: 40},
+        {name: "孙召召", age: 21}
+    ];//二维数组
+    //需求：按照当前每一项中的年龄由小到大进行排序
+
+    //    ary.sort(function (a, b) {
+    //        return parseFloat(a.age) - parseFloat(b.age);
+    //    });
+
+    ary.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+    });
+
+
+    //    ary.sort(function (a, b) {
+    //        //a:数组中的当前项
+    //        //b:数组中的当前项的后一项
+    //        //console.log(a, b);
+    //
+    //        //return 需要返回的值是一个>0或者<=0的数
+    //        // >0:a和b交换位置
+    //        // <=0:a和b不进行任何的处理
+    //        return 1;//这里我返回的永远是一个>0的数,那么每一次a和b都交换位置,最后的结果是把数组整体的倒过来排列
+    //    });
+
+
+</script>
+</body>
+</html>

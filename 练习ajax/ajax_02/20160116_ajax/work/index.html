@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商品信息页</title>
+    <style>
+        table td {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<p>当前查询类型为:<span id="type">全部查询</span></p>
+
+<div id="panel">
+    <button node-type="1" type="button">食品查询</button>
+    <button node-type="2" type="button">用品查询</button>
+    <button node-type="" type="button">全部查询</button>
+</div>
+
+<table id="content">
+    <thead>
+    <tr>
+        <th>类别</th>
+        <th>名称</th>
+        <th>价格</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</body>
+</html>
+<script src="../ajax.js"></script>
+<script>
+    window.onload = function () {
+        var tbody = document.getElementById('content').getElementsByTagName('tbody')[0];
+        var template = [
+            '<tr>',
+            '<td>{{type}}</td>',
+            '<td>{{name}}</td>',
+            '<td>{{price}}</td>',
+            '</tr>'].join('');
+        var panel = document.getElementById('panel');
+        var spanType=document.getElementById('type');
+        panel.onclick = function (e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+            getInfoHelper(target.getAttribute('node-type'));
+            spanType.innerHTML=target.innerHTML;
+        };
+        var getInfoHelper = function (type) {
+            ajax({
+                url: '/getInfo',
+                data: {type: type || ''},
+                cache: false,
+                method: 'get',
+                success: function (data) {
+                    var html = '';
+                    if (data.errno === 0) {
+                        for (var i = 0, l = data.items.length; i < l; i++) {
+                            var temp = data.items[i];
+                            html += template.replace('{{type}}', temp.type)
+                                    .replace('{{name}}', temp.name)
+                                    .replace('{{price}}', temp.price);
+                        }
+                        tbody.innerHTML = html;
+                    }
+                },
+                error: function () {
+                    console.error('failure')
+                },
+                dataType: 'json'
+            })
+        };
+        getInfoHelper('');
+    }
+
+</script>

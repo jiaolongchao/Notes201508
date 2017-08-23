@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<!--href="javascript:;" 阻止a标签的默认行为-->
+<a id="link" href="https://www.baidu.com/">点击我啊~~</a>
+
+<script type="text/javascript">
+    //a标签实现的是跳转链接的,当点击它的时候跳转到指定的页面->这个就是a标签本身的默认行为
+    var link = document.getElementById("link");
+    link.onclick = function (e) {
+        e = e || window.event;
+        console.log(1);
+        //阻止默认行为
+        //e.preventDefault ? e.preventDefault() : e.returnValue = false;
+        return false;//->也是阻止默认的行为
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // promise是解决什么的？
+        /**
+         * 解决异步回调金字塔和解决延迟调用的问题
+         * 解决之后代码更好维护。逻辑结构就像同步一样 很清晰
+         */
+        // 这是同步
+        /* $.get('1',function(){
+
+         })
+         $.get('2',function(){
+
+         })
+         $.get('3',function(){
+
+         })
+         $.get('4',function(){
+
+         })*/
+
+        // 这是异步
+
+        /*$.get('1',function(){
+         //100行逻辑处理
+         $.get('2',function(){
+         // 400行逻辑处理
+         $.get('3',function(){
+         $.get('4',function(){
+         $.get('5',function(){
+
+         })
+         })
+         })
+         })
+         })*/
+
+        // 使用promise之后 写法会变成什么样？
+        /*$.get('1').done(function(){
+         return $.get('2')
+         }).done(function(){
+         return $.get('3')
+         }).done(function(){
+         return $.get('4')
+         }).done(function(){
+
+         })*/
+
+        /**
+         * 延迟调用
+         * @constructor
+         */
+        var Deferred = function () {
+            // promise的实例
+            this.promise = new Promise();
+        };
+        Deferred.prototype = {
+            // 解决成功态
+            resolve: function (data) {
+                // 调用promise实例上的成功函数
+                this.promise._success(data);
+            },
+            // 解决失败态
+            reject: function (err) {
+                // 调用promise实例上的失败函数
+                this.promise._error(err)
+            }
+        };
+        /**
+         * 解决链式调用
+         * @constructor
+         */
+        var Promise = function () {
+            // 设置默认值
+            this._success = this._error = function () {
+            };
+        };
+        Promise.prototype = {
+            // 解决成功逻辑
+            done: function (func) {
+                // 校验参数
+                if (typeof func === 'function') {
+                    this._success = func;
+                }
+                return this;
+            },
+            // 解决失败逻辑
+            fail: function (func) {
+                if (typeof func === 'function') {
+                    this._error = func;
+                }
+                return this;
+            }
+        };
+
+        function async() {
+            var deferred = new Deferred();
+            setTimeout(function () {
+                // 获取时间戳
+                // 时间戳就是1970年到现在的毫秒数
+                var datestamp = Date.now();
+                if (datestamp % 2 == 0) {
+                    deferred.resolve('success')
+                } else {
+                    deferred.reject('error')
+                }
+            }, 1000);
+            // 为了链式调用
+            return deferred.promise;
+        }
+
+        async().done(function (data) {
+            console.log('这是延迟调用中的成功', data)
+        }).fail(function (err) {
+            console.error('这是延迟调用中的失败', err)
+        });
+
+
+        function jQueryAsync() {
+            var deferred = $.Deferred();
+            setTimeout(function () {
+                // 获取时间戳
+                // 时间戳就是1970年到现在的毫秒数
+                var datestamp = Date.now();
+                if (datestamp % 2 == 0) {
+                    deferred.resolve('success')
+                } else {
+                    deferred.reject('error')
+                }
+            }, 0);
+            return deferred.promise;
+        }
+        jQueryAsync().done(function (data) {
+            console.log('jquery done', data)
+        }).fail(function (data) {
+            console.error('jquery error', data)
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

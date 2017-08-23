@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //要给所有的以后创建的div增加div的click事件，增加处理方法，这些div是#div的子元素，这些div现在没有，什么时候有不知道
+    //只需要使用事件委托的方法就可解决
+    document.documentElement.onclick = function(e){
+        if(e.target.parentNode.id == "div1"  && e.target.tagName == "DIV"){
+
+        }
+    }
+</script>

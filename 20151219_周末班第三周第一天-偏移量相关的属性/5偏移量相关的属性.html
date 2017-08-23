@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:400px; height:200px; background:red; -float:right;}
+</style>
+</head>
+
+<body>
+<div id="div1">div1</div>
+<div id="div1" style="clear:both; position:absolute; top:300px; left:400px;" >div2
+	<p id="p1" style="background:yellow; position:relative; height:100px;  width:200px;">段落
+    	<span id="span1" style="float:right; width:50px; height:50px; background:green;">span</span>
+    </p>
+
+</div>
+
+</body>
+</html>
+<script>
+//1、什么是偏移量；2、那些CSS的属性会产生偏移量；3、偏移量是相对于谁的？
+//3：默认情况下，所有的DOM元素的产生的偏移量，是相对于文档（document.documentElement,）document.body是文档的代理人
+
+//和偏移量相关的三个属性：offsetLeft,offsetTop,offsetParent；
+//offsetLeft是左偏移量，offsetTop是上偏移量，offetParent产生偏移的参照物
+
+
+//第二个问题：什么情况偏移量的参照物会发生变化：当文档的layout发生变化的时候，offsetParent也会随之变化
+//如何layout，布局，层级关系，我们学过的zIndex这个css有直接的关系
+//必须要明确是：offsetParent和parentNode不一定存在关联（这两个属性不是一个概念）
+
+//如何计算出span1距离浏览器的偏移量
+var l=span1.offsetLeft;//span-->p
+l+=span1.offsetParent.offsetLeft;//p-->div2
+l+=span1.offsetParent.offsetParent.offsetLeft;//div2-->body
+l+=span1.offsetParent.offsetParent.offsetParent.offsetLeft;
+alert(l);
+
+function offset(ele){//计算任意元素距离body的偏移
+	var l=ele.offsetLeft;
+	var t=ele.offsetTop;
+	var p=ele.offsetParent;
+	while(true){
+		if(p==document.body)break;
+		l+=p.offsetLeft;
+		t+=p.offsetTop;
+		p=p.offsetParent;
+		
+	}
+	return {l:l,t:t}
+	//以上的写法，相当于：
+	var obj={};
+	obj.l=l;obj.t=t;
+	return obj;
+}
+
+</script>

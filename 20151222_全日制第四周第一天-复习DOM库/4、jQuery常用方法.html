@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 10px 0 0 10px;
+            width: 336px;
+            border: 1px dashed #999;
+            overflow: hidden;
+        }
+
+        #ul1 li {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #a3dbff;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //1、核心
+    //index:获取当前jQuery对象的索引
+    //get、size、length、selector、context
+
+    //2、each
+    //在jQuery原型上写的each ->遍历获取的jQuery元素集合用的
+    //    $("#ul1>li").each(function (index, item) {
+    //        //index:每一次遍历的索引
+    //        //item:每一次遍历的当前的li原生JS对象
+    //        //$(this)->每一次遍历的时候,我们获取的当前jQuery对象-->$(item)
+    //        if (index % 2 === 0) {
+    //            $(this).css("background", "red");
+    //        }
+    //    });
+
+    //在jQuery对象上增加的each方法 ->遍历数组中的每一项的
+    //    $.each([12, 23, 34], function (index, item) {
+    //        //index:每一次遍历数组中的当前项的索引
+    //        //item:每一次遍历数组中的当前项
+    //    });
+
+    //3、extend ->扩展
+    //在jQuery.prototype上扩展新的方法 ->编写我们的jQuery插件
+    //    $.fn.extend({
+    //        aa: function () {
+    //
+    //        }
+    //    });
+    //    $().aa();
+
+    //在jQuery对象上扩展一些新的属性方法 ->完善我们的类库
+    //    $.extend({
+    //        bb: function () {
+    //
+    //        }
+    //    });
+    //    $.bb();
+
+    //4、$.noConflict ->把jQuery的$使用权转让
+    //    var j = $.noConflict();
+    //    //$();//->Uncaught TypeError: $ is not a function $的使用权已经转让了,我们不能再使用$来操作了
+    //    j();//->j是转让$后我们起的另外一个小名  jQuery();
+
+    //5、在原型上写的方法都有哪些?
+    //属性
+    //attr:设置或者获取我们的"自定义属性"
+    // ->$("#ul1").attr("index",10) 设置一个叫做index的自定义属性值是10
+    // ->$("#ul1").attr("index") 获取index自定义属性的值
+    //prop:设置或者获取我们的"内置属性"
+    //removeAttr、removeProp
+    //addClass、removeClass、toggleClass:之前有这个样式类名我们就删除,没有就是增加
+    //html:获取或者设置元素的内容(innerHTML) text:获取或者设置元素的内容(innerText) val:获取或者设置表单元素的value值
+
+    //CSS
+    //css:获取或者设置元素的样式
+    // ->$("#ul1").css({
+    //    width:100,
+    //    height:100
+    // });
+    // ->$("#ul1").css("width");
+
+    //offset:距离body的偏移、position:距离父亲元素的偏移
+    //scrollTop/scrollLeft:设置或者获取对应的值
+    //height/width:设置或者获取对应的值
+    //innerWidth/innerHeight:->clientWidth/clientHeight
+    //outerWidth/outerHeight:->offsetWidth/offsetHeight
+
+    //文档处理
+    //append:->appendChild  父亲.append(儿子)  儿子.appendTo(父亲)
+    //prepend:把当前元素添加到容器的第一个位置
+    //insertBefore:把当前元素添加到指定容器中某一个元素的前面
+    //insertAfter:把当前元素添加到指定容器中某一个元素的后面
+    //...
+
+    //筛选
+    //hasClass:拥有某个样式类名的
+
+    //filter/find/children
+    //children:在所有子元素中筛选
+    //find:在所有的后代元素中筛选
+    //filter:在所有兄弟元素中筛选
+
+    //next/nextAll/prev/prevAll/siblings
+    //contents:包含某一个内容的 $("#ul1>li").contents("珠峰") ->获取所有的li中内容包含"珠峰"两个字的li
+
+    //事件
+    //click、mouseover、mouseout
+    //    $("#ul1").click(function () {
+    //        //$(this) ->当前的元素
+    //    });
+
+    //on
+    //    $("#ul1").on("click", function () {
+    //        //$(this) ->当前的元素
+    //    });
+
+    //bind
+    //    $("#ul1").bind("click", function () {
+    //        //$(this) ->当前的元素
+    //    });
+
+    //delegate
+
+    //效果(动画)
+    //show/hide/slideDown/slideUp/slideToggle/fadeIn/fadeOut/fadeToggle/animate/stop...
+
+    //6、在我们jQuery对象上编写的方法
+    //Ajax
+    //工具
+</script>
+</body>
+</html>

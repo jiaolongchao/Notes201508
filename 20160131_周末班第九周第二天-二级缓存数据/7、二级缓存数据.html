@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+    (function () {
+        var zhuFeng = localStorage.getItem("zhuFeng");
+        if (zhuFeng) {
+            zhuFeng = JSON.parse(zhuFeng);
+            //假设我们存储的数据缓存有效期限是1小时
+            var now = new Date().getTime();
+            if (zhuFeng.time + 10000 > now) {
+
+                console.log(zhuFeng.shuju);
+
+                return;
+            }
+        }
+        $.ajax({
+            url: "json.txt?_=" + Math.random(),
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                //->第一次请求把数据存储到本地,我们每一次存储的值是字符串(你存储的是一个对象它也会转换为字符串)
+                var obj = {
+                    time: new Date().getTime(),
+                    shuju: data
+                };
+                localStorage.setItem("zhuFeng", JSON.stringify(obj));
+            }
+        });
+    })();
+</script>
+</body>
+</html>

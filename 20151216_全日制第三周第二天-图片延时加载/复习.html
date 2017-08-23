@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+1、为什么realImg必须用oImg.getAttribute方法来获得属性值，而下面的oImg.loaded就可以直接打点来操作呢？
+realImg是写在HTML标签里的，loaded这个是写在JS中的
+oImg.id,DHTML来规定（DOM0）。HTML，XHTML，XML
+HTML语言先于DOM出生，在DOM出生之前，也有一套属于HTML自已的操作它的JS的编程规范--DHTML（DOM0） DOM core
+DOM0(DHTML)规定了如何操作HTML的合法属性
+docu
+2、为什么要新建一个image呢？
+	为了让这个新image去下载资源，而原来的img负责客户体验（转圈的效果）
+3、不知道oImg.onload是怎么执行的？
+oImg.onerror=function(){
+
+}
+onload事件是因为浏览器的异步机制产生的
+文档本身 html DOM结构生成 --加载JS,CSS,图片。。。。
+window.onload=function(){
+
+}
+
+
+
+4、oImg.loaded自定义的标识属性，这个属性什么时候赋值：放在onload里边还是外边，有什么区别
+<zhufeng value="" name="" realImg=""></zhufeng>
+</body>
+</html>
+<script>
+document.images//DOM0,DHTML
+document.forms;
+document.anchors;
+document.all["id"]==document.getElementById("id");
+//ele.id,ele.className DHTML,DOM0
+ele.getAttribute();///获得写在HTML里的属性值的，这个属性无论是自定义的还是法定的，都可以用这个方法。但是如果这个属性是自定义的，只能用这个方法
+ele.abcde=true;//直接定义在JS对象中的属性，不需要getAttribute方法，直接打点操作就好了
+if(document.all){//判断是否是IE
+	
+}
+</script>

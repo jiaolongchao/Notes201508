@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训</title>
+    <!--<meta name = 'viewport' content="initial-scallable=1.0">-->
+    <meta name="viewprot" content="width=device-width,initial-scallable=1.0;minimum-scale=1.0;user-scalable=no">
+
+</head>
+<body>
+//在所有的终端设备上默认的viewport 都是980 ,
+//pc端页面在终端设备上打开的时候默认的会以最小的缩放模式打开，目换是为了不出现横向滚动条
+//如果设置了content=initial-scallable = 1.0，就会以原来的大小来展现
+//手机中看到的页面区域就是visualviewport
+//如果 visualviewprot 和viewprot值相当，那就可以在移动端中看到全部的页面部分了  在meta中的content中设置width=device-width和initial-scallable=1.0是一个意思，只设置一个就可以
+//user-scalable=no 不允许用户缩放
+在终端设备上visualviewprot默认的初始值是980，  viewprot就是屏幕的宽度
+
+//一般情况下设备像素比都是2.0了，-webkit-min-device-pixel-ration
+//每英存的像素比www.iaxure.com/2696.html
+//css像素 px
+//设备像素比 = css像素 / 设备分辨率(dip/dp)
+//orientation浏览器窗口的方向纵向还是横向，当窗口的高度值大于宽度时该特性的值 为protrait(坚向) 否则会横向，但是ipad上相反
+//如果只做pc端的Media queries的时候只需要写max-width就可以了，如果要都兼容各种终端设备的话，就需要写min-device-width
+
+
+</body>
+</html>

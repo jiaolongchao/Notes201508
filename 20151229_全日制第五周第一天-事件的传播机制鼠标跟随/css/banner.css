@@ -1,0 +1,97 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+}
+
+img:not([src*="/"]) {
+    display: none
+}
+
+ul, li {
+    list-style: none;
+}
+
+.outer {
+    position: relative;
+    margin: 20px auto;
+    width: 1000px;
+    height: 300px;
+    border: 1px solid #ccc;
+    box-shadow: 5px 5px 10px 0 #ccc;
+    overflow: hidden;
+}
+
+.inner {
+    position: absolute;
+    top: 0;
+    /*left: 0;
+    width: 5000px; 我们在JS中会根据页面中图片的数量动态的赋值样式*/
+    height: 300px;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.inner div {
+    float: left;
+    width: 1000px;
+    height: 300px;
+    background: url("../img/default.gif") no-repeat center center;
+}
+
+.inner div img {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.innerTip {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.innerTip li {
+    float: left;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: antiquewhite;
+    cursor: pointer;
+}
+
+.innerTip li.select {
+    background: #456f9a;
+}
+
+.outer a {
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    width: 30px;
+    height: 50px;
+    background: url("../img/pre.png") no-repeat 0 0;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+
+.outer .innerLeft {
+    left: 20px;
+}
+
+.outer .innerRight {
+    right: 20px;
+    background-position: -50px 0;
+}
+
+.outer a:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}

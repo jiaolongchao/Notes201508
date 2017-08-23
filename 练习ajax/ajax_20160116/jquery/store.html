@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>小卖部</title>
+    <style>
+        table td {
+            border: 1px solid #ccc;
+        }
+    </style>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="//apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script>
+        (function () {
+            var template = "<% for (var i=0;i<items.length;i++){ %>" +
+                    "<% var item=items[i] %>" +
+                    "<tr>" +
+                    "<td><%= item.type %></td>" +
+                    "<td><%= item.name %></td>" +
+                    "<td><%= item.price %></td>" +
+                    "</tr>" +
+                    "<% } %>";
+            var tpl = _.template(template);
+
+            var getData = function (type) {
+                $.ajax({
+                    url: '/getInfo',
+                    method: 'get',
+                    data: {type: type || ''},
+                    context: $('#content tbody'),
+                    success: function (data) {
+                        if (data.errno == 1) {
+                            alert('查询失败')
+                        } else {
+                            this.html(tpl(data));
+                        }
+                    },
+                    error: function (e) {
+                        console.log('error:', e)
+                    },
+                    dataType: 'json'
+                });
+
+            };
+
+            $(document).ready(function () {
+//            $.ajax({
+//                url: '/getInfo',
+//                method: 'get',
+//                data: {type: ''},
+//                context: $('#content tbody'),
+//                // 相当于一层过滤网
+//                // 过滤器
+//                // 这个方法必须含有返回值 因为返回值就是success方法的参数
+//                // 接收的都是服务器未转化之前的数据
+//                dataFilter: function (data,type) {
+//                    data = JSON.parse(data);
+//                    if (data.errno == 1) {
+//                        alert('查询失败')
+//                    } else {
+//                        return tpl(data);
+//                    }
+//                },
+//                success: function (data) {
+//                    this.html(data);
+//                },
+//                error: function (e) {
+//                    console.log('error:',e)
+//                },
+//                dataType: 'text'
+//            })
+                var type = $('#type');
+                $('#panel').click(function (e) {
+                    // 事件源
+                    // jquery里currentTarget和target的区别
+                    // currentTarget：绑定事件的元素
+                    // target：事件触发的元素，可用于处理事件冒泡
+                    var target = $(e.target);
+                    if (target.is('button')) {
+                        type.html(target.html());
+                        getData(target.attr('node-type'));
+                    }
+                });
+                getData();
+
+            });
+        })()
+
+    </script>
+</head>
+<body>
+<p>当前查询类型为:<span id="type">全部查询</span></p>
+
+<div id="panel">
+    <button node-type="1" type="button">食品查询</button>
+    <button node-type="2" type="button">用品查询</button>
+    <button node-type="" type="button">全部查询</button>
+</div>
+
+<table id="content">
+    <thead>
+    <tr>
+        <th>类别</th>
+        <th>名称</th>
+        <th>价格</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</body>
+</html>

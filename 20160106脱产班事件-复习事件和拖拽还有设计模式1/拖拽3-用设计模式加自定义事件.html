@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; left:0; top:0; -webkit-user-select:none; }
+</style>
+</head>
+
+<body>
+<div id="div1">1111</div>
+<div id="div2" style="background:black; top:150px; overflow:hidden;"><img src="../20151231_全日制第五周第二天/1.png"></div>
+<div id="div3" style="background:green; top:150px; left:150px;"></div>
+
+</body>
+</html>
+<script src="event2.js"></script>
+<script src="drag.js"></script>
+<script>
+var oDiv1=document.getElementById("div1");
+var oDiv2=document.getElementById("div2");
+var oDiv3=document.getElementById("div3");
+on(oDiv1,"mousedown",down);
+on(oDiv2,"mousedown",down);
+on(oDiv3,"mousedown",down);
+//down,up,move A模块
+//drop,fly-- 在down加的清除定时器积累的代码，还有move方法里计算速度的代码  ---它们实现了另外的功能---动画效果 这是一个功能
+
+//现在的问题是把拖拽和动画搅在了一起
+
+//不同的模块之间，既是独立的，还可以通过某种途径接合在一起
+
+on(oDiv1,"selfDragStart",clearEffect);
+on(oDiv1,"selfDragging",getSpeed);
+on(oDiv1,"selfDragEnd",fly);
+on(oDiv1,"selfDragEnd",drop);
+</script>

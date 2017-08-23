@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+//1 . creatElement() 动态创建一个元素标签
+//2 . appendchild() 把创建的标签添加到标签的末尾
+//3 . insertBefore():把创建的标签增加到容器中的某一个标签的前面
+//4 . replaceChild(newEle, oldEle) 
+//5 . removeChild()
+//6 . cloneNode(): 复制一个节点 有参数true 就是把当前节点的子元素都复制，如果参数false 则只复制当前元素节点
+<input type="button" value="添加" id="btnAdd"/>
+<ul id="list">
+    <li>列表1</li>
+    <li>列表2</li>
+    <li>列表3</li>
+    <li>列表4</li>
+    <li>列表5</li>
+    <li>列表6</li>
+    <li>列表7</li>
+</ul>
+<script>
+    var btnAdd = document.getElementById('btnAdd');
+    var olist  = document.getElementById('list');
+    btnAdd.onclick = function(){
+        var oli = document.createElement('li');
+        oli.innerHTML = '你好' + Math.round(Math.random() * (100-1) + 1)
+        olist.appendChild(oli);
+        del()
+    }
+
+    function del(){
+        var olis = document.getElementsByTagName('li');
+        for(var i=0;i<olis.length;i++){
+            olis[i].onclick = function(){
+                olist.removeChild(this)
+            }
+        }
+    }
+    del()
+</script>
+</body>
+</html>

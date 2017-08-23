@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{ margin:0; padding:0;}
+        li{
+            list-style-type: none;}
+        #box{
+            width: 900px; margin:100px auto;
+        }
+        #box li{
+            height: 30px; }
+        #box li.c1{ background-color: antiquewhite;}
+        #box li.c2{ background-color: red;}
+        #box li.c3{ background-color: darkorange;
+            line-height: 30px;}
+        #box li span{
+            display: inline-block;
+            padding: 0 10px; }
+    </style>
+</head>
+<body>
+<div id="box">
+
+</div>
+<script type="text/javascript">
+    var str="";
+    var oBox=document.getElementById("box");
+    str+="<ul>";
+    for(var i=1;i<=9;i++){
+        switch (i%3){
+            case 0:
+                str+="<li class='c1'>";
+                break;
+            case 1:
+                str+="<li class='c2'>";
+                break;
+            case 2:
+                str+="<li class='c3'>";
+                break;
+        }
+            for(var j=1;j<=i;j++){
+                  str+="<span>"+j+"*"+i+"="+(j*i)+"</span>";
+            }
+            str+="</li>";
+
+    }
+    str+="</ul>";
+    oBox.innerHTML=str;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #box{width:100px; height: 100px; background:red; position:absolute; left:100px; top:100px;}
+    </style>
+</head>
+<body>
+<div id="box">box</div>
+<script>
+  function bind(ele,type,fn){
+      if(ele.addEventListener){
+          ele.addEventListener(type,fn,false);
+      }else{
+          if(!ele["aEvent"+type]){
+              ele["aEvent"+type] = [];
+          }
+          var ary = ele["on" + type];
+          for(var i=0;i<ary.length;i++){
+              if(a[i].photo == fn)return;
+          }
+          var fnTemp = function(){fn.call(ele)}
+          ary.push(fnTemp)
+          fnTemp.photo = fn;
+          ele.attachEvent("on"+type,fnTemp)
+      }
+  }
+  function unbind(ele,type,fn){
+      if(ele.removeEventListener){
+          ele.removeEventListener(type,fn,false);
+      }else{
+          var ary = ele["aEvent"+type];
+          if(ary){
+              for(var i = 0; i<ary.length;i++){
+                  if(ary[i].photo == fn){
+                      ele.detachEvent("on"+type,ary[i]);
+                      ary.splice(i,1);
+                      break;
+                  }
+              }
+          }
+
+      }
+  }
+  function on(ele,type,fn){
+      if(!ele["onEvent"+type]){
+          ele["onEvent"+type] = [];
+      }
+      var onary = ele["onEvent"+type];
+      for(var i=0;i<onary.length;i++){
+          if(onary[i] == fn){return}
+      }
+      onary.push(fn)
+      bind(ele,type,run)
+  }
+  function run(e){
+      e = e || window.event;
+      var type = e.type;
+      if(!e.target){
+          e.target = e.srcElement;
+          e.pageX=(document.documentElement.srollLeft||document.body.scrollLeft)+e.clientX;
+          e.pageY=(document.documentElement.scrollTop||document.body.scrollTop)+e.clientY;
+          e.stopPropagation = function(){e.cancelBubble = true}
+          e.preventDefault = function(){e.returnValue = false}
+
+      }
+      var ran = this["onEvent"+type];
+      for(var i=0;i<ran.length;i++){
+          if(typeof ran[i] == "function"){
+              ran[i].call(this,e)
+          }else{
+              ran.splice(i,1);//X
+              i--;  //X
+
+          }
+      }
+  }
+  function off(ele,type,fn){
+      var ary = ele["onEvent"+type];
+      if(ary){
+          for(var i=0;i<ary.length;i++){
+              if(ary[i] == fn){
+                  ary[i] = null;
+                  break;
+              }
+          }
+      }
+  }
+
+function processThis(ele,fn){
+    return function(e){fn.call(ele,e)}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //我想把重复的项去掉，然后在按照从大到小排序，原有的数组是不改变的，请用你认为最优的方式实现！(不得使用sort方法)
+    var ary=[12,23,23,12,24,34,34,23,34,5,21,2];
+    var tempary = ary.slice(); //克隆数组
+    function removeary(obj){   //数组去重方法
+        var obc = {};
+        for(var i=0;i < obj.length;i++){
+            var cur = obj[i];
+            if(obc[cur] == cur){
+               obj.splice(i,1);
+                //obj.splice(i,1,obj.length-1);
+                obj[i] = obj[obj.length -1];
+                obj.length --;
+                i--;
+                continue;
+            }else{
+                obc[cur] = cur;
+            }
+        }
+        return obj;
+    }
+
+    function sortAry(abj){
+        for(var i=0;i<abj.length;i++){
+            for(var j=0;j<abj.length - i -1; j++){
+                var cur = Number(abj[j]);
+                var next = Number(abj[j+1]);
+                if(cur<next){
+                    var temp = abj[j];
+                    abj[j] = abj[j+1];
+                    abj[j+1] = temp;
+                }
+            }
+        }
+        return abj
+    }
+
+    console.log(sortAry(removeary(tempary)))
+</script>
+</body>
+</html>

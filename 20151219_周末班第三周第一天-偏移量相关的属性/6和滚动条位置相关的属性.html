@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:200px; height:300px; background:#3CF; margin:100px auto; overflow:hidden;}
+
+</style>
+</head>
+
+<body>
+<div id="div1">
+盒子模型1：和高、宽相关的JS属性
+没有现成的直接获得内容宽高的JS属性
+clientHeight,clientWidth：带padding的内容宽度
+offsetHeight,offsetHeight:带边框的
+scrollHeight,scrollWidth实际内容的，不带下padding
+盒子模型2：用JS获得CSS属性，行内的和内嵌、外链样式
+标准浏览器：window.getComputedStyle
+IE6/7/8：ele.currentStyle
+IE6/7/8里的诸多问题
+元素的偏移和偏移参照物
+offsetLeft和offsetTop
+offsetLeft受到什么的影响：标准流自然产生，浮动产生，定位产生，margin产生
+分清绝对定位的left是从那儿开始的，offsetLeft是从那儿开始的
+难点：偏移量产生的参照物
+所有网页元素默认的偏移参照物都是网页文档，body是它的代理人
+当其祖先元素做了相对或绝对定位后，参照物会发生变化
+如何获得网页中任意元素距离文档左上角的偏移量
+滚动条：scrollTop或scrollLeft
+滚动条属性是可读写的属性
+scrollTop或scrollLeft的值是有上限和下限的
+文字无缝滚动实例
+图片延迟加载实例
+按需加载
+图片的异步
+图片的缓存机制
+按需加载图片
+多张图片加载出现的问题和闭包解决方案
+什么时候使用：异步与闭包
+clientHeight,clientwidth,clientLeft:左边框的宽,clientTop：上边框的宽
+offsetHeight,offsetWidth,offsetLeft左偏移量，从border外边开始算,offsetTop：上偏移量，从上边框外边开始算
+scrollTop,scrollLeft,scrollHeight：实际内容的高，包括溢出的内容,scrollWidth：实际内容的宽，包括溢出的内容
+
+</div>
+</body>
+</html>
+<script>
+//可以用以下三种方式得到div1的高，前提是没有设置div1的padding,border
+var h1=div1.clientHeight;
+var h2=div1.offsetHeight;
+var h3=getComputedStyle(div1,null).height;//这种方式得到的值是字符串，带px这个单位
+console.log(h1,h2,h3);
+//scrollTop有最大值和最小值，现在来研究最大值和最小值是多少？
+//最小值就是0
+//最大值是多少？实际内容的高-容器的高  scrollHeight-clientHeight;
+div1.scrollHeight-div1.clientHeight
+div1.onscroll=function(){//当div1的滚动条在滚动的时候，就执行后边的方法
+	console.log(this.scrollTop);
+}
+
+//scrollTop或scrollLeft和其它属性的不同：它是可读写的，而其它的属性都是只读的
+//clientHeight,offsetHeight,getComputedStyle方法获得
+div1.clientHeight=383;
+
+/*(function(){
+	div1.scrollTop++;//++的意思是累加之后再赋给自己
+	window.setTimeout(arguments.callee,10);
+	arguments.callee.caller//这里的caller属性是null
+})();*/
+
+//arguments.callee是指当前运行的这个方法的定义
+
+;(function(){
+	var h=++div1.scrollTop;
+	//一般情况下，h和scrollTop相同
+	//但是，当scrollTop累加到最大值的时候，累加就无效了，则h和scrollTop就不相等了，这时候说明scrollTop已经到了最大值了，则可以让文字内容翻倍了
+/*	if(h==div1.scrollTop){
+		
+	}else{
+		div1.innerHTML+=div1.innerHTML;//让内容翻倍一次
+	}*/
+	if(h!=div1.scrollTop){
+		div1.innerHTML+=div1.innerHTML;//让内容翻倍一次
+	}
+	window.setTimeout(arguments.callee,10);
+})()
+</script>

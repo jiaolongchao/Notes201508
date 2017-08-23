@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //回调函数:把一个方法A当做参数传递给方法B、在方法B执行的过程中,根据需求在任何位置执行方法A ->callback
+    //使用回调函数可以让我们的方法在指定的条件下执行
+
+    //    function fn1(callback) {
+    //        if (typeof callback === "function") {
+    //            callback();
+    //        }
+    //    }
+    //    function fn2() {
+    //        console.log("ok");
+    //    }
+    //    fn1(fn2);
+
+    //    $().animate({left: 100}, 1000, "linear", function () {
+    //        //这个函数是等待动画完成后,才执行的
+    //        //这个匿名函数其实是在animate这个方法中执行的->"回调函数"
+    //    });
+
+    //    window.setTimeout(function () {
+    //        //把匿名函数当做一个参数值,传递给setTimeout,在setTimeout方法中过了1000ms后执行我们的匿名函数->"回调函数"
+    //    }, 1000);
+
+    var ary = [12, 23, 34, 45, 56];
+    ary.forEach(function (item, index, input) {
+        //item:每一次循环数组中的当前项
+        //index:每一次循环数组中的当前项的索引
+        //input:每一次循环我们要遍历的原始的数组
+
+    }, context);//context->指定匿名函数方法中的this是context,如果不传递的话,默认匿名函数中的this是window
+
+    //这个方法也是一个经典的回调函数：把匿名函数当做一个值传递给我们的forEach这个方法,然后在循环数组中每一项的时候执行我们的匿名函数,不仅执行而且还可以给匿名函数传递三个参数值item、index、input，有些时候还可以改变这个匿名函数中this关键字的指向问题
+
+    //思考题:
+    //在数组的原型上扩展一个方法:myForEach、myMap 解决在IE6~8下这两个方法不兼容的问题(用到了回调函数的思想来处理)->参考珠峰培训最新版DOM库中的prototype.js
+</script>
+</body>
+</html>

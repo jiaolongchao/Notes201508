@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        //当页面上的HTML结构加载完成才会执行function中的JS代码（可以在同一个页面中同时使用多次）
+        //        $(function () {
+        //            console.log($("#ul1"));
+        //        });
+        //        $(document).ready(function () {
+        //            console.log($("#ul1"));
+        //        });
+
+        //当页面上的HTML结构、图片、文字等所有的资源文件都加载完成才会执行（这种方式在一个页面中只能出现一次，出现多次后面的会把前面的覆盖掉）
+        //        window.onload = function () {
+        //            console.log($("#ul1"));
+        //        };
+    </script>
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #ul1 {
+            margin: 10px auto;
+            padding: 10px 0 0 10px;
+            width: 336px;
+            border: 1px dashed #999;
+            overflow: hidden;
+        }
+
+        #ul1 li {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #a3dbff;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li></li>
+    <li name="peixun"></li>
+    <li></li>
+    <li name="zhufeng"></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<script type="text/javascript">
+    //jQuery强大的选择器类型
+    //$("#ul1>li").css("backgroundColor", "red"); ->获取所有的六个li,让其背景颜色都为红色
+    $("#ul1>li:lt(3)").css("backgroundColor", "red");
+    $("#ul1>li:gt(2)").css("backgroundColor", "green");
+    $("#ul1>li[name]").css("backgroundColor", "orange");
+
+    $("#ul1>li:odd").css("backgroundColor", "blue");//->索引为奇数的都变为了蓝色
+
+    $("#ul1>li:first-child").css("backgroundColor", "yellow");//->让第一个变为黄色
+
+    $("#ul1>li:eq(0)").css("backgroundColor", "pink");//->让索引为零的变为粉色
+</script>
+<script type="text/javascript">
+    //var oUl = document.getElementById("ul1");//->获取的是原生的JS元素对象
+    //var $ul = $("#ul1");//->获取的是一个jQuery实例->jQuery对象(和我们的类数组非常的相似)
+
+    //1、原生JS对象和jQuery对象是不一样的
+    //console.log(oUl.childNodes);
+    //console.log($ul.childNodes);//->undefined  childNodes是原生JS对象的属性名,jQuery对象是无法直接调用的
+
+    //$ul.addClass("bg");
+    //oUl.addClass("bg");//->Uncaught TypeError: oUl.addClass is not a function  addClass是jQuery类的原型上的方法,原生的JS是无法直接的调用的
+
+    //2、两者如何的相互转换?
+    //原生->jQuery
+    //$(oUl).addClass("bg");
+
+    // ->$()第一个参数selector可以传递字符串也可以传递一个原生的JS对象
+    //字符串:按照指定的选择器类型来获取我们对应的jQuery对象
+    //原生的JS对象:把原生的JS对象转换为jQuery对象
+    //$(function () {});//->$(document).ready(function(){})->当页面上的HTML结构加载完成才会执行对应的代码,和我们window.onload对应
+
+    //jQuery->原生
+    //$ul[0] ->我们的jQuery和类数组非常相似,想获取其中的某一个具体的JS对象,只需要通过索引来获取即可
+    //$ul.get(0) ->这个等同于上面的操作(但是没有第一种的性能好)
+
+    //3、关于选择器的一些私有的属性?
+    //$ul.selector ->获取选择器类型
+    //$ul.context ->获取当前的上下文
+    //$ul.length ->获取集合的长度   $ul.size()等同于length的操作
+</script>
+</body>
+</html>

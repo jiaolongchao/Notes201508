@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div style="height: 2000px;"></div>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466924.jpg" src="default.gif" style="width:200px;"><br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466925.jpg" src="default.gif" style="width:200px"><br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466926.jpg" src="default.gif" style="width:200px"><br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466927.jpg" src="default.gif" style="width:200px"><br>
+<img realImg="http://pic1.win4000.com/pic/9/8c/0a08466928.jpg" src="default.gif" style="width:200px"><br>
+</body>
+<script>
+    var oImgs = document.getElementsByTagName('img');
+    for(var i=0;i<oImgs.length;i++){
+        var oImg = oImgs.item(i)
+        oImg.oposition = oImg.offsetTop + oImg.offsetHeight;
+    }
+    window.onscroll = function(){
+        var windowBottom = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+        for(var i = 0; i<oImgs.length;i++){
+            var oImg = oImgs.item(i);
+            if(oImg.loaded){ continue; }
+            if(oImg.oposition < windowBottom){
+               changeImg(oImg)
+            }
+        }
+    }
+    function changeImg(oImg){
+        var real = oImg.getAttribute("realImg") + "?" + Math.random();
+        var temp = new Image();
+        temp.src = real;
+        oImg.src = 'o_loading.gif';
+        temp.onload = function(){
+            oImg.src = real;
+            oImg.loaded = true;
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>通过gitHub发布静态资源文件</title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、创建仓库
+    //->登录gitHub->New repository->填写相关的信息->Create repository
+
+    //2、把我们的仓库发布
+    //->在当前的仓库点击settings->GitHub Pages->Launch Automatic page generator->Continue to layouts->Publish page->我们刚才创建的文件都在gh-pages这个分支上
+
+    //3、把默认的分支进行修改
+    //->settings->Branches(左侧导航)->Default branch->把我们的默认分支切换为gh-pages
+
+    //4、把我们的仓库克隆到本地
+    //->$ git clone 我们仓库的地址
+    //->把默认的文件(除了.git)其它的都删除掉,然后在把我们的项目文件,放进来
+
+    //5、把本地项目文件提交到远程仓库上
+    //->$ git add -A
+    //->$ git commit -m""
+    //->$ git push origin gh-pages (一定要注意分支不是master了)
+
+    //6、找到我们的发布地址
+    //->settings->GitHub Pages->"Your site is published at http://zhouxiaotian.github.io/myProject."
+    //->当我们按照地址"http://zhouxiaotian.github.io/myProject"访问的时候是404页面,因为这个目录下的默认文件是index.html
+    //->我们的页面叫做jd.html ->"http://zhouxiaotian.github.io/myProject/jd.html"
+
+    //7、把我们的页面发布二维码扫描
+    //->http://cli.im/ (草料二维码生成器)
+</script>
+</body>
+</html>

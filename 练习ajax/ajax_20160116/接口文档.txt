@@ -1,0 +1,17 @@
+接口文档
+1：获取商品信息
+请求地址：
+url:"/getInfo"
+参数：
+type：1(食品)、2(用品)、不传的话两种都返回
+返回：{errno:0,items:[{type:'食品',name:'蛋糕',price:'12'},
+{type:'用品',name:'充电器',price:'5'}]}
+
+
+在chrom浏览器执行getXHR方法
+第一次执行 做if判断 拿到最合适的ajax对象 XMLHttpRequest
+第二次执行 : 由于第一次执行已经知道当前浏览器最合适的ajax对象是XMLHttprequest了，所以
+为了优化性能，不需要再做判断。
+
+什么是MIME类型？
+作用：说明资源的类型，告诉浏览器如何解析此资源。

@@ -1,0 +1,83 @@
+@charset "utf-8";
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none;
+
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+img {
+    display: block;
+    border: none;
+}
+
+.banner {
+    position: relative;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 640px;
+    height: 156px;
+    overflow: hidden;
+    background: url("");
+}
+
+.banner .inner {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 500%;
+    height: 156px;
+    opacity: 1;
+    -webkit-transition : all 0.5s linear 0s;
+    transition : all 0.5s linear 0s;
+}
+
+.banner .inner img {
+    float: left;
+    width: 20%;
+    height: 100%;
+}
+
+.banner .inner img.opacityMove {
+   -webkit-animation: opacityMove 0.5s linear 0s 1 both;
+    animation: opacityMove 0.5s linear 0s 1 both;
+}
+@-webkit-keyframes opacityMove {
+    100%{
+        opacity: 1;
+    }
+    
+}
+@keyframes opacityMove {
+    100%{
+        opacity: 1;
+    }
+
+}
+
+.banner .tip {
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.banner .tip span {
+    display: inline-block;
+    margin: 0 5px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid red;
+    border-radius: 50%;
+}
+
+.banner .tip span.select{
+    background: red;
+}

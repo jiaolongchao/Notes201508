@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*去掉a、input、button等点击的时候默认的蓝色的外边框和灰色的背景*/
+    -webkit-touch-callout: none; /*禁止长按a标签连接与图片弹出的菜单*/
+    -webkit-overflow-scrolling: touch; /*让页面的滚动条滚动的更加流畅*/
+    -webkit-text-size-adjust: 100%; /*关闭横竖屏切换或者缩放时候的字体大小自动的调整*/
+    -webkit-user-select: none; /*禁止用户选中页面中的文字*/
+
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif; /*字体最好使用无衬字体*/
+}
+
+img:not([src*="/"]) {
+    display: none
+}

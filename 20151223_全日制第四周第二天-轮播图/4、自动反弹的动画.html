@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1, #div2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #a3dbff;
+            cursor: pointer;
+        }
+
+        #div2 {
+            top: 150px;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<div id="div2"></div>
+
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var oDiv2 = document.getElementById("div2");
+    var tarLeft = 0, tarRight = (document.documentElement.clientWidth || document.body.clientWidth) - oDiv.offsetWidth;
+
+    function move(target) {
+        var _this = this;
+        ~function _move() {
+            window.clearTimeout(_this.timer);
+            var curL = utils.getCss(_this, "left");
+            if (curL > target) {//->向左走
+                if (curL - 10 <= target) {//->已经走到左边的边界了
+                    _this.style.left = target + "px";
+                    move.call(_this, tarRight);
+                    return;
+                }
+                _this.style.left = curL - 10 + "px";
+            } else if (curL < target) {//->向右走
+                if (curL + 10 >= target) {//->已经走到右边的边界了
+                    _this.style.left = target + "px";
+                    move.call(_this, tarLeft);
+                    return;
+                }
+                _this.style.left = curL + 10 + "px";
+            } else {
+                return;
+            }
+            _this.timer = window.setTimeout(_move, 10);
+        }();
+    }
+
+    //默认点击的时候先向右走
+    //    oDiv.onclick = function () {
+    //        //this->oDiv
+    //        move.call(this, tarRight);
+    //    };
+
+    oDiv.onclick = function () {
+        move.call(this, tarRight);
+        window.setTimeout(function () {
+            move.call(oDiv2, tarRight);
+        }, 500);
+    };
+</script>
+
+</body>
+</html>

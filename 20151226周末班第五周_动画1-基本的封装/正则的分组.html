@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+var reg=/[a-z](\d+)[a-z]/i;
+var str="abc48399xyz";
+var a=str.match(reg);
+a[1];//得到分组
+reg.test(str);//让正则方法执行，执行之后，系统会自动的给RegExp的$1到$9赋值：把正则分组中的内容赋给它们
+RegExp.$1//第一个分组中的内容
+</script>

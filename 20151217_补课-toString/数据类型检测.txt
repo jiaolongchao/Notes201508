@@ -1,0 +1,122 @@
+1、typeof ->用来检测数据类型的运算符
+  ->语法: typeof value
+  ->返回值:首先是一个字符串,其次才包含了对应的数据类型,例如:"number"、"string"、"boolean"、"undefined"、"object"、"function"
+  ->局限性:
+    1)不能具体的细分对象数据类型中的 数组、正则、对象、时间... 用typeof检测返回的结果都是"object"
+    2)typeof null ->"object"
+
+  [案例]
+  function fn(num1,num2){
+      if(typeof num2==="undefined"){
+          //定义了形参变量但是没有传递值,我们用typeof检测,然后进行相关的处理
+          num2=0;
+      }
+      num2=num2||0;//->上面可以运用我们的逻辑或来进行默认值的赋值
+  }
+
+2、instanceof ->判断某一个实例是否属于某个类
+
+  1)instanceof在一般情况下,可以检测typeof不能检测的那几个数据类型(数组、对象、正则、时间...)
+    [案例1]
+    var ary = [];
+    console.log(ary instanceof Array);//->如果结果为true的话,说明ary是一个数组
+
+  2)instanceof在检测的时候,在这个实例的原型链上,所有的类都是它的所属类,用它在检测的时候返回的结果都是true
+    [案例2]
+    var oDiv=document.getElementById("div1");
+    oDiv instanceof EventTarget ->true
+    oDiv instanceof Node ->true
+    oDiv instanceof HTMLDivElement ->true
+    oDiv instanceof Object ->true
+
+  3)instanceof在我们的原型继承中,检测出来的结果未必是准确的
+    [案例3]
+    function Fn() {}
+    Fn.prototype = new Array;
+    var f = new Fn;
+    f instanceof Array ->true
+
+    在上面的案例中,由于Fn继承类Array,我们的Array就出现在了f的原型链上,所以f instanceof Array是true(详细的分析见图1)
+    但是f并不是我们的数组,所以在这样的继承模式中,instanceof检测出来的结果未必是准确的
+
+  4) (实例 instanceof 类) 在这个语法中我们左边的实例一定是对象数据类型的实例,对于基本数据类型的实例不能用instanceof检测
+    12 instanceof Number ->false 虽然12是Number的一个实例,但是由于我们的12是基本数据类型的值而不是我们的对象数据类型,那么instanceof是不能检测的
+    new Number(12) instanceof Number ->true 只有通过实例创建的数字类的实例才可以用instanceof来检测
+
+3、constructor ->和instanceof一样,通过判断实例的constructor来检测是否为某一个类的实例
+   [案例1]
+   var ary=[];
+   ary.constructor==Array ->true ->说明ary是Array这个类的一个实例,也就是数组
+   ary.constructor==Object ->false
+
+   [局限性]
+   和instanceof的局限性一样,在关于类的继承中,我们实例的constructor会从新的指向父类,这样的我们也不能通过constructor来确定一定是某个数据类型
+   和上面的案例3一样
+   f.constructor == Array ->true ->但是f并不是数组
+
+4、借用Object基类原型上的toString检测数据类型
+
+   原理:利用了这个toString方法不是单纯的转换为字符串,而是返回实例所属类的信息的原理,我们执行原型上的toString方法,并且让里面的this变为我们要检测的值,这样就可以把当前值的所属类输出了
+   Object.prototype.toString.call(value)
+
+   返回值:首先也是一个字符串,里面包含了如下格式的内容
+   "[object value的类]"
+   例如:
+   "[object Number]"、"[object String]"、"[object Boolean]"、"[object Null]"、"[object Undefined]"
+   "[object Object]"、"[object Array]"、"[object RegExp]"、"[object Date]"、"[object Function]"
+
+   ->不管是什么样的数据类型值我们都可准确的检测它的数据类型了
+
+   /*
+    * isType:用来检测某一个值是否属于某一个数据类型
+    * @parameter
+    *    value:要检测数据类型的值
+    *    className:[string]要检测的数据类型所属的类名
+    * @return
+    *    [boolean]一个布尔类型值,如果是true代表value是className这个类型的,flase代表不是这个类型的
+    */
+    function isType(value, className) {
+        var reg = new RegExp("^\\[object " + className + "\\]$", "i");
+        return reg.test(Object.prototype.toString.call(value));
+    }
+
+
+    [复杂的方法]
+    ~function () {
+        var utils = {};
+        var numObj = {
+            isNum: "Number",
+            isStr: "String",
+            isBoo: "Boolean",
+            isNul: "Null",
+            isUnd: "Undefined",
+            isObj: "Object",
+            isAry: "Array",
+            isFun: "Function",
+            isReg: "RegExp",
+            isDate: "Date"
+        };
+        var isType = function () {
+            var outerArg = arguments[0];
+            return function () {
+                var innerArg = arguments[0], reg = new RegExp("^\\[object " + outerArg + "\\]$", "i");
+                return reg.test(Object.prototype.toString.call(innerArg));
+            }
+        };
+        for (var key in numObj) {
+            if (numObj.hasOwnProperty(key)) {
+                utils[key] = isType(numObj[key]);
+            }
+        }
+
+        window.$util = utils;
+    }();
+    console.log($util.isNum(12));
+    console.log($util.isAry([]));
+    console.log($util.isFun([]));
+
+
+
+
+
+

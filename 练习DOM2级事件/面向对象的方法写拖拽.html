@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script language="javascript" src="event2.js"></script>
+    <style>
+        div{ width: 100px; height:100px; backgorund:red; position:absolute; cursor: move;}
+        div:nth-of-type(1){ background: darkblue; left:100px; top:100px}
+        div:nth-of-type(2){ background: darkmagenta; left:200px; top:200px;}
+        div:nth-of-type(3){ background:darkgoldenrod; left:150px; top:300px;}
+
+    </style>
+</head>
+<body>
+<div class="odiv1"></div>
+<div class="odiv2"></div>
+<div class="odiv3"></div>
+<script>
+    function Drag(ele){
+        this.x = null;
+        this.y = null;
+        this.mx = null;
+        this.my = null;
+        this.ele = ele;
+        this.DOWN = processThis(this,this.down);
+        this.MOVE = processThis(this,this.move);
+        this.UP = processThis(this,this.up);
+
+        on(this.ele,"mousedown",this.DOWN)
+    }
+    Drag.prototype.down = function(e){
+        this.x = this.ele.offsetLeft;
+        this.y = this.ele.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+        if(this.ele.setCapture){
+            this.ele.setCapture();
+            on(this.ele,"mousemove",this.MOVE);
+            on(this.ele,"mouseup",this.UP)
+        }else{
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+        }
+    }
+    Drag.prototype.move = function(e){
+        this.ele.style.left = this.x + (e.pageX - this.mx) + "px";
+        this.ele.style.top = this.y + (e.pageY - this.my) + "px";
+    }
+    Drag.prototype.up = function(){
+        if(this.ele.releaseCapture){
+            this.ele.releaseCapture();
+            off(this.ele,"mousemove",this.MOVE);
+            off(this.ele,"mouseup",this.MOVE);
+        }else{
+            off(document,"mousemove",this.MOVE);
+            off(document,"mouseup",this.UP);
+        }
+    }
+    var odiv0 = document.getElementsByTagName("odiv")[0];
+    var odiv1 = document.getElementsByTagName("odiv")[1];
+    var odiv2 = document.getElementsByTagName("odiv")[2];
+    new Drag(odiv0);
+    new Drag(odiv1);
+    new Drag(odiv2);
+
+</script>
+</body>
+</html>

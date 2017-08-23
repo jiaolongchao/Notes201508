@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //中间类继承使用了__proto__,而在IE浏览器中屏蔽了这个属性的使用,所以不兼容IE浏览器
+    //    function fn() {
+    //        //console.dir(arguments);
+    //        //console.dir([]);//->为什么数组可以使用Array原型上的方法,因为[].__proto__=Array.prototype ->最后都指向Object
+    ////        Array.prototype.sort.call(arguments, function (a, b) {
+    ////            return a - b;
+    ////        });
+    ////        Array.prototype.join.call(arguments, "+");
+    //    }
+
+    function fn() {
+        arguments.__proto__ = Array.prototype;
+        arguments.sort(function (a, b) {
+            return a - b;
+        });
+        arguments.shift();
+        arguments.pop();
+        console.log(eval(arguments.join("+")) / arguments.length);
+    }
+
+    fn(56, 67, 78, 89, 90, 12, 23, 34, 45);
+
+
+</script>
+</body>
+</html>

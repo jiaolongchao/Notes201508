@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #outer{ width:500px; height:270px; margin:100px auto; overflow:hidden; position:relative;}
+        #inner{ width:500px; height:1350px; position:absolute; top:0; left:0; color:#fff; font-size:72px; text-align:center; line-height:270px; }
+        #inner div{ width:500px; height:270px; background:red; }
+        #btn{ padding:0; margin:0; position:absolute; list-style:none; right:30px; top:30px; }
+        #btn li{ width:30px; height:30px;  font-size:14px; font-weight:bold; border-radius:50%; cursor:pointer; background:orange; color:red; margin:10px; text-align:center; line-height:30px; }
+        #btn li.promoted{ color: #fff; background:darkred;}
+    </style>
+</head>
+<body>
+<script src="tween.js"></script>
+<div id="outer">
+    <div id="inner">
+        <div>一</div><div style="background:black;">二</div><div style="background:green; " >三</div><div style="background:purple">四</div><div style="background:yellow;" >五</div><div>一</div>
+    </div>
+    <ul id="btn"><li class="promoted">1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+</div>
+<script>
+    var oLis = document.getElementById('btn').getElementsByTagName("li");
+    var inner = document.getElementById('inner');
+    var step = 0;
+    for(var i=0;i<oLis.length;i++){
+        oLis.item(i).i = i;
+        oLis.item(i).onclick = function(){
+            clearInterval(timer)
+            animate(inner,{top:this.i*-270},600)
+            timer = window.setTimeout(function(){
+                timer = window.setInterval(autoMove,2000)
+            },3000)
+
+            tips()
+        }
+
+    }
+    function autoMove(){
+        step++;
+        if(step >=oLis.length)step=0;
+        animate(inner,{top:step*-270},600)
+        tips()
+    }
+    var timer = window.setInterval(autoMove,2000)
+    function tips(){
+        for(var i=0;i<oLis.length;i++){
+            oLis.item(i).className = '';
+        }
+        oLis[step].className = 'promoted';
+    }
+</script>
+
+</body>
+</html>

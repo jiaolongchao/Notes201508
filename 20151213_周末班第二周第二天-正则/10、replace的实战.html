@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    var str = "20151213";//->"贰零壹伍壹贰壹叁"
+    var ary = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+    str = str.replace(/\d/g, function () {
+//        var num = arguments[0];
+//        var str = ary[num];
+//        return str;
+        return ary[arguments[0]];
+    });
+    console.log(str);
+
+    //http://www.zhufengpeixun.com/viewer.do?courseId=958104#currentPlaying=1663662
+</script>
+</body>
+</html>

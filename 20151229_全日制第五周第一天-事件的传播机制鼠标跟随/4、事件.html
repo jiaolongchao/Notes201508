@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1 {
+            margin: 1000px auto;
+            padding: 0;
+            width: 2000px;
+            height: 200px;
+            background: #ff7b00;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">有本事点我啊~~</div>
+<script type="text/javascript">
+    //一、理解事件
+    //事件:一个行为,浏览器中包含了很多的行为->onclick、onmouseover、onmouseout、onmousemove、onmouseenter(鼠标进入)、onmouseleave(鼠标离开)、onmousedown、onmouseup、onmousewheel(鼠标滚轮滚动)、onscroll、onload、onunload、onresize(窗口的大小发生改变)、onblur(文本框失去焦点)、onfocus(文本框获取焦点)、onkeydown、onkeyup...
+
+    //事件是由两部分组成的:
+    //事件本身->行为本身
+    //事件绑定->给当前的行为绑定一个方法,当行为触发的时候执行这个方法
+
+    //重要的一句话:
+    //事件的行为是天生就有的,即使我们没有给其绑定任何的方法,行为也是存在的,只不过在触发行为的时候什么事情都没有做而已,例如：
+    //我们点击页面中的div,div的click行为已经被触发了,如果没有给其绑定方法,只是什么事情都不去做,但是click行为却发生了
+
+    //二、事件对象 MouseEvent
+    //给oDiv的click行为绑定了一个方法,当点击的行为被触发的时候,执行对应的方法-->不仅仅把方法执行了,而且浏览器还会默认的给这个方法传递一个参数值(我们一般定义一个形参变量e来接收这个值)-->"事件对象"
+    //事件对象:它是一个对象数据类型的值,里面存储了我们常用的事件的相关信息
+
+    //clientX: 250 ->当前鼠标点击的这个点在当前窗口x轴的坐标
+    //clientY: 103 ->当前鼠标点击的这个点在当前窗口y轴的坐标
+
+    //pageX: 163 ->当前鼠标距离body的左上角的X轴坐标 (如果当前元素没有在第一屏,它是距离第一屏最上面的距离,而clientX是不管在哪屏幕,距离的都是当期窗口的)
+    //pageY: 137 ->当前鼠标距离body的左上角的Y轴坐标
+    //pageX/pageY在IE6~8下不兼容
+    // e.pageX = e.pageX || (e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+    //e.pageY = e.pageY || (e.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
+
+    //target:当前事件源(行为是发生在哪个元素上的,这个元素就是当前的事件源)
+    //在IE6~8下不兼容
+    //e.target= e.target|| e.srcElement;
+
+    //type:当前事件行为的类型  例如:"click"
+
+    //preventDefault:阻止事件的默认行为
+    //在IE6~8下不兼容
+    //e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+    var oDiv = document.getElementById("div1");
+    oDiv.onclick = function (e) {
+        //在保准的浏览器中,我们通过形参来获取事件对象;但是在IE6~8下并没有传递给函数任何的参数值,也就是我们不能在通过e来获取信息了,IE浏览器把事件对象存储在了全局的event对象中了
+        e = e || window.event;
+
+        e.target = e.target || e.srcElement;
+        e.pageX = e.pageX || (e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+        e.pageY = e.pageY || (e.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
+
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    };
+</script>
+</body>
+</html>

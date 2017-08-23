@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #odiv1{ width:100px; height:100px; position:absolute; left:100px; top:200px; background:red;}
+    </style>
+</head>
+<body>
+<div id="odiv1"></div>
+<script>
+    function getClass(obj,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(obj,null)[attr])
+        }else{
+            return parseFloat(obj.currentStyle[attr]);
+        }
+    }
+    function animate(ele,target,duration){
+        var times = 0;
+        var interval = 15;
+        var begin = getClass(ele,'left');
+        var changet = target - begin;
+
+        function step(){
+            times += interval;
+            if(times < duration){
+                ele.style.left = (times / duration) * changet + begin  + "px";
+            }else{
+                window.clearInterval(timer);
+                ele.style.left = target + "px";
+            }
+            timer = setTimeout(step,interval)
+
+        }
+        step()
+    }
+
+    var odiv = document.getElementById("odiv1");
+    odiv.onclick = function(){
+        animate(this,900,1000)
+    }
+</script>
+</body>
+</html>

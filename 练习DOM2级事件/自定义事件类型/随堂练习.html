@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{ width:100px; height: 100px; background:red; position: absolute;}
+    </style>
+</head>
+<script src="event.js"></script>
+<script src="darg.js"></script>
+<body>
+<div id="div1"></div>
+<script>
+var odiv = document.getElementById("div1");
+    on(odiv,"mousedown",down)
+</script>
+</body>
+</html>

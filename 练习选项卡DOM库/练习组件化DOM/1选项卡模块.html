@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{ padding: 0; margin: 0;}
+        .tabbedPanels{width: 500px; margin:10px auto;}
+        ul.tabGroup{list-style: none; height: 30px; line-height: 30px; overflow: hidden; margin: 0;}
+        li.tab{ width: 40px; margin-left: 20px; background: #ccc; font-size: 16px; float: left; text-align: center; cursor: pointer; padding: 0 10px}
+        li.selectedTab{ background: #09f; font-weight: bold;}
+        div.contentGroup{ overflow: hidden; clear:both}
+        div.content{height: 400px; background: #09f; display: none; padding: 10px;}
+        div.selectedContent{ display: block;}
+        .promoted{ color: red; font-weight: bold;}
+    </style>
+</head>
+<body>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">选项卡一</li>
+        <li class="tab">选项卡二</li>
+        <li class="tab promoted">选项卡三</li>
+        <li class="tab">选项卡四</li>
+        <li class="tab">选项卡五</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">
+            内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML5</li>
+                    <li>JS</li>
+                    <li>移动端</li>
+                </ol>
+            </div>
+        </div>
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+        <div class="content">内容四</div>
+        <div class="content">内容五</div>
+    </div>
+</div>
+<div class="tabbedPanels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">选项卡一</li>
+        <li class="tab">选项卡二</li>
+        <li class="tab promoted">选项卡三</li>
+        <li class="tab">选项卡四</li>
+        <li class="tab">选项卡五</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">
+            内容一
+            <div>
+                <h3>课程内容</h3>
+                <ol>
+                    <li>CSS</li>
+                    <li>HTML5</li>
+                    <li>JS</li>
+                    <li>移动端</li>
+                </ol>
+            </div>
+        </div>
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+        <div class="content">内容四</div>
+        <div class="content">内容五</div>
+    </div>
+</div>
+<script src="DOM.js"></script>
+<script>
+    var oLis = document.getElementsByClassName('tab');
+    var cons = document.getElementsByClassName('content');
+    for(i=0;i<oLis.length;i++){
+        /*oLis.index = i;
+        oLis.item(i).onclick = function(){
+            changeTab(this.i)
+        }  //两种风格1 ：每循环一次都要创建一个新的匿名方法，造成新的空间浪费
+        ;(function(i){
+            oLis.item(0).onclick = function(){
+                chagngeTab(i);
+            }
+        })(i)//两种风格2 比上一次性能浪费的更多，*/
+        //如果我们不用给事件传参的话，那就不用以上那种麻烦的方法了
+        oLis.item(i).onclick = changeTab;
+    }
+
+
+    function changeTab(){
+        var n = DOM.getIndex(this);
+        var siblings = DOM.siblings(this);
+        this.className = 'tab selectedTab';
+        for(var i = 0; i< siblings.length;i++){
+            siblings[i].className = 'tab';
+        }
+
+        /*for(var i = 0; i< cons.length; i++){
+           cons[i].className = 'content';
+        }
+        cons.item(n).className = 'content selectedContent';*/
+
+
+
+        var next = DOM.next(this.parentNode);
+        var contents = DOM.children(next); //获取了所有内容div
+        var selectedContent = contents[n]; //获得了和被点中的li对应的div
+
+        selectedContent.className = 'content selectedContent';
+        var s = DOM.siblings(selectedContent);
+        for( var i = 0; i< s.length; i++){
+            s[i].className = 'content';
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*function changeTab(){//实现核心的选项卡切换功能的方法
+        //如果能够在这个方法里，把索引值动态取到，那就可以不传参数了
+        //能不能找到当前触发click事件的那个li元素呢？
+        //this 就是当前被点击的li元素 那就可以算出this的索引值
+        var index = 0;//假设它是索引值是0，就是老大
+        var p = this.previousSibling;
+        while(p){ //如果他的哥哥存在并且是元素，那则让index++
+            if(p.nodeType === 1){
+                index ++ ;//则让它的排行递进一次
+            }
+            p = p.previousSibling;
+        }
+        alert(index);  //当循环结束的时候。index就是它的索引值
+
+    }*/
+</script>
+</body>
+</html>

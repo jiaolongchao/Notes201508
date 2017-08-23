@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, h2 {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        .box {
+            position: absolute;
+            /*top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -150px;*/
+            width: 300px;
+            height: 300px;
+            background: #FFCF78;
+        }
+
+        .box h2 {
+            padding: 0 15px;
+            height: 35px;
+            line-height: 35px;
+            background: #96E555;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <h2>珠峰培训-登录</h2>
+</div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var boxTop = box.getElementsByTagName("h2")[0];
+
+    //1、JS实现让当前的盒子#box在屏幕的居中的位置
+    var winW = document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+    var boxW = box.offsetWidth, boxH = box.offsetHeight;
+    box.style.left = (winW - boxW) / 2 + "px";
+    box.style.top = (winH - boxH) / 2 + "px";
+
+
+    //2、实现拖拽
+    function down(e) {
+        e = e || window.event;
+
+        //记录之前的鼠标的开始位置和盒子的开始的位置
+        this["strX"] = e.clientX;
+        this["strY"] = e.clientY;
+        this["strL"] = parseFloat(box.style.left);
+        this["strT"] = parseFloat(box.style.top);
+
+        //只有当我已经按下来的时候,才给当前的元素绑定move方法和up方法
+        this.onmousemove = move;
+        this.onmouseup = up;
+    }
+
+    function move(e) {
+        e = e || window.event;
+
+        //获取当前的鼠标位置,计算鼠标偏移的距离,求出最新的top/left值
+        var changeL = e.clientX - this["strX"];
+        var changeT = e.clientY - this["strY"];
+        var left = this["strL"] + changeL;
+        var top = this["strT"] + changeT;
+
+        //做边界检测
+        var minL = 0, maxL = winW - boxW, minT = 0, maxT = winH - boxH;
+        if (left < minL) {
+            left = minL;
+        } else if (left > maxL) {
+            left = maxL;
+        }
+
+        if (top < minT) {
+            top = minT;
+        } else if (top > maxT) {
+            top = maxT;
+        }
+
+        box.style.left = left + "px";
+        box.style.top = top + "px";
+    }
+
+    function up(e) {
+        e = e || window.event;
+
+        //当鼠标抬起的时候我们的拖拽结束,我们把之前绑定的move/up移除掉
+        this.onmousemove = null;
+        this.onmouseup = null;
+    }
+
+    boxTop.onmousedown = down;
+</script>
+</body>
+</html>

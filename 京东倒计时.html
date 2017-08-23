@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #time{ width: 200px; margin:100px auto;}
+    </style>
+</head>
+<body>
+<div id="time">倒计时</div>
+<script>
+    setInterval(function(){
+        var odiv = document.getElementById('time');
+        var myDate = new Date();
+        var target = Date.parse('2015-12-3 23:10:00');
+        var haomiao = myDate.getTime();  //获取从1970年一月开始到现在的毫秒数
+        var resulte = target - haomiao;
+        var reshour = Math.floor(resulte/1000/60/60);  //获取转换的小时数
+        var minutes = resulte - (reshour * 1000 * 60 * 60)  //减去小时数后所剩的毫秒数
+        var resminutes = Math.floor(minutes / 1000 /60); //获取转换的分钟数
+        var second = minutes - (resminutes * 1000 * 60); //减去分数后所剩余的毫秒数
+        var ressecond = Math.floor(second / 1000);
+        var daojishi = reshour+ '时' + resminutes + '分'  + ressecond + '秒';
+        odiv.innerHTML = daojishi;
+    },1000)
+
+</script>
+</body>
+</html>

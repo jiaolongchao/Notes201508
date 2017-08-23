@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{ width: 100px; height: 100px;background: red; float: right; margin-top: 10px;}
+    </style>
+</head>
+<body>
+<div id="div1">111</div>
+<div id="div2">
+    <p></p>
+</div>
+// 3:偏移量是相对于谁产生的：
+    //默认情况下，所有的DOM元素产生的偏移量，是相对于文档document.documentElement的，document.body是文档的代理人
+//和偏移量相关的三个属性：offsetLeft offsetTop offsetParent;
+//offsetLeft 是左偏移量，offsetTop是上偏移量，offsetParent产生偏移的参照物。
+// 第二个问题：什么情况偏移量的参照物会发生变化，当文档的layout发生变化 的时候，offsetParent也会随之变化
+//layout  布局，层级关系，和我们学过的zIndex这个Css有直接的关系。
+//必须要明确的是offsetParent 和 parrseNde 不存在关联，这两个属性不是一个概念
+
+
+
+
+<script>
+
+</script>
+</body>
+</html>

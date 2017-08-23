@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li>
+        <li class="ab tab promoted cd">选项二</li>
+        <li class="tab promoted">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+        <li class="tab selectedTab">选项一</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted ab-cd">选项三</li>
+        <li class="tab cd">选项四</li>
+        <li class="tab">选项五</li>
+        <li class="tab selectedTab ab">选项一ab</li>
+        <li class="tab">选项二</li>
+        <li class="tab promoted ab-cd">选项三</li>
+        <li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+          <li class="promoted tab">选项五</li>
+            <li class="tab promoted">选项五</li>
+             <li class="cd tab  promoted ab">选项五ab</li>
+    </ul>
+</body>
+</html>
+<script>
+
+function byClass(strClass,eles){//eles表示的是筛选的范围
+	var reg=new RegExp("(^| )"+strClass+"( |$)");
+	//var eles=document.body.getElementsByTagName("*");
+	var a=[]
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(reg.test(ele.className)){
+			a.push(ele);
+		}
+	}
+	return a;
+}
+var eles=document.body.getElementsByTagName("*");
+
+var strClass="  promoted ab cd  ";
+//先去首尾空格
+var regTrim=/^ +| +$/g;
+strClass=strClass.replace(regTrim,"");
+var regTrim2=/ {2,}/g;
+strClass=strClass.replace(regTrim2," ")
+
+var aClass=strClass.split(" ");
+for(var i=0;i<aClass.length;i++){
+	eles=byClass(aClass[i],eles);
+}
+ eles=byClass("promoted",eles);
+ eles=byClass("ab",eles);
+ eles=byClass("cd",eles);
+
+var a=eles;
+//以下是测试代码
+for(var i=0;i<a.length;i++){
+	a[i].style.backgroundColor="red";
+}
+</script>

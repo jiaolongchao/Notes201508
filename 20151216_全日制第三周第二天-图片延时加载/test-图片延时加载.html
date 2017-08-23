@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="DOM.js"></script>
+</head>
+<body>
+//所有外链资源的缓存机制，相同的外链资源，如果原来请求过，第二次再去主请求，则不会去远程服务器上去请求了
+<script>
+    var oImg = document.getElementsByTagName('img').item(0);
+    oImg.posi = offset(oImg).top + oImg.offsetHeight;
+    window.onscroll = function(){
+        //计算浏览器底边的位置
+        var browse = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+        if(oImg.posi < browse){
+            var src = ''
+            var tempImg = new Image();
+            tempImg.src = src;
+            tempImg.onload = function(){  //当图片资源成功的加载到了网页中，则会触发这个事件，其实这张图不会显示在网页，而是在缓存里。
+                oImg.src = src;
+            }
+        }
+    }
+</script>
+</body>
+</html>

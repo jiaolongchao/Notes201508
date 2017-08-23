@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jsonp.js"></script>
+    <script>
+        window.onload=function(){
+            jsonp('http://localhost:3000/getName',
+            '','valName',function(data){
+                        console.log(data);
+                    });
+            jsonp('http://localhost:3000/getName',
+                    '','valName',function(data){
+                        console.log(data);
+                    });
+            jsonp('http://localhost:3000/getName',
+                    '','valName',function(data){
+                        console.log(data);
+                    });
+            jsonp('http://localhost:3000/getName',
+                    '','valName',function(data){
+                        console.log(data);
+                    });
+            jsonp('http://localhost:3000/getName',
+                    '','valName',function(data){
+                        console.log(data);
+                    });
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

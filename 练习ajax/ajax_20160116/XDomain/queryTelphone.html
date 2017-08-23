@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jsonp.js"></script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script>
+        /*  window.onload = function () {
+         //http://tcc.taobao.com/cc/json/mobile_tel_segment.htm
+         var searchInput = document.getElementById('phone-number');
+         var searchBtn = document.getElementById('query');
+         var tbody = document.getElementById('t-body');
+         searchBtn.onclick = function () {
+         var tel = searchInput.value;
+         if (tel) {
+         */
+        /*{
+         mts:'1820123',
+         province:'北京',
+         catName:'中国移动',
+         telString:'18201232238',
+         areaVid:'29400',
+         ispVid:'3236139',
+         carrier:'北京移动'
+         }*/
+        /*
+         jsonp('http://tcc.taobao.com/cc/json/mobile_tel_segment.htm',
+         {tel: tel}, 'callback', function (data) {
+         var tr = document.createElement('tr');
+         for (var n in data) {
+         var td = document.createElement('td');
+         td.innerHTML = data[n];
+         tr.appendChild(td);
+         }
+         tbody.innerHTML = "";
+         tbody.appendChild(tr);
+         })
+         }
+
+         }
+         }*/
+
+
+        $(function () {
+            window.test=function(data){
+                console.log(data)
+            }
+            var queryInfo = function (tel) {
+                // jquery的jsonp用法
+                $.ajax({
+                    url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm',
+                    data: {tel: tel},
+                    dataType: 'jsonp',
+                    // 对方服务器提供的querystring param
+                    jsonp:'callback',
+                    // jsonp回调函数
+                    // 如果设置此项，则不需要再设置success了
+                    // 必须传指定的全局函数名，不能传函数
+                    jsonpCallback:'test',
+                    context: $('#t-body')
+//                    success: function (data) {
+//                        var tr = '<tr>';
+//                        for (var n in data) {
+//                            tr += '<td>' + data[n] + '</td>';
+//                        }
+//                        tr += '</tr>';
+//                        this.html(tr);
+//                    }
+                })
+            };
+
+            var input = $('#phone-number');
+            var btn = $('#query');
+
+            btn.click(function () {
+                var val = input.val();
+                if (val) {
+                    queryInfo(val)
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+<span>请输入手机号：</span>
+<input id="phone-number" type="text">
+<button id="query" type="button">查询手机号</button>
+<table>
+    <caption>号码内容</caption>
+    <thead>
+    <th>mts</th>
+    <th>省份</th>
+    <th>运营商</th>
+    <th>电话号码</th>
+    <th>区域id</th>
+    <th>ispVid</th>
+    <th>carrier</th>
+    </thead>
+    <tbody id="t-body">
+
+    </tbody>
+</table>
+</body>
+</html>

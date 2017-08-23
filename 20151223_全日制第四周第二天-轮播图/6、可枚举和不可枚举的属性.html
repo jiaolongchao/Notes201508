@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    Object.prototype.aa = function () {
+
+    };
+    var obj = {name: "郭威东", age: 25, height: "175cm", weight: "55kg"};
+    //    for (var key in obj) {
+    //        console.log(key);
+    //    }
+
+    //在浏览器内置类的原型上,天生自带的那些属性和方法是不可枚举的,在for in遍历中我们无法遍历到这些内置的属性
+    //但是我们自己在内置类的原型上扩展的方法是可枚举的,在for in循环中可以遍历到
+    //->我们以后再用for in循环遍历一个对象的属性的时候,需要判断是否私有的属性,只有的私有的才是我们要遍历出来的
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {//->判断key是否为私有的属性
+            console.log(key);
+        }
+    }
+</script>
+</body>
+</html>

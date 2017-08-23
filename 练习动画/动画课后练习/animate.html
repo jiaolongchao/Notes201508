@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{ width: 100px; height: 100px; background: red; position:absolute; left: 0; top: 0; opacity: 1; filter:alpha(opacity=100)}
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script src="animate.js"></script>
+<script>
+    function fn(){
+        this.innerHTML = '运动完成'
+    }
+    div1.onclick = function(){
+        animate(this,{left:300,top:300,opacity:0.4,width:300,height:300},1000,fn)
+    }
+</script>
+</body>
+</html>

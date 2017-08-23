@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ height:100px; width:100px; position:absolute; top:100px;  background:red;}
+</style>
+</head>
+
+<body>
+当前的位置=当前消耗的时间/总时间*(总距离)+起始位置
+单步的时间是多少？
+当前消耗的时间是单步时间的累加
+<div id="div1"></div>
+</body>
+</html>
+<script>
+function getCss(ele,attr){
+	if(window.getComputedStyle(ele,null)){
+		//return parseFloat("a"+getComputedStyle(ele,null)[attr]);
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+function animate(ele,attr,target,duration){
+	var begin=getCss(ele,attr);
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style[attr]=times/duration*change+begin+"px";
+		}else{
+			ele.style[attr]=target+"px";
+			//停止定时器的动作
+			window.clearInterval(timer);//这个timer不是下边42的返回值，如果step方法是由46行得到的，那timer就是46行的返回值
+		}
+		
+	}
+	
+	var timer=window.setInterval(step,interval);
+}
+
+var ele=document.getElementById("div1");
+ele.onclick=function(){
+	animate(this,"left",900,1000);	
+}
+</script>

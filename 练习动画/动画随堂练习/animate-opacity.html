@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{ width:100px; height:100px; position:absolute; left:100px; top:200px; background:red; opacity: 1; filter: alpha(opacity = 100)}
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script>
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr])
+        }else{ //专门处理IE的方案
+            if(attr == 'opacity'){
+                //filter: alpha(opacity = 10)
+                var reg = /alpha\(opacity =(\d+)\)/
+                var str = ele.currentStyle.filter;
+                if(reg.test(str)){
+                   return RegExp.$1/100;
+                }else{
+                    return 1;//如果滤镜样式没有写，或滤镜样式写了，但没有写opacity，则上面的判断为false，则应该把默认值1返回
+                }
+            }
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+    function setCss(ele,attr,value){
+        if(attr == "opacity"){
+            ele.style.opacity = value;
+            ele.style.filter = "alpha(opacity = "+ value*100 +")"
+        }else{
+            ele.style[attr] = value + "px";
+        }
+    }
+    function fadeInOut(ele,target,duration){
+        var begin = getCss(ele,"opacity");
+        var change = target - begin;
+        var times = 0;
+        var interval = 15;
+        function setp(){
+            times += interval;
+            if(times < duration){
+                var val = times / duration * change + begin;
+                //ele.style.opacity = val;
+                //ele.style.filter = "alpha(opacity = " + val*100 +  ")";
+                setCss(ele,"opacity",val);
+            }else{
+                //ele.style.opacity = target;
+                //ele.style.filter = "alpha(opacity = " + target*100 +  ")";
+                setCss(ele,"opacity",target);
+                clearInterval(ele.timer)
+                ele.timer = null;
+            }
+        }
+        ele.timer = window.setInterval(setp,interval)
+    }
+
+    div1.onclick = function(){
+        fadeInOut(this,0,3000);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>callee/caller/无缝滚动</title>
+</head>
+<body>
+    
+</body>
+<script>
+function fn() {
+    arguments.callee == fn;//callee是指当前执行的这个方法
+    //callee上还会有一个属性叫caller,caller是调用callee的那个放发
+    console.log(arguments.callee.caller == fn);
+    //在不确定方法名的时候 可以用callee来代替
+}    
+(function( {
+    div.scrollTop++;
+    window.setTimeout(arguments.callee,10);
+}()
+
+
+
+
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

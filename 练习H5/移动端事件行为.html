@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<body>
+<script>
+	//1、移动端的操作行为（这些都没有现成的方法，都需要移动端的事件模型来实现）
+	//tap:singleTap  doubleTap longTap(点击)
+	//swipe:swipeLeft swipeRight (滑动)
+	//drap 拖拽行为
+
+	//pinch:pinchIn pinchOut
+	//rotate (旋转行为)
+	//重力感应行为
+
+
+	//2、移动端的事件
+	//一个手指的:touch
+	//多个手指的：gesture
+	//所有的操作行为都是由以上的事件模拟出来的
+	//例如：
+	// tocuch: touchstart touchmove touchend touchcancle(非正常关闭的情况下进行的一些数据保存)
+	//一般在30像素以内的偏差我们都算没有移动
+	// 一般在300毫秒内当我们连续触发toushtart,并且没有发生移动，我们认为是双击
+	//一般在750毫秒内我们还没有离开算做长按
+
+	//3、移动端有click事件，为什么我们还要用touch事件去模型去模拟出来呢
+	//移动端的click事件，存在一些弊端：
+	//它的触发有300毫秒的延迟,因为浏览器在这段时间内，需要看一下用户是否在触发第二次，如果触发了就是双击，没有就是说明还是单击，在执行即可
+	//为了解决这300ms的延迟，我们还可以使用fastClick来解决
+
+	//4、移动端其它的常用事件库
+    //(1)zepto.js(移动端的小型jQuery类库，jQuery怎么用基本上zepto就怎么用) 因为zepto里有一个移动端的专用事件模块 touch.js  gesture.js(目前还不太成熟)
+	//tap(点击)
+	//(2)百度touch云手势事件库
+
+	//(3)hammer.js国际上现在非常流行的一款touch事件库
+	//(4)swipe.js 主要用它来实现我们的场景应用
+
+
+</script>
+</body>
+</html>

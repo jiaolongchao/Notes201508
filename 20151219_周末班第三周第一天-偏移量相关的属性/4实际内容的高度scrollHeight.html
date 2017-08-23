@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{height:200px; width:200px; background:#ccc; overflow:auto;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+
+盒子模型1：和高、宽相关的JS属性
+没有现成的直接获得内容宽高的JS属性
+clientHeight,clientWidth：带padding的内容宽度
+offsetHeight,offsetHeight:带边框的
+scrollHeight,scrollWidth实际内容的，不带下padding
+盒子模型2：用JS获得CSS属性，行内的和内嵌、外链样式
+标准浏览器：window.getComputedStyle
+IE6/7/8：ele.currentStyle
+IE6/7/8里的诸多问题
+元素的偏移和偏移参照物
+offsetLeft和offsetTop
+offsetLeft受到什么的影响：标准流自然产生，浮动产生，定位产生，margin产生
+分清绝对定位的left是从那儿开始的，offsetLeft是从那儿开始的
+难点：偏移量产生的参照物
+所有网页元素默认的偏移参照物都是网页文档，body是它的代理人
+当其祖先元素做了相对或绝对定位后，参照物会发生变化
+如何获得网页中任意元素距离文档左上角的偏移量
+滚动条：scrollTop或scrollLeft
+滚动条属性是可读写的属性
+scrollTop或scrollLeft的值是有上限和下限的
+文字无缝滚动实例
+图片延迟加载实例
+按需加载
+图片的异步
+图片的缓存机制
+按需加载图片
+多张图片加载出现的问题和闭包解决方案
+什么时候使用：异步与闭包<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div >我是最后的标签</div>
+</div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+var h=window.getComputedStyle(ele,null).height;//容器的高度
+var contentH=ele.scrollHeight;//实际内容的高，包含溢出的部分
+
+//计算浏览器可视窗口的高
+document.documentElement.clientHeight;
+//文档的高度(网页本身的内容的高度)
+document.documentElement.scrollHeight||document.body.scrollHeight;
+
+//移动端 >50%
+//PC端的 >30-50%;
+//硬件 5%
+//APP 5%-10%
+
+</script>

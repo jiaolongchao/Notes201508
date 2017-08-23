@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<script src="DOM.js"></script>
+<body>
+    <ul id="oul">
+        <li class="abc a1 b1">选项1  abc a1 b1</li>
+        <li class="abc b1">选项1</li>
+        <li class="abc c1 b1" id="last">选项1</li>
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <li class="abc a1 b1">选项1</li>
+        <li class="abc a1 b1" >选项1</li>
+        <P>AAA</P>
+        <span>SPAN</span>
+    </ul>
+</body>
+<script>
+    var oul = document.getElementById('oul');
+    var last = document.getElementById('last');
+    console.log(DOM.getNextEle(last))
+
+</script>
+</html>

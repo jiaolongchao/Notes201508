@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证码</title>
+
+</head>
+<body>
+<div id="code"></div>
+<!--<script>
+    function getCode(){
+        var rangeStr = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ';
+        var str = '';
+        for(var i=0;i<4;i++){
+            var ran = Math.round(Math.random() * (60-0) + 0);
+            str += rangeStr[ran];
+        }
+        return str;
+    }
+    var code = document.getElementById('code');
+    code.innerHTML = getCode();
+</script>-->
+<script>
+    function getCode(){
+        var rangeStr = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ';
+        var str = '';
+        var i=0;
+        while(i < 4){
+            var ran = Math.round(Math.random() * (60-0) + 0);
+            var temp = rangeStr[ran];
+            if(str.indexOf(temp) === -1){
+                str += temp;
+            }
+            i++;
+        }
+        return str;
+    }
+    var code = document.getElementById('code');
+    code.innerHTML = getCode();
+</script>
+</body>
+</html>

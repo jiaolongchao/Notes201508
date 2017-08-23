@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+             height: 200px; background: red; color: white;line-height: 200px; font-size: 50px; text-align: center;
+        }
+    </style>
+</head>
+<body style="height: 5000px;">
+<div style="height: 3000px"></div>
+<img src="default.gif" realimg = 'http://pic1.win4000.com/pic/9/8c/0a08466928.jpg'>
+<script>
+    var oImg = document.getElementsByTagName('img').item(0);
+    var imgBottom = offset(oImg).top + oImg.offsetHeight;
+    window.onscroll = function(){
+        if(oImg.loaded) return;
+        var browBottom = (document.documentElement.scrollHeight || document.body.scrollHeight) + (document.documentElement.clientHeight || document.body.clientHeight);
+        if(imgBottom < browBottom){
+            var tempImg = new Image;
+            var src = oImg.getAttribute('realimg') + '?' +Math.random();
+            tempImg.src = src;
+            tempImg.onload = function(){
+                oImg.src = src;
+                oImg.loaded = true;
+            }
+            oImg.src = 'o_loading.gif'
+        }
+    }
+    //封装offset方法获取offset距离
+    function offset(ele){
+        var l = ele.offsetLeft;
+        var t = ele.offsetTop;
+        var p = ele.offsetParent;
+        while(true){
+            if(!p || p == document.body) break;
+            if(window.navigator.userAgent.indexOf('MSIE 8') > -1){
+                l += p.offsetLeft;
+                t += p.offsetTop;
+            }else{
+
+                l += p.offsetLeft + p.clientLeft;
+                t += p.offsetTop + p.clientTop;
+            }
+            p = p.offsetParent;
+        }
+        return {left:l,top:t};
+    }
+    //封装获取计算后的css样式的方法
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return getComputedStyle(ele,null)[attr]
+        }else{
+            return ele.currentStyle(attr);
+        }
+    }
+</script>
+</body>
+</html>

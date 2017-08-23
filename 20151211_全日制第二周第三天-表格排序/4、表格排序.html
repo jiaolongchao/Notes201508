@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训-表格排序</title>
+    <link type="text/css" rel="stylesheet" href="css/tab.css"/>
+</head>
+<body>
+<table id="tab" cellspacing="0" cellpadding="0">
+    <thead>
+    <!--哪一个TH的class='cursor',那么当前的这一列就要进行表格排序-->
+    <tr>
+        <th class="cursor">姓名</th>
+        <th class="cursor">年龄</th>
+        <th class="cursor">分数</th>
+        <th>性别</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--实现奇数行和偶数行变颜色的话,只需要让偶数行的class="even"-->
+    </tbody>
+</table>
+
+<!--页面引入了很多的JS文件，根据文件的依赖关系我们需要把引入的顺序调整好-->
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/json.js"></script>
+<script type="text/javascript" src="js/tab.js"></script>
+</body>
+</html>

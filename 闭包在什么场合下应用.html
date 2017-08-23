@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul li{ width: 200px;
+            height: 30px;
+            background: darkred;
+            position: relative;}
+    </style>
+</head>
+<body>
+<ul>
+    <li>列表</li>
+    <li>列表</li>
+    <li>列表</li>
+    <li>列表</li>
+    <li>列表</li>
+</ul>
+<script>
+   /* var oli = document.getElementsByTagName('li');
+    for(var i=0;i<oli.length;i++){
+        ;(function(i){
+            window.setTimeout(function(){
+                oli.item(i).style.left = (i+1) * 100 + 'px';
+            },(i+1)*1000)
+        })(i)
+    }*/
+
+   var oli = document.getElementsByTagName('li');
+   for(var i=0;i<oli.length;i++){
+           window.setTimeout((function(i){
+               return function(){
+                   oli.item(i).style.left = (i+1) * 100 + 'px';
+               }
+           })(i),(i+1)*1000)
+   }
+</script>
+</body>
+</html>

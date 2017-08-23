@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //JSON是一种数据格式,主要应用于前后台数据交互的时候,作为数据存储的载体->后台返回给我们的数据基本上都是JSON格式的数据
+
+    //var obj = {name: "珠峰", age: 7};//->普通格式的对象
+    //var obj = {"name": "珠峰", "age": 7};//->JSON格式的对象 把对象的属性名用""包起来,这样的格式就是JSON格式
+    //    var ary = [
+    //        {"name": "珠峰"}
+    //    ];
+
+    //1、在window浏览器对象中提供了一个叫做JSON的对象,里面包含了我们操作处理JSON格式数据的常用方法
+    //window.JSON
+    //1)stringify:把普通格式/JSON格式的对象转换为JSON格式的字符串
+    //var ary = [{name: "珠峰"}, {name: "中国"}];
+    //var str = window.JSON.stringify(ary);//->'[{"name":"珠峰"},{"name":"中国"}]'
+
+    //2)parse:把JSON格式的字符串转换为JSON格式的对象
+    //var jsonAry = JSON.parse(str);
+
+    //2、在IE6~7下不兼容我们的JSON->window下没有JSON这个属性
+    //如何
+    //把普通格式/JSON格式的对象转换为JSON格式的字符串?(后期讲)
+    //把JSON格式的字符串转换为JSON格式的对象?
+    var str = '[{"name":"珠峰"},{"name":"中国"}]';
+    var jsonAry = eval("(" + str + ")");
+</script>
+</body>
+</html>

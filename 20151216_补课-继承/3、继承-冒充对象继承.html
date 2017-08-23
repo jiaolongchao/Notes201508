@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //冒充对象继承:在子类B的私有函数体中,创建一个父类A的实例temp(temp中就存有父类A中的私有和公有的属性/方法),我们把temp当做一个普通的对象进行遍历,分别把temp中存有的属性都存储到我们子类B的私有中一份
+    //1)冒充对象继承首先继承父类中的私有和公有的属性/方法,并且和原型不一样,冒充对象继承是把A中的私有的属性和共公有的方法复制一份直接的给了B的实例
+    //2)把父类A中的私有属性和共公有的方法继承到子类B中的私有的属性
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    function B() {
+        //this->b
+        var temp = new A;//->temp中现在就存有了A中的私有和公有的属性/方法
+        //temp={x:100,getX:function...}
+        for (var key in temp) {
+            this[key] = temp[key];
+        }
+        temp = null;
+    }
+    var b = new B;
+</script>
+</body>
+</html>

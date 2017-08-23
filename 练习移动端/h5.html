@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title></title>
+    <style>
+        *{ margin:0;
+            padding: 0; }
+        ul li{ margin: 0 20px;}
+        ul{
+            list-style: none;
+            background: deepskyblue;
+            line-height: 50px;
+            display: flex;
+            flex-flow:row wrap;
+            justify-content:flex-end;
+            height: 100%;
+        }
+        ul li{ margin: 0 20px; line-height: 50px;}
+        @media all and (max-width:800px) {
+            ul{
+                justify-content: center;
+            }
+        }
+        @media all and (max-width:600px) {
+            ul{
+                flex-flow: column wrap;
+                align-content: center;
+            }
+            ul li{
+                border-top:1px solid rgba(255,255,255,0.3);
+                border-bottom:1px solid rgba(0,0,0,0.1)
+            }
+        }
+    </style>
+
+</head>
+<body>
+<!--//flex-direction 写在父元素上  flex-->
+<div id="main">
+    <ul>
+        <li>天猫</li>
+        <li>聚划算</li>
+        <li>淘生活</li>
+        <li>淘点点</li>
+    </ul>
+</div>
+</body>
+</html>

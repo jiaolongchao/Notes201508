@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.tabbedPanels{ width:500px; margin:10px auto;}
+ul.tabGroup{ list-style:none; height:30px; line-height:30px; overflow:hidden; margin:0; padding:0;}
+li.tab{ width:70px; margin-left:20px; background:#CCC; font-size:16px; float:left; text-align:center; cursor:pointer; }
+li.selectedTab{ background:#09F; font-weight:bold;}
+div.contentGroup{ overflow:hidden; clear:both; }
+div.content{ height:400px; background:#09f; display:none; padding:10px;  }
+div.selectedContent{ display:block;}
+
+.promoted{ color:red; font-weight:bold;}
+
+</style>
+</head>
+
+<body>
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="tabbedPanels">
+	<ul class="tabGroup">
+    	<li class="tab selectedTab">选项一</li><li class="tab">选项二</li>
+        <li class="tab promoted">选项三</li><li class="tab">选项四</li>
+        <li class="tab">选项五</li>
+    </ul>
+    <div class="contentGroup">
+    	<div class="content selectedContent">内容一
+        	<div>
+            <h3>课程内容</h3>
+            <ol>
+            	<li>CSS</li><li>HTML5</li><li>JS</li><li>移动端</li><li>CSS</li>
+            </ol>
+            </div>
+        </div>
+        <div class="content">
+        	内容二
+        </div>
+        
+        <div class="content">
+        	内容三
+        </div>
+        
+        <div class="content">
+        	内容四
+        </div>
+        
+        <div class="content">
+        	内容五
+        </div>
+    
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+var oLis=document.getElementsByClassName("tab");
+for(var i=0;i<oLis.length;i++){
+	oLis.item(i).n=i;
+	oLis.item(i).onclick=function(){
+		changeTab(this.n);
+	}
+	;(function(i){
+		oLis.item(i).onclick=function(){
+			changeTab(i);//当前li的索引值	
+		}
+		
+	})(i);
+	oLis.item(i).onclick=changeTab;
+}
+
+function changeTab(i){//实现核心的选项卡切换功能的方法
+	//如果能够在这个方法里，把索引值动态取到，那就可以不传参数了
+	//能不能找到当前触发click事件的那个li元素呢？
+	this//就是当前被点击的li元素，那就可以算出this的索引值
+	var index=0;//假设它的索引值是0，就是老大
+	var p=this.previousSibling;
+	while(p){//如果它的哥哥存在
+		if(p.nodeType===1){//并且哥哥是元素
+			
+			index++;//则让它的排行递进一次（累加）
+		}
+		p=p.previousSibling;
+	}
+	alert(index);//当循环结束的时候，这个index就是它的索引值
+}
+</script>

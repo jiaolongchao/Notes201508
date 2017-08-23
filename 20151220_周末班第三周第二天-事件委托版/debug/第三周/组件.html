@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .tabPanel {
+        width: 500px;
+        margin: 10px auto;
+    }
+    .tabGroup {
+        list-style: none;
+        height: 30px;
+        line-height: 30px;
+    }
+    .tabGroup .tab {
+        width: 70px;
+        margin-right: 20px;
+        text-align: center;      
+        background: #ccc;
+        font-size: 16px;
+        float: left;
+        cursor: pointer;
+    }
+    .tabGroup .tab.selectedTab {
+        background: #09f;
+        font-weight: bold;
+    }
+    .contentGroup {
+        overflow: hidden;
+        clear: both;
+    }
+    .contentGroup .content {
+        height: 150px;
+        text-align: center;
+        background: #09f;
+        display: none;
+    }
+    .contentGroup .block {
+        display: block;
+    }
+    </style>
+</head>
+<body>
+    <div class="tabPanel">
+        <ul class="tabGroup">
+            <li class="tab selectedTab">选项一</li>
+            <li class="tab">选项二</li>
+            <li class="tab">选项三</li>
+            <li class="tab">选项四</li>
+        </ul>
+        <div class="contentGroup">
+            <div class="content block">
+                内容一
+                <div>
+                    <h3>课程内容</h3>
+                    <ol>
+                        <li>CSS</li>
+                        <li>HTML5</li>
+                        <li>JS</li>
+                        <li>移动端</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="content">
+                内容二
+            </div>
+            <div class="content">
+                内容三
+            </div>
+            <div class="content">
+                内容四
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var DOM = {};
+    var oLi = document.getElementsByClassName("tab");
+    DOM.getIndex = function (ele) {
+        var index = 0;
+        var p = ele.previousSibling;
+        while(p) {
+            if(p.nodeType === 1) {
+                index++;
+            }
+            p = p.previousSibling;
+        }
+        return index;
+    }
+    for(var i = 0; i < oLi.length; i++) {
+        oLi[i].onclick = changeTab;
+    }
+    // function changeTab() {
+    //     var index = getIndex(this);
+    //     this.className = "tab selectedTab";
+    //     var nodes = this.parentNode.childNodes;
+    //     var aSiblings = [];
+    //     for(var i = 0; i < nodes.length; i++) {
+    //         if(nodes[i] != this && nodes[i].nodeType ===1) {
+    //             aSiblings.push(nodes[i]);
+    //         }
+    //     }
+
+    //     for(var i = 0; i < aSiblings.length; i++) {
+    //         aSiblings[i].className = "tab";
+    //     }
+    // }
+
+    function changeTab() {
+        var n = DOM.getIndex(this);
+        var siblings = DOM.siblings(this);
+        this.className = "tab selectedTab"
+        for(var i = 0; i < siblings.length; i++) {
+            siblings[i].className = "tab";
+        }
+    }
+    
+
+//获得ele的所有的元素兄弟节点 第一种写法
+    DOM.siblings = function (ele) {
+        var nodes = ele.parentNode.childNodes;
+        var a = [];
+        for(var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+            if(node != ele && node.nodeType == 1) {
+                a.push(node);
+            }
+        }
+    }
+
+//获得ele的所有的元素兄弟节点 第二种写法
+    // function siblings(ele) {
+    //     var a = [];
+    //     var p = ele.previousSibling;
+    //     while(p) {
+    //         if (p.nodeType === 1) {
+    //             a.unshift(p);
+    //         };
+    //         p = p.previousSibling;
+    //     }
+    //     a.reverse();
+    //     while(n) {
+    //         if(n.nodeType == 1) {
+    //             a.push(n);
+    //         }
+    //         n = n.nextSibling;
+    //     }
+    //     return a;
+    // }
+    // 从以上的siblings方法里，还可以演化出另外三个方法来，只找哥哥，只找弟弟，只找相邻的哥哥和弟弟（返回的元素最多只有两个）;
+    //还可以再有两个方法，只找相邻的那一个哥哥，或只找相邻的哪一个弟弟
+    DOM.prevSiblings = function prevSiblings(ele) {
+        //找ele的哥哥们
+        var nodes = ele.parentNode.childNodes;
+        var a = [];
+        for(var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+            if(node.nodeType == 1) {
+                a.push(node);
+            }
+        }
+    }   
+
+    DOM.nextSiblings = function nextSiblings(ele) {
+        //找弟弟们
+        var nodes = ele.parentNode.childNodes;
+        var a = [];
+        for(var i = nodes.length-1; i>=0; i--) {
+            var node = nodes[i];
+            if(node == ele) {
+                break;
+            }
+            if(node != ele && node.nodeType == 1) {
+                a.unshift(node);
+            }
+            node = node.nextSibling;
+        }
+        return a;
+    }
+    // var oli = document.getElementsByClassName("tab")[3];
+    // console.log(nextSiblings(oli));
+
+    DOM.prev = function prev(ele) {
+        //找相邻的唯一的哥哥
+        // 方法一
+        // var a = prevSiblings(ele);
+        // return a[a.length-1];
+
+        // 方法二
+        var p = ele.previousSibling;
+        while(p) {
+            if (p.nodeType == 1) {
+                return p;
+            };
+            p = p.previousSibling;
+        }
+        return null;//表示此方法应该有返回值，但是得不到，则应该返回null，如果不写这个return null,找不到结果，则返回undefined；
+        // null和undefined都表示没有，不存在
+        // 一个主动的结果，一个被动的结果
+    }
+
+    function next(ele) {
+        //找相邻的唯一的哥哥
+    }
+
+    function prev(ele) {
+        //找相邻的唯一的哥哥
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

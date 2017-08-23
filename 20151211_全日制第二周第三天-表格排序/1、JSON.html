@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //1、什么叫做JSON?
+    //JSON只是一种数据格式(它不是一种新的数据类型)
+    //    var obj = {name: "中国", age: 5000};//->普通格式的对象
+    //    var jsonObj = {"name": "中国", "age": 5000};//->JSON格式的对象 (只要把普通对象的属性名用""(不能是'')包起来，这样的格式就是我们JSON格式的对象)
+    //    var data = [
+    //        {name: "", age: ""},
+    //        {name: "", age: ""}
+    //    ];//->普通的二维数组
+    //
+    //    var jsonData = [
+    //        {"name": "", "age": ""},
+    //        {"name": "", "age": ""}
+    //    ];//->JSON格式的数据
+
+    //2、在window浏览器对象中提供给我们操作JSON格式数据的一些方法
+    // ->window.JSON
+    // ->stringify:把JSON格式/普通格式的对象转换为JSON格式的字符串
+    // ->parse:把JSON格式的字符串转换为JSON格式的对象
+
+    //    var data = [
+    //        {name: "王小波", age: 48},
+    //        {name: "王梦缘", age: 84}
+    //    ];
+    //
+    //    var str = JSON.stringify(data);//->'[{"name":"王小波","age":48},{"name":"王梦缘","age":84}]'
+    //    console.log(JSON.parse(str));
+
+    //3、关于兼容的问题
+    //在IE6、IE7中window下没有JSON这个属性
+    //console.log(window.JSON); ->在IE6~7下输出的结果是undefined
+
+    //不兼容的情况下如何把JSON格式的字符串转换为JSON格式的对象? ->使用eval，但是记住最好是手动在字符串左右两边加上小括号
+    //    var str = '[{"name":"王小波","age":48},{"name":"王梦缘","age":84}]';
+    //    var data = eval("(" + str + ")");//->兼容的话我们使用JSON.parse(str)
+    //    console.dir(data);
+</script>
+</body>
+</html>
